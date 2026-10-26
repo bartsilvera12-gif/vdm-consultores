@@ -1,0 +1,71 @@
+import { Container } from "@/components/primitives/Container";
+import { Logo } from "@/components/primitives/Logo";
+import { areas } from "@/content/areas";
+
+export function Footer() {
+  return (
+    <footer className="border-t border-white/10 bg-navy text-on-navy-muted">
+      <Container className="grid gap-10 pt-14 pb-8">
+        <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
+          <div>
+            <Logo variant="white" width={129} height={52} className="h-13" />
+            <p className="mt-4 font-display text-base font-semibold text-on-navy">
+              Un solo equipo, soluciones integrales.
+            </p>
+            <p className="mt-2 max-w-[40ch]">
+              Asesoría jurídica, empresarial y de inversiones en Paraguay.
+            </p>
+          </div>
+          <div>
+            <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
+              Áreas
+            </h4>
+            <ul className="grid gap-2">
+              {areas.map((area) => (
+                <li key={area.id}>
+                  <a
+                    href={`#${area.id}`}
+                    className="transition-colors hover:text-on-navy"
+                  >
+                    {area.eyebrow}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
+              Firma
+            </h4>
+            <ul className="grid gap-2">
+              <li>
+                <a href="#nosotros" className="hover:text-on-navy">
+                  Quiénes somos
+                </a>
+              </li>
+              <li>
+                <a href="#equipo" className="hover:text-on-navy">
+                  Equipo
+                </a>
+              </li>
+              <li>
+                <a href="#experiencia" className="hover:text-on-navy">
+                  Experiencia
+                </a>
+              </li>
+              <li>
+                <a href="#contacto" className="hover:text-on-navy">
+                  Contacto
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="flex flex-wrap justify-between gap-3 border-t border-white/10 pt-6 text-small">
+          <span>© 2026 VDM Consultores. Todos los derechos reservados.</span>
+          <span>Fortaleciendo empresas, potenciando inversiones.</span>
+        </div>
+      </Container>
+    </footer>
+  );
+}
