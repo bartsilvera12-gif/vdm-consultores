@@ -1,0 +1,55 @@
+/* VDM Consultores — generated from tokens.json */
+:root, [data-theme="light"] {
+  --surface: #FFFFFF;
+  --surface-alt: #F3F6FA;
+  --navy: #0A2747;
+  --ink: #0F1E33;
+  --ink-muted: #4A5B70;
+  --blue: #0B56A3;
+  --blue-bright: #1265B5;
+  --on-blue: #FFFFFF;
+  --orange: #F7841F;
+  --orange-text: #A84F00;
+  --on-orange: #0F1E33;
+  --on-navy: #FFFFFF;
+  --on-navy-muted: #B4C3D6;
+  --line: #DCE3EC;
+  --line-strong: #8193A8;
+  --focus-ring: #0B56A3;
+  --success: #1B6E3A;
+}
+[data-theme="dark"] {
+  --surface: #0B1726;
+  --surface-alt: #112236;
+  --navy: #06111E;
+  --ink: #EEF3F9;
+  --ink-muted: #A7B6C8;
+  --blue: #5FA4EC;
+  --blue-bright: #7DB6F0;
+  --on-blue: #0B1726;
+  --orange: #F7841F;
+  --orange-text: #FFA24D;
+  --on-orange: #0F1E33;
+  --on-navy: #EEF3F9;
+  --on-navy-muted: #B4C3D6;
+  --line: #22364F;
+  --line-strong: #5C6F86;
+  --focus-ring: #7DB6F0;
+  --success: #5CC98A;
+}
+:root {
+  --font-display: "Montserrat", "Avenir Next", system-ui, sans-serif;
+  --font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-24: 96px;
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --shadow-card: 0 1px 2px rgba(15,30,51,.06), 0 8px 24px rgba(15,30,51,.06);
+}
