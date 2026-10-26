@@ -6,8 +6,8 @@ export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-navy text-on-navy-muted">
       <Container className="grid gap-10 pt-14 pb-8">
-        <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div>
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr]">
+          <div className="sm:col-span-2 md:col-span-1">
             <Logo variant="white" width={129} height={52} className="h-13" />
             <p className="mt-4 font-display text-base font-semibold text-on-navy">
               Un solo equipo, soluciones integrales.

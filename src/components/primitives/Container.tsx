@@ -11,7 +11,8 @@ export function Container({
   return (
     <div
       className={cn(
-        "mx-auto w-full max-w-[1180px] px-4 md:px-12",
+        // Respeta safe-area iOS (notch, home indicator) sin perder el padding mínimo.
+        "mx-auto w-full max-w-[1180px] px-[max(1rem,env(safe-area-inset-left))] [padding-right:max(1rem,env(safe-area-inset-right))] md:px-[max(3rem,env(safe-area-inset-left))] md:[padding-right:max(3rem,env(safe-area-inset-right))]",
         className,
       )}
     >

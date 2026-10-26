@@ -24,13 +24,13 @@ export function Hero() {
             <span className="h-[3px] w-10 bg-orange" aria-hidden="true" />
             <Eyebrow>VDM Consultores · Paraguay</Eyebrow>
           </div>
-          <h1 className="font-display text-[40px] leading-[44px] font-bold tracking-tight text-ink md:text-[62px] md:leading-[64px]">
+          <h1 className="font-display text-[34px] leading-[40px] font-bold tracking-tight text-ink sm:text-[40px] sm:leading-[44px] md:text-[52px] md:leading-[56px] lg:text-[62px] lg:leading-[64px]">
             Fortaleciendo empresas,{" "}
             <em className="block not-italic text-blue">
               potenciando inversiones<span className="text-orange">.</span>
             </em>
           </h1>
-          <p className="max-w-[540px] text-lead text-ink-muted">
+          <p className="max-w-[540px] text-base leading-[26px] text-ink-muted sm:text-lead">
             Firma paraguaya de consultoría jurídica, empresarial y de
             inversiones. Acompañamos a empresas e inversionistas nacionales y
             extranjeros con asesoramiento integral y seguridad jurídica en cada
@@ -64,18 +64,18 @@ export function Hero() {
         <div className="relative min-w-0">
           <span
             aria-hidden="true"
-            className="absolute left-[18%] top-[-24px] bottom-[12%] w-14 origin-top -skew-x-[16deg] bg-orange motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-4 motion-safe:duration-700"
+            className="pointer-events-none absolute left-[18%] top-[-24px] bottom-[12%] hidden w-14 origin-top -skew-x-[16deg] bg-orange lg:block motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-4 motion-safe:duration-700"
           />
           <div
             className={cn(
-              "relative rounded-lg bg-navy p-8 pb-5 text-on-navy md:p-10 md:pb-6",
+              "relative overflow-hidden rounded-lg bg-navy p-6 pb-4 text-on-navy sm:p-8 sm:pb-5 md:p-10 md:pb-6",
               "lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%,0_9%)]",
               "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-500",
             )}
           >
             <span
               aria-hidden="true"
-              className="absolute right-0 top-0 bottom-0 w-2.5 bg-blue-bright"
+              className="pointer-events-none absolute right-0 top-0 bottom-0 hidden w-2.5 bg-blue-bright md:block"
             />
             <Eyebrow tone="onNavy">Áreas de servicio</Eyebrow>
             <p className="mt-2.5 mb-5 font-display text-h3 leading-h3 font-semibold text-on-navy">

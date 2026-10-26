@@ -31,7 +31,7 @@ function AreaBlock({ area }: { area: Area }) {
   return (
     <article
       id={area.id}
-      className="grid gap-7 border-t border-line py-10 last:border-b lg:grid-cols-[5fr_6fr] lg:gap-16 lg:py-14"
+      className="grid gap-6 border-t border-line py-8 last:border-b sm:gap-7 sm:py-10 lg:grid-cols-[5fr_6fr] lg:gap-16 lg:py-14"
     >
       <div className="grid content-start gap-3.5">
         <div className="flex items-center gap-2.5">

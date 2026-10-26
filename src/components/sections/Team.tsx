@@ -11,15 +11,15 @@ export function Team() {
         lead="Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente."
       />
       <div
-        className="grid gap-5"
-        style={{ gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))" }}
+        className="grid gap-4 sm:gap-5"
+        style={{ gridTemplateColumns: "repeat(auto-fill, minmax(min(160px,100%), 1fr))" }}
       >
         {team.map((member, i) => (
-          <article key={i} className="grid gap-3.5">
-            <div className="grid aspect-[4/5] max-w-full place-items-center rounded-lg border border-dashed border-line-strong bg-surface-alt p-4 text-center text-small text-ink-muted">
+          <article key={i} className="grid gap-3">
+            <div className="grid aspect-[4/5] max-w-full place-items-center rounded-lg border border-dashed border-line-strong bg-surface-alt p-3 text-center text-small text-ink-muted sm:p-4">
               <div>
                 <User
-                  className="mx-auto mb-2 block size-11 text-line-strong"
+                  className="mx-auto mb-2 block size-9 text-line-strong sm:size-11"
                   aria-hidden="true"
                 />
                 Fotografía autorizada
@@ -29,7 +29,7 @@ export function Team() {
               <h3 className="font-display text-base font-semibold leading-6 text-ink">
                 {member.name}
               </h3>
-              <p className="text-label font-normal text-ink-muted">
+              <p className="text-small font-normal leading-5 text-ink-muted sm:text-label">
                 {member.role}
               </p>
             </div>

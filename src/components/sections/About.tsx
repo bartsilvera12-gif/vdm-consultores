@@ -14,7 +14,7 @@ const disciplines = [
 export function About() {
   return (
     <Section id="nosotros">
-      <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-18">
+      <div className="grid gap-10 md:gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-18">
         <div className="grid max-w-[620px] gap-5">
           <Eyebrow>Quiénes somos</Eyebrow>
           <h2 className="font-display text-[28px] leading-[34px] font-semibold tracking-h2 md:text-h2 md:leading-h2">

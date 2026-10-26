@@ -11,7 +11,7 @@ export function CtaBand() {
       {/* Diagonal V art, inspired by the logo. Hidden on mobile. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-10 top-0 hidden h-full w-[420px] md:block"
+        className="pointer-events-none absolute right-0 top-0 hidden h-full w-[420px] md:block"
       >
         <svg
           viewBox="0 0 420 320"

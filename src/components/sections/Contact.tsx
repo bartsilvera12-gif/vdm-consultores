@@ -96,7 +96,7 @@ export function Contact() {
   return (
     <section id="contacto" className="py-16 md:py-24">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-18">
+        <div className="grid gap-10 md:gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-18">
           {/* Info columns ------------------------------------------------- */}
           <div className="grid content-start gap-6">
             <div className="grid gap-4">
@@ -138,7 +138,7 @@ export function Contact() {
           <form
             onSubmit={handleSubmit}
             noValidate
-            className="grid gap-4 rounded-lg bg-surface-alt p-7 md:grid-cols-2 md:gap-x-5 md:p-10"
+            className="grid gap-4 rounded-lg bg-surface-alt p-5 sm:p-7 md:grid-cols-2 md:gap-x-5 md:p-10"
           >
             <FormField
               id="f-nombre"
