@@ -1,0 +1,23 @@
+# Supabase CLI config — https://supabase.com/docs/guides/cli/config
+project_id = "vdm-consultores"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173"]
+
+[functions.enviar-consulta]
+verify_jwt = false

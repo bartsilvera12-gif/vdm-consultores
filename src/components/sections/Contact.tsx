@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { ArrowRight, Linkedin, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Linkedin, Loader2, Mail, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
@@ -7,46 +7,86 @@ import { WhatsAppIcon } from "@/components/primitives/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { contactInfo } from "@/content/contact";
 import { areas } from "@/content/areas";
+import { enviarConsulta, type Consulta } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
-type Field = "name" | "email" | "phone" | "area" | "msg";
+type Field = "nombre" | "email" | "telefono" | "area" | "mensaje";
 
 const errorMsg: Record<Field, string> = {
-  name: "Escribe tu nombre.",
+  nombre: "Escribe tu nombre.",
   email: "Revisa el correo: falta el @ o el dominio.",
-  phone: "Deja un número para contactarte.",
+  telefono: "Deja un número para contactarte.",
   area: "Elige el área de tu consulta.",
-  msg: "Escribe tu consulta.",
+  mensaje: "Escribe tu consulta.",
 };
 
 export function Contact() {
   const [errors, setErrors] = useState<Partial<Record<Field, boolean>>>({});
+  const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
     const newErrors: Partial<Record<Field, boolean>> = {};
-    (["name", "email", "phone", "area", "msg"] as Field[]).forEach((f) => {
-      const el = form.elements.namedItem(f) as
-        | HTMLInputElement
-        | HTMLSelectElement
-        | HTMLTextAreaElement
-        | null;
-      const value = String(data.get(f) ?? "").trim();
-      const valid = !!el?.checkValidity() && value !== "";
-      if (!valid) newErrors[f] = true;
-    });
+    (["nombre", "email", "telefono", "area", "mensaje"] as Field[]).forEach(
+      (f) => {
+        const el = form.elements.namedItem(f) as
+          | HTMLInputElement
+          | HTMLSelectElement
+          | HTMLTextAreaElement
+          | null;
+        const value = String(data.get(f) ?? "").trim();
+        const valid = !!el?.checkValidity() && value !== "";
+        if (!valid) newErrors[f] = true;
+      },
+    );
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
       const firstKey = Object.keys(newErrors)[0] as Field;
       (form.elements.namedItem(firstKey) as HTMLElement | null)?.focus();
       return;
     }
+
+    const payload: Consulta = {
+      nombre: String(data.get("nombre") ?? "").trim(),
+      empresa: String(data.get("empresa") ?? "").trim() || undefined,
+      email: String(data.get("email") ?? "").trim(),
+      telefono: String(data.get("telefono") ?? "").trim(),
+      area: String(data.get("area") ?? "").trim() as Consulta["area"],
+      mensaje: String(data.get("mensaje") ?? "").trim(),
+    };
+
+    setSubmitting(true);
+    const result = await enviarConsulta(payload);
+    setSubmitting(false);
+
+    if (!result.ok) {
+      if (result.status === "preview") {
+        form.reset();
+        toast.message("Vista previa", {
+          description:
+            "Supabase todavía no está configurado en este entorno. La consulta no se envió.",
+        });
+        return;
+      }
+      toast.error("No pudimos enviar tu consulta", {
+        description: result.error,
+      });
+      return;
+    }
+
     form.reset();
-    toast.success(
-      "Vista previa: en el sitio publicado esta consulta llegará al correo de VDM.",
-    );
+    if (result.emailStatus === "enviado") {
+      toast.success("Recibimos tu consulta", {
+        description: "Un profesional del área te responderá a la brevedad.",
+      });
+    } else {
+      toast.success("Guardamos tu consulta", {
+        description:
+          "El equipo de VDM la verá en el panel y se contactará contigo.",
+      });
+    }
   }
 
   function clearError(f: Field) {
@@ -101,17 +141,17 @@ export function Contact() {
             className="grid gap-4 rounded-lg bg-surface-alt p-7 md:grid-cols-2 md:gap-x-5 md:p-10"
           >
             <FormField
-              id="f-name"
-              name="name"
+              id="f-nombre"
+              name="nombre"
               label="Nombre y apellido"
               autoComplete="name"
               required
-              invalid={!!errors.name}
-              onChange={() => clearError("name")}
+              invalid={!!errors.nombre}
+              onChange={() => clearError("nombre")}
             />
             <FormField
-              id="f-company"
-              name="company"
+              id="f-empresa"
+              name="empresa"
               label="Empresa"
               hint="(opcional)"
               autoComplete="organization"
@@ -127,15 +167,15 @@ export function Contact() {
               onChange={() => clearError("email")}
             />
             <FormField
-              id="f-phone"
-              name="phone"
+              id="f-telefono"
+              name="telefono"
               type="tel"
               label="Teléfono o WhatsApp"
               placeholder="+595"
               autoComplete="tel"
               required
-              invalid={!!errors.phone}
-              onChange={() => clearError("phone")}
+              invalid={!!errors.telefono}
+              onChange={() => clearError("telefono")}
             />
             <FormField
               id="f-area"
@@ -156,13 +196,13 @@ export function Contact() {
               <option value="Otra consulta">Otra consulta</option>
             </FormField>
             <FormField
-              id="f-msg"
-              name="msg"
+              id="f-mensaje"
+              name="mensaje"
               label="Tu consulta"
               placeholder="Cuéntanos brevemente qué necesitas"
               required
-              invalid={!!errors.msg}
-              onChange={() => clearError("msg")}
+              invalid={!!errors.mensaje}
+              onChange={() => clearError("mensaje")}
               className="md:col-span-2"
               as="textarea"
             />
@@ -170,9 +210,21 @@ export function Contact() {
               <small className="max-w-[40ch] text-small text-ink-muted">
                 Usamos tus datos solo para responder esta consulta.
               </small>
-              <Button type="submit">
-                Enviar consulta
-                <ArrowRight className="size-4" aria-hidden="true" />
+              <Button type="submit" disabled={submitting}>
+                {submitting ? (
+                  <>
+                    <Loader2
+                      className="size-4 animate-spin"
+                      aria-hidden="true"
+                    />
+                    Enviando…
+                  </>
+                ) : (
+                  <>
+                    Enviar consulta
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </>
+                )}
               </Button>
             </div>
           </form>
@@ -216,7 +268,7 @@ function ContactRow({
 
 type BaseFieldProps = {
   id: string;
-  name: Field | "company";
+  name: Field | "empresa";
   label: string;
   hint?: string;
   required?: boolean;
@@ -294,7 +346,7 @@ function FormField(props: FormFieldProps) {
           className={inputBase}
         />
       )}
-      {invalid && (
+      {invalid && name !== "empresa" && (
         <span className="text-small text-[#B3261E]">
           {errorMsg[name as Field]}
         </span>
