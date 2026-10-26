@@ -8,8 +8,8 @@ type EyebrowProps = {
 };
 
 const toneClass = {
-  default: "text-orange-text",
-  onNavy: "text-orange",
+  default: "text-blue",
+  onNavy: "text-on-navy-muted",
   muted: "text-ink-muted",
 };
 

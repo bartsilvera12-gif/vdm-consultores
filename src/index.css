@@ -106,14 +106,14 @@
 :root,
 [data-theme="light"] {
   --vdm-surface: #ffffff;
-  --vdm-surface-alt: #f3f6fa;
+  --vdm-surface-alt: #f5f7f9;
   --vdm-navy: #0a2747;
-  --vdm-ink: #0f1e33;
+  --vdm-ink: #123653;
   --vdm-ink-muted: #4a5b70;
-  --vdm-blue: #0b56a3;
-  --vdm-blue-bright: #1265b5;
+  --vdm-blue: #0a56a2;
+  --vdm-blue-bright: #1168b8;
   --vdm-on-blue: #ffffff;
-  --vdm-orange: #f7841f;
+  --vdm-orange: #fe841f;
   --vdm-orange-text: #a84f00;
   --vdm-on-orange: #0f1e33;
   --vdm-on-navy: #ffffff;
@@ -137,7 +137,7 @@
   --vdm-blue: #5fa4ec;
   --vdm-blue-bright: #7db6f0;
   --vdm-on-blue: #0b1726;
-  --vdm-orange: #f7841f;
+  --vdm-orange: #fe841f;
   --vdm-orange-text: #ffa24d;
   --vdm-on-orange: #0f1e33;
   --vdm-on-navy: #eef3f9;

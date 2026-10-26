@@ -47,7 +47,7 @@ export function Team() {
 function PendingNote({ children }: { children: React.ReactNode }) {
   return (
     <p className="mt-6 inline-flex items-center gap-2 rounded-sm border border-line bg-surface-alt px-3 py-1.5 text-small text-ink-muted">
-      <span className="block size-2 shrink-0 rounded-full bg-orange" />
+      <span className="block size-2 shrink-0 rounded-full bg-blue" />
       {children}
     </p>
   );

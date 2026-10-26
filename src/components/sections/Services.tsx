@@ -9,7 +9,7 @@ import { preselectArea } from "@/lib/scroll-to-contact";
 
 export function Services() {
   return (
-    <section id="servicios" className="bg-surface-alt py-16 md:py-24">
+    <section id="servicios" className="bg-surface py-16 md:py-24">
       <Container>
         <SectionHead
           eyebrow="Áreas de servicio"
@@ -66,7 +66,7 @@ function AreaBlock({ area }: { area: Area }) {
               key={svc}
               className="flex items-start gap-3 border-b border-line py-3.5 text-base font-semibold leading-6"
             >
-              <VBullet className="mt-1.5 text-orange" />
+              <VBullet className="mt-1.5 text-blue" />
               {svc}
             </li>
           ))}

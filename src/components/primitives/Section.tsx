@@ -54,7 +54,7 @@ export function SectionHead({
         <p
           className={cn(
             "font-display text-eyebrow font-semibold uppercase tracking-eyebrow",
-            onNavy ? "text-orange" : "text-orange-text",
+            onNavy ? "text-on-navy-muted" : "text-blue",
           )}
         >
           {eyebrow}

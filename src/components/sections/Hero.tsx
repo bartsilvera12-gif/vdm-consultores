@@ -21,13 +21,13 @@ export function Hero() {
         {/* Copy ------------------------------------------------------------- */}
         <div className="grid min-w-0 gap-6 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500">
           <div className="flex items-center gap-3">
-            <span className="h-[3px] w-10 bg-orange" aria-hidden="true" />
+            <span className="h-[3px] w-10 bg-blue" aria-hidden="true" />
             <Eyebrow>VDM Consultores · Paraguay</Eyebrow>
           </div>
           <h1 className="font-display text-[34px] leading-[40px] font-bold tracking-tight text-ink sm:text-[40px] sm:leading-[44px] md:text-[52px] md:leading-[56px] lg:text-[62px] lg:leading-[64px]">
             Fortaleciendo empresas,{" "}
             <em className="block not-italic text-blue">
-              potenciando inversiones<span className="text-orange">.</span>
+              potenciando inversiones<span className="text-blue">.</span>
             </em>
           </h1>
           <p className="max-w-[540px] text-base leading-[26px] text-ink-muted sm:text-lead">
@@ -64,7 +64,7 @@ export function Hero() {
         <div className="relative min-w-0">
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute left-[18%] top-[-24px] bottom-[12%] hidden w-14 origin-top -skew-x-[16deg] bg-orange lg:block motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-4 motion-safe:duration-700"
+            className="pointer-events-none absolute left-[18%] top-[-24px] bottom-[12%] hidden w-14 origin-top -skew-x-[16deg] bg-blue lg:block motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-4 motion-safe:duration-700"
           />
           <div
             className={cn(
@@ -90,7 +90,7 @@ export function Hero() {
                       href={`#${area.id}`}
                       className="group grid grid-cols-[40px_1fr_18px] items-center gap-3.5 border-t border-white/15 py-4 text-on-navy"
                     >
-                      <span className="grid size-10 place-items-center rounded-md bg-white/10 text-orange">
+                      <span className="grid size-10 place-items-center rounded-md bg-white/10 text-on-navy">
                         <Icon className="size-5" aria-hidden="true" />
                       </span>
                       <span className="min-w-0">
@@ -105,7 +105,7 @@ export function Hero() {
                         </span>
                       </span>
                       <ArrowRight
-                        className="size-4 text-on-navy-muted transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-orange"
+                        className="size-4 text-on-navy-muted transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-on-navy"
                         aria-hidden="true"
                       />
                     </a>

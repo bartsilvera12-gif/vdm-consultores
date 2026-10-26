@@ -20,7 +20,7 @@ export function CtaBand() {
         >
           <polygon
             points="120,-10 190,-10 300,330 230,330"
-            fill="var(--vdm-orange)"
+            fill="var(--vdm-blue-bright)"
           />
           <polygon
             points="250,-10 420,-10 420,330 360,330"
@@ -35,7 +35,7 @@ export function CtaBand() {
             className="font-display text-[28px] leading-[34px] font-semibold text-on-navy md:text-h2 md:leading-h2"
           >
             ¿Vas a invertir o hacer crecer tu empresa en{" "}
-            <em className="not-italic text-orange">Paraguay</em>?
+            <em className="not-italic text-on-navy">Paraguay</em>?
           </h2>
           <p className="mt-3 max-w-[560px] text-body text-on-navy-muted">
             Cuéntanos tu proyecto. Te orientamos sobre los pasos, permisos y la
@@ -43,7 +43,7 @@ export function CtaBand() {
           </p>
         </div>
         <div>
-          <Button asChild variant="accent">
+          <Button asChild variant="onNavy">
             <a href="#contacto">
               Agenda tu consulta
               <ArrowRight className="size-4" aria-hidden="true" />

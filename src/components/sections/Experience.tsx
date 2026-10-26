@@ -31,7 +31,7 @@ export function Experience() {
           })}
         </div>
         <p className="mt-6 inline-flex items-center gap-2 rounded-sm border border-line bg-surface px-3 py-1.5 text-small text-ink-muted">
-          <span className="block size-2 shrink-0 rounded-full bg-orange" />
+          <span className="block size-2 shrink-0 rounded-full bg-blue" />
           Espacio para casos y proyectos: se publican solo con autorización del
           cliente.
         </p>

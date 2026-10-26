@@ -13,7 +13,7 @@ const disciplines = [
 
 export function About() {
   return (
-    <Section id="nosotros">
+    <Section id="nosotros" tone="surface-alt">
       <div className="grid gap-10 md:gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-18">
         <div className="grid max-w-[620px] gap-5">
           <Eyebrow>Quiénes somos</Eyebrow>
@@ -90,11 +90,11 @@ function Pillar({
         {orientation === "rect-first" ? (
           <>
             <rect x="0" y="4" width="22" height="16" rx="2" fill="var(--vdm-blue)" />
-            <path d="M24 4h12L30 20z" fill="var(--vdm-orange)" />
+            <path d="M24 4h12L30 20z" fill="var(--vdm-blue-bright)" />
           </>
         ) : (
           <>
-            <path d="M0 4h12l6 16z" fill="var(--vdm-orange)" />
+            <path d="M0 4h12l6 16z" fill="var(--vdm-blue-bright)" />
             <rect x="14" y="4" width="22" height="16" rx="2" fill="var(--vdm-blue)" />
           </>
         )}
