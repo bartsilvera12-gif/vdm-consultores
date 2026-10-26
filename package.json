@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "deploy": "npm run build && powershell -ExecutionPolicy Bypass -File deploy-ftp.ps1"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.1",
