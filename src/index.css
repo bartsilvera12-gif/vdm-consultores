@@ -1,0 +1,185 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+/* ---------------------------------------------------------------------------
+ * VDM Consultores — Design tokens
+ * Source of truth: design-system/tokens.json
+ * Light theme: :root. Dark theme: [data-theme="dark"] or .dark on <html>.
+ * ------------------------------------------------------------------------- */
+
+@theme {
+  /* Colors — exposed as Tailwind utilities (bg-*, text-*, border-*). */
+  --color-surface: var(--vdm-surface);
+  --color-surface-alt: var(--vdm-surface-alt);
+  --color-navy: var(--vdm-navy);
+  --color-ink: var(--vdm-ink);
+  --color-ink-muted: var(--vdm-ink-muted);
+  --color-blue: var(--vdm-blue);
+  --color-blue-bright: var(--vdm-blue-bright);
+  --color-on-blue: var(--vdm-on-blue);
+  --color-orange: var(--vdm-orange);
+  --color-orange-text: var(--vdm-orange-text);
+  --color-on-orange: var(--vdm-on-orange);
+  --color-on-navy: var(--vdm-on-navy);
+  --color-on-navy-muted: var(--vdm-on-navy-muted);
+  --color-line: var(--vdm-line);
+  --color-line-strong: var(--vdm-line-strong);
+  --color-focus-ring: var(--vdm-focus-ring);
+  --color-success: var(--vdm-success);
+
+  /* shadcn semantic aliases → VDM tokens */
+  --color-background: var(--vdm-surface);
+  --color-foreground: var(--vdm-ink);
+  --color-card: var(--vdm-surface-alt);
+  --color-card-foreground: var(--vdm-ink);
+  --color-popover: var(--vdm-surface);
+  --color-popover-foreground: var(--vdm-ink);
+  --color-primary: var(--vdm-blue);
+  --color-primary-foreground: var(--vdm-on-blue);
+  --color-secondary: var(--vdm-navy);
+  --color-secondary-foreground: var(--vdm-on-navy);
+  --color-accent: var(--vdm-orange);
+  --color-accent-foreground: var(--vdm-on-orange);
+  --color-muted: var(--vdm-surface-alt);
+  --color-muted-foreground: var(--vdm-ink-muted);
+  --color-border: var(--vdm-line);
+  --color-input: var(--vdm-line-strong);
+  --color-ring: var(--vdm-focus-ring);
+  --color-destructive: #B42318;
+  --color-destructive-foreground: #FFFFFF;
+
+  /* Typography families */
+  --font-display: "Montserrat", "Avenir Next", system-ui, sans-serif;
+  --font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+
+  /* Named type scale (use as text-hero, text-h2, leading-hero, etc.) */
+  --text-hero: 56px;
+  --text-hero--line-height: 60px;
+  --text-h2: 38px;
+  --text-h2--line-height: 44px;
+  --text-h3: 22px;
+  --text-h3--line-height: 28px;
+  --text-eyebrow: 12px;
+  --text-eyebrow--line-height: 16px;
+  --text-lead: 20px;
+  --text-lead--line-height: 30px;
+  --text-body: 17px;
+  --text-body--line-height: 28px;
+  --text-small: 14px;
+  --text-small--line-height: 20px;
+  --text-label: 15px;
+  --text-label--line-height: 20px;
+
+  /* Letter-spacing */
+  --tracking-eyebrow: 0.22em;
+  --tracking-hero: -0.02em;
+  --tracking-h2: -0.015em;
+
+  /* Spacing (VDM named stops) */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-12: 48px;
+  --spacing-24: 96px;
+
+  /* Radii */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius: 6px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(15, 30, 51, 0.06),
+    0 8px 24px rgba(15, 30, 51, 0.06);
+
+  /* Motion — Emil Kowalski ease-out */
+  --ease-out-vdm: cubic-bezier(0.23, 1, 0.32, 1);
+  --default-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* --------------------------------------------------------------------------
+ * Light theme (default)
+ * ------------------------------------------------------------------------ */
+:root,
+[data-theme="light"] {
+  --vdm-surface: #ffffff;
+  --vdm-surface-alt: #f3f6fa;
+  --vdm-navy: #0a2747;
+  --vdm-ink: #0f1e33;
+  --vdm-ink-muted: #4a5b70;
+  --vdm-blue: #0b56a3;
+  --vdm-blue-bright: #1265b5;
+  --vdm-on-blue: #ffffff;
+  --vdm-orange: #f7841f;
+  --vdm-orange-text: #a84f00;
+  --vdm-on-orange: #0f1e33;
+  --vdm-on-navy: #ffffff;
+  --vdm-on-navy-muted: #b4c3d6;
+  --vdm-line: #dce3ec;
+  --vdm-line-strong: #8193a8;
+  --vdm-focus-ring: #0b56a3;
+  --vdm-success: #1b6e3a;
+}
+
+/* --------------------------------------------------------------------------
+ * Dark theme
+ * ------------------------------------------------------------------------ */
+[data-theme="dark"],
+.dark {
+  --vdm-surface: #0b1726;
+  --vdm-surface-alt: #112236;
+  --vdm-navy: #06111e;
+  --vdm-ink: #eef3f9;
+  --vdm-ink-muted: #a7b6c8;
+  --vdm-blue: #5fa4ec;
+  --vdm-blue-bright: #7db6f0;
+  --vdm-on-blue: #0b1726;
+  --vdm-orange: #f7841f;
+  --vdm-orange-text: #ffa24d;
+  --vdm-on-orange: #0f1e33;
+  --vdm-on-navy: #eef3f9;
+  --vdm-on-navy-muted: #b4c3d6;
+  --vdm-line: #22364f;
+  --vdm-line-strong: #5c6f86;
+  --vdm-focus-ring: #7db6f0;
+  --vdm-success: #5cc98a;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
