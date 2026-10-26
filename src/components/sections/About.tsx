@@ -25,16 +25,10 @@ export function About() {
             empresarial y de inversiones, especializada en brindar asesoramiento
             integral a empresas e inversionistas nacionales y extranjeros.
           </p>
-          <p className="text-body text-ink-muted">
-            Acompañamos la planificación, instalación y desarrollo de nuevas
-            inversiones en Paraguay, así como el crecimiento, fortalecimiento y
-            gestión de empresas ya consolidadas, con asesoría jurídica
-            permanente, soluciones estratégicas y seguridad jurídica para sus
-            operaciones.
-          </p>
           <div>
             <p className="font-semibold">
-              Equipo multidisciplinario en las áreas:
+              Contamos con un equipo multidisciplinario de profesionales
+              especializados en las áreas:
             </p>
             <div className="mt-2 flex flex-wrap gap-2">
               {disciplines.map((d) => (
@@ -47,11 +41,23 @@ export function About() {
               ))}
             </div>
           </div>
+          <p className="text-body text-ink-muted">
+            Acompañamos la planificación, instalación y desarrollo de nuevas
+            inversiones en Paraguay, así como el crecimiento, fortalecimiento y
+            gestión de empresas ya consolidadas, ofreciendo asesoría permanente,
+            soluciones estratégicas y seguridad jurídica para sus operaciones.
+          </p>
           <p className="mt-2 border-t border-line pt-5 text-body text-ink-muted">
             Nuestro compromiso es brindar un servicio profesional, personalizado
             e integral, orientado a proteger los intereses de nuestros clientes,
             fortalecer sus estructuras empresariales y potenciar sus proyectos
             de inversión.
+          </p>
+          <p className="font-display text-base font-semibold text-blue">
+            VDM Consultores ·{" "}
+            <span className="font-normal italic text-ink-muted">
+              “Fortaleciendo empresas, potenciando inversiones.”
+            </span>
           </p>
         </div>
         <div className="grid content-start gap-4">
