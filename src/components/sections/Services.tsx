@@ -5,6 +5,7 @@ import { SectionHead } from "@/components/primitives/Section";
 import { VBullet } from "@/components/primitives/VBullet";
 import { Button } from "@/components/ui/button";
 import { areas, type Area } from "@/content/areas";
+import { preselectArea } from "@/lib/scroll-to-contact";
 
 export function Services() {
   return (
@@ -46,7 +47,10 @@ function AreaBlock({ area }: { area: Area }) {
           {area.description}
         </p>
         <Button asChild variant="outline" className="mt-2 justify-self-start">
-          <a href={`#contacto?area=${encodeURIComponent(area.eyebrow)}`}>
+          <a
+            href="#contacto"
+            onClick={() => preselectArea(area.eyebrow)}
+          >
             Consultar sobre esta área
             <ArrowRight className="size-4" aria-hidden="true" />
           </a>
