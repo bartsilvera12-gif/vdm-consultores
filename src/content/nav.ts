@@ -1,10 +1,15 @@
-export type NavLink = { href: string; label: string };
+export type NavLink = {
+  to: string;
+  label: string;
+  /** Para resaltar el link cuando estamos en una ruta anidada o un hash. */
+  match?: (pathname: string) => boolean;
+};
 
 export const navLinks: NavLink[] = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#nosotros", label: "Quiénes somos" },
-  { href: "#servicios", label: "Servicios" },
-  { href: "#equipo", label: "Equipo" },
-  { href: "#experiencia", label: "Experiencia" },
-  { href: "#contacto", label: "Contacto" },
+  { to: "/", label: "Inicio" },
+  { to: "/nosotros", label: "Quiénes somos" },
+  { to: "/servicios", label: "Servicios" },
+  { to: "/equipo", label: "Equipo" },
+  { to: "/experiencia", label: "Experiencia" },
+  { to: "/contacto", label: "Contacto" },
 ];

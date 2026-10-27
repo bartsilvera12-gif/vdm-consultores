@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Drawer } from "vaul";
 import { Menu, X } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
 import { navLinks } from "@/content/nav";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function MobileDrawer() {
   const [open, setOpen] = useState(false);
+  const close = () => setOpen(false);
 
   return (
     <Drawer.Root
@@ -33,28 +36,29 @@ export function MobileDrawer() {
           <button
             type="button"
             aria-label="Cerrar menú"
-            onClick={() => setOpen(false)}
+            onClick={close}
             className="mb-2 inline-flex size-11 items-center justify-center self-end rounded-md border border-line text-ink"
           >
             <X className="size-5" aria-hidden="true" />
           </button>
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="border-b border-line py-3 font-display text-lg font-semibold text-ink"
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === "/"}
+              onClick={close}
+              className={({ isActive }) =>
+                cn(
+                  "border-b border-line py-3 font-display text-lg font-semibold",
+                  isActive ? "text-blue" : "text-ink",
+                )
+              }
             >
               {link.label}
-            </a>
+            </NavLink>
           ))}
-          <Button
-            asChild
-            size="lg"
-            className="mt-5 w-full"
-            onClick={() => setOpen(false)}
-          >
-            <a href="#contacto">Agenda tu consulta</a>
+          <Button asChild size="lg" className="mt-5 w-full" onClick={close}>
+            <Link to="/contacto">Agenda tu consulta</Link>
           </Button>
         </Drawer.Content>
       </Drawer.Portal>

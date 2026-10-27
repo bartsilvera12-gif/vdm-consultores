@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Container } from "@/components/primitives/Container";
 import { Logo } from "@/components/primitives/Logo";
 import { areas } from "@/content/areas";
@@ -8,7 +9,9 @@ export function Footer() {
       <Container className="grid gap-10 pt-14 pb-8">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="sm:col-span-2 md:col-span-1">
-            <Logo variant="white" width={129} height={52} className="h-13" />
+            <Link to="/">
+              <Logo variant="white" width={129} height={52} className="h-13" />
+            </Link>
             <p className="mt-4 font-display text-base font-semibold text-on-navy">
               Un solo equipo, soluciones integrales.
             </p>
@@ -23,12 +26,12 @@ export function Footer() {
             <ul className="grid gap-2">
               {areas.map((area) => (
                 <li key={area.id}>
-                  <a
-                    href={`#${area.id}`}
+                  <Link
+                    to={`/servicios#${area.id}`}
                     className="transition-colors hover:text-on-navy"
                   >
                     {area.eyebrow}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -39,24 +42,24 @@ export function Footer() {
             </h4>
             <ul className="grid gap-2">
               <li>
-                <a href="#nosotros" className="hover:text-on-navy">
+                <Link to="/nosotros" className="hover:text-on-navy">
                   Quiénes somos
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#equipo" className="hover:text-on-navy">
+                <Link to="/equipo" className="hover:text-on-navy">
                   Equipo
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#experiencia" className="hover:text-on-navy">
+                <Link to="/experiencia" className="hover:text-on-navy">
                   Experiencia
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#contacto" className="hover:text-on-navy">
+                <Link to="/contacto" className="hover:text-on-navy">
                   Contacto
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

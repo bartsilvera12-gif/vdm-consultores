@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useLocation } from "react-router-dom";
 import { ArrowRight, Linkedin, Loader2, Mail, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import { Container } from "@/components/primitives/Container";
@@ -20,9 +21,24 @@ const errorMsg: Record<Field, string> = {
   mensaje: "Escribe tu consulta.",
 };
 
-export function Contact() {
+export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
   const [errors, setErrors] = useState<Partial<Record<Field, boolean>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const location = useLocation();
+
+  // Pre-selección del área al llegar desde el apartado Servicios
+  // (<Link to="/contacto" state={{ area }}>) o desde el bloque de áreas en Home
+  // (preselectArea manipula el <select> directamente).
+  useEffect(() => {
+    const state = location.state as { area?: string } | null;
+    if (!state?.area) return;
+    const select = formRef.current?.elements.namedItem(
+      "area",
+    ) as HTMLSelectElement | null;
+    if (!select) return;
+    select.value = state.area;
+  }, [location.state]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -99,15 +115,17 @@ export function Contact() {
         <div className="grid gap-10 md:gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-18">
           {/* Info columns ------------------------------------------------- */}
           <div className="grid content-start gap-6">
-            <div className="grid gap-4">
-              <Eyebrow>Contacto</Eyebrow>
-              <h2 className="font-display text-[28px] leading-[34px] font-semibold tracking-h2 md:text-h2 md:leading-h2">
-                Hablemos de tu empresa o tu inversión
-              </h2>
-              <p className="text-lead text-ink-muted">
-                Escríbenos y un profesional del área te responderá.
-              </p>
-            </div>
+            {!embedded && (
+              <div className="grid gap-4">
+                <Eyebrow>Contacto</Eyebrow>
+                <h2 className="font-display text-[28px] leading-[34px] font-semibold tracking-h2 md:text-h2 md:leading-h2">
+                  Hablemos de tu empresa o tu inversión
+                </h2>
+                <p className="text-lead text-ink-muted">
+                  Escríbenos y un profesional del área te responderá.
+                </p>
+              </div>
+            )}
             <ContactRow
               icon={<WhatsAppIcon className="size-5" />}
               label={contactInfo.whatsapp.label}
@@ -136,6 +154,7 @@ export function Contact() {
 
           {/* Form --------------------------------------------------------- */}
           <form
+            ref={formRef}
             onSubmit={handleSubmit}
             noValidate
             className="grid gap-4 rounded-lg bg-surface-alt p-5 sm:p-7 md:grid-cols-2 md:gap-x-5 md:p-10"
