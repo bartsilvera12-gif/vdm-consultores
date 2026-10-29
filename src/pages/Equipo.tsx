@@ -2,9 +2,13 @@ import { User } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
-import { team } from "@/content/team";
+import { useTeam } from "@/hooks/useTeam";
 
 export function Equipo() {
+  const { members } = useTeam();
+  const allPlaceholders =
+    members.length > 0 && members.every((m) => m.name === "Nombre y apellido");
+
   return (
     <>
       <PageHero
@@ -21,16 +25,25 @@ export function Equipo() {
                 "repeat(auto-fill, minmax(min(180px,100%), 1fr))",
             }}
           >
-            {team.map((member, i) => (
-              <article key={i} className="grid gap-3">
-                <div className="grid aspect-[4/5] max-w-full place-items-center rounded-lg border border-dashed border-line-strong bg-surface-alt p-4 text-center text-small text-ink-muted">
-                  <div>
-                    <User
-                      className="mx-auto mb-2 block size-10 text-line-strong"
-                      aria-hidden="true"
+            {members.map((member, i) => (
+              <article key={member.id ?? i} className="grid gap-3">
+                <div className="grid aspect-[4/5] max-w-full place-items-center overflow-hidden rounded-lg border border-dashed border-line-strong bg-surface-alt p-4 text-center text-small text-ink-muted">
+                  {member.photo ? (
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      loading="lazy"
+                      className="h-full w-full rounded-lg object-cover"
                     />
-                    Fotografía autorizada
-                  </div>
+                  ) : (
+                    <div>
+                      <User
+                        className="mx-auto mb-2 block size-10 text-line-strong"
+                        aria-hidden="true"
+                      />
+                      Fotografía autorizada
+                    </div>
+                  )}
                 </div>
                 <div>
                   <h2 className="font-display text-base font-semibold leading-6 text-ink">
@@ -41,11 +54,13 @@ export function Equipo() {
               </article>
             ))}
           </div>
-          <p className="mt-6 inline-flex items-center gap-2 rounded-sm border border-line bg-surface px-3 py-1.5 text-small text-ink-muted">
-            <span className="block size-2 shrink-0 rounded-full bg-blue" />
-            Perfiles, cargos y fotografías a completar con el material que
-            entregue VDM.
-          </p>
+          {allPlaceholders && (
+            <p className="mt-6 inline-flex items-center gap-2 rounded-sm border border-line bg-surface px-3 py-1.5 text-small text-ink-muted">
+              <span className="block size-2 shrink-0 rounded-full bg-blue" />
+              Perfiles, cargos y fotografías a completar con el material que
+              entregue VDM.
+            </p>
+          )}
         </Container>
       </section>
       <PageCta

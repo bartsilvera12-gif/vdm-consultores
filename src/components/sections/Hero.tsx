@@ -1,8 +1,10 @@
+import { useMemo } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Button } from "@/components/ui/button";
 import { areas } from "@/content/areas";
+import { useSiteContent } from "@/hooks/useSiteContent";
 import { cn } from "@/lib/utils";
 
 const trustPoints = [
@@ -12,6 +14,8 @@ const trustPoints = [
 ];
 
 export function Hero() {
+  const keys = useMemo(() => ["hero.lead" as const], []);
+  const content = useSiteContent(keys);
   return (
     <section
       id="inicio"
@@ -31,10 +35,7 @@ export function Hero() {
             </em>
           </h1>
           <p className="max-w-[540px] text-base leading-[26px] text-ink-muted sm:text-lead">
-            Firma paraguaya de consultoría jurídica, empresarial y de
-            inversiones. Acompañamos a empresas e inversionistas nacionales y
-            extranjeros con asesoramiento integral y seguridad jurídica en cada
-            decisión.
+            {content["hero.lead"]}
           </p>
           <div className="mt-1 flex flex-wrap gap-3">
             <Button asChild>

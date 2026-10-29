@@ -1,8 +1,14 @@
 import { User } from "lucide-react";
 import { Section, SectionHead } from "@/components/primitives/Section";
-import { team } from "@/content/team";
+import { useTeam } from "@/hooks/useTeam";
 
 export function Team() {
+  const { members } = useTeam();
+  // Mostramos la nota pendiente solo cuando todos los miembros aún son los
+  // placeholders de ejemplo (vienen del seed o del fallback de código).
+  const allPlaceholders =
+    members.length > 0 && members.every((m) => m.name === "Nombre y apellido");
+
   return (
     <Section id="equipo" className="pt-0 md:pt-0">
       <SectionHead
@@ -14,16 +20,25 @@ export function Team() {
         className="grid gap-4 sm:gap-5"
         style={{ gridTemplateColumns: "repeat(auto-fill, minmax(min(160px,100%), 1fr))" }}
       >
-        {team.map((member, i) => (
-          <article key={i} className="grid gap-3">
-            <div className="grid aspect-[4/5] max-w-full place-items-center rounded-lg border border-dashed border-line-strong bg-surface-alt p-3 text-center text-small text-ink-muted sm:p-4">
-              <div>
-                <User
-                  className="mx-auto mb-2 block size-9 text-line-strong sm:size-11"
-                  aria-hidden="true"
+        {members.map((member, i) => (
+          <article key={member.id ?? i} className="grid gap-3">
+            <div className="grid aspect-[4/5] max-w-full place-items-center overflow-hidden rounded-lg border border-dashed border-line-strong bg-surface-alt p-3 text-center text-small text-ink-muted sm:p-4">
+              {member.photo ? (
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  loading="lazy"
+                  className="h-full w-full rounded-lg object-cover"
                 />
-                Fotografía autorizada
-              </div>
+              ) : (
+                <div>
+                  <User
+                    className="mx-auto mb-2 block size-9 text-line-strong sm:size-11"
+                    aria-hidden="true"
+                  />
+                  Fotografía autorizada
+                </div>
+              )}
             </div>
             <div>
               <h3 className="font-display text-base font-semibold leading-6 text-ink">
@@ -36,10 +51,12 @@ export function Team() {
           </article>
         ))}
       </div>
-      <PendingNote>
-        Perfiles, cargos y fotografías a completar con el material que entregue
-        VDM.
-      </PendingNote>
+      {allPlaceholders && (
+        <PendingNote>
+          Perfiles, cargos y fotografías a completar con el material que
+          entregue VDM.
+        </PendingNote>
+      )}
     </Section>
   );
 }

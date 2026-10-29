@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Section } from "@/components/primitives/Section";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 const disciplines = [
   "Jurídica",
@@ -12,6 +14,11 @@ const disciplines = [
 ];
 
 export function About() {
+  const keys = useMemo(
+    () => ["about.intro" as const, "about.commitment" as const],
+    [],
+  );
+  const content = useSiteContent(keys);
   return (
     <Section id="nosotros" tone="surface-alt">
       <div className="grid gap-10 md:gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-18">
@@ -20,11 +27,7 @@ export function About() {
           <h2 className="font-display text-[28px] leading-[34px] font-semibold tracking-h2 md:text-h2 md:leading-h2">
             Un solo equipo, soluciones integrales.
           </h2>
-          <p className="text-lead text-ink-muted">
-            Somos VDM Consultores, una firma paraguaya de consultoría jurídica,
-            empresarial y de inversiones, especializada en brindar asesoramiento
-            integral a empresas e inversionistas nacionales y extranjeros.
-          </p>
+          <p className="text-lead text-ink-muted">{content["about.intro"]}</p>
           <div>
             <p className="font-semibold">
               Contamos con un equipo multidisciplinario de profesionales
@@ -48,10 +51,7 @@ export function About() {
             soluciones estratégicas y seguridad jurídica para sus operaciones.
           </p>
           <p className="mt-2 border-t border-line pt-5 text-body text-ink-muted">
-            Nuestro compromiso es brindar un servicio profesional, personalizado
-            e integral, orientado a proteger los intereses de nuestros clientes,
-            fortalecer sus estructuras empresariales y potenciar sus proyectos
-            de inversión.
+            {content["about.commitment"]}
           </p>
           <p className="font-display text-base font-semibold text-blue">
             VDM Consultores ·{" "}

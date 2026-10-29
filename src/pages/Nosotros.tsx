@@ -1,6 +1,8 @@
+import { useMemo } from "react";
 import { Container } from "@/components/primitives/Container";
 import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 const disciplines = [
   "Jurídica",
@@ -13,12 +15,18 @@ const disciplines = [
 ];
 
 export function Nosotros() {
+  const keys = useMemo(
+    () => ["about.intro" as const, "about.commitment" as const],
+    [],
+  );
+  const content = useSiteContent(keys);
+
   return (
     <>
       <PageHero
         eyebrow="Quiénes somos"
         title="Un solo equipo, soluciones integrales."
-        lead="Firma paraguaya de consultoría jurídica, empresarial y de inversiones, especializada en brindar asesoramiento integral a empresas e inversionistas nacionales y extranjeros."
+        lead={content["about.intro"]}
       />
       <section className="py-14 md:py-20">
         <Container className="grid max-w-[760px] gap-6">
@@ -44,10 +52,7 @@ export function Nosotros() {
             operaciones.
           </p>
           <p className="border-t border-line pt-5 text-body text-ink-muted">
-            Nuestro compromiso es brindar un servicio profesional,
-            personalizado e integral, orientado a proteger los intereses de
-            nuestros clientes, fortalecer sus estructuras empresariales y
-            potenciar sus proyectos de inversión.
+            {content["about.commitment"]}
           </p>
           <p className="font-display text-base font-semibold text-blue">
             VDM Consultores ·{" "}

@@ -10,7 +10,8 @@ import { AdminLogin } from "@/pages/admin/Login";
 import { AdminLayout } from "@/pages/admin/AdminLayout";
 import { AdminDashboard } from "@/pages/admin/Dashboard";
 import { EditContact } from "@/pages/admin/EditContact";
-import { AdminPlaceholder } from "@/pages/admin/Placeholder";
+import { EditTeam } from "@/pages/admin/EditTeam";
+import { EditTexts } from "@/pages/admin/EditTexts";
 
 export function App() {
   return (
@@ -30,24 +31,8 @@ export function App() {
         <Route path="admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="contacto" element={<EditContact />} />
-          <Route
-            path="equipo"
-            element={
-              <AdminPlaceholder
-                title="Equipo"
-                body="Agregá, editá u ordená los perfiles del equipo."
-              />
-            }
-          />
-          <Route
-            path="textos"
-            element={
-              <AdminPlaceholder
-                title="Textos de secciones"
-                body="Editá los copys principales del sitio (hero, quiénes somos, etc.)."
-              />
-            }
-          />
+          <Route path="equipo" element={<EditTeam />} />
+          <Route path="textos" element={<EditTexts />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
