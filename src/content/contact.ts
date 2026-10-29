@@ -1,8 +1,23 @@
 /**
- * Datos de contacto — a confirmar con VDM.
- * Ver docs/pendientes.md.
+ * Datos de contacto — defaults usados como fallback cuando Supabase no está
+ * configurado o la tabla `contact_info` no responde. En producción los valores
+ * los edita VDM desde el admin (/admin/contacto).
  */
-export const contactInfo = {
+export type ContactRow = {
+  label: string;
+  value: string;
+  pending?: boolean;
+  href?: string;
+};
+
+export type ContactInfo = {
+  whatsapp: ContactRow;
+  email: ContactRow;
+  office: ContactRow;
+  linkedin: ContactRow;
+};
+
+export const contactInfo: ContactInfo = {
   whatsapp: {
     label: "WhatsApp",
     value: "+595 9XX XXX XXX",

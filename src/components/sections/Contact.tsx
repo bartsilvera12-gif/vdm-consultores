@@ -6,8 +6,8 @@ import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { WhatsAppIcon } from "@/components/primitives/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
-import { contactInfo } from "@/content/contact";
 import { areas } from "@/content/areas";
+import { useContactInfo } from "@/hooks/useContactInfo";
 import { enviarConsulta, type Consulta } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +26,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
   const [submitting, setSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const location = useLocation();
+  const contactInfo = useContactInfo();
 
   // Pre-selección del área al llegar desde el apartado Servicios
   // (<Link to="/contacto" state={{ area }}>) o desde el bloque de áreas en Home
