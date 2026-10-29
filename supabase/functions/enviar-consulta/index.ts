@@ -207,8 +207,10 @@ Deno.serve(async (req) => {
     null;
 
   const email = await sendEmail(result.data);
+  // La tabla vive en public.vdm_consultas (prefijo del proyecto para no
+  // colisionar con otros proyectos de Neura en la misma instancia).
   const insert = await supabase
-    .from("consultas")
+    .from("vdm_consultas")
     .insert({
       nombre: result.data.nombre,
       empresa: result.data.empresa ?? null,

@@ -40,7 +40,7 @@ export function EditContact() {
       return;
     }
     client
-      .from("contact_info")
+      .from("vdm_contact_info")
       .select("*")
       .eq("id", "default")
       .maybeSingle()
@@ -72,7 +72,7 @@ export function EditContact() {
     }
     setSaving(true);
     const { error } = await client
-      .from("contact_info")
+      .from("vdm_contact_info")
       .upsert({ id: "default", ...row });
     setSaving(false);
     if (error) {

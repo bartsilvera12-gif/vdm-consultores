@@ -63,7 +63,7 @@ export function useContactInfo(): ContactInfo {
     if (!client) return;
     let cancelled = false;
     client
-      .from("contact_info")
+      .from("vdm_contact_info")
       .select("*")
       .eq("id", "default")
       .maybeSingle()

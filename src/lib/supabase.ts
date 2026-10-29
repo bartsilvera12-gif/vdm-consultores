@@ -11,7 +11,9 @@ export function getSupabase(): SupabaseClient | null {
   if (!supabaseConfigured) return null;
   if (!client) {
     client = createClient(env.supabaseUrl, env.supabaseAnonKey, {
-      auth: { persistSession: false },
+      // Persistimos la sesión para que el /admin recuerde el login entre
+      // recargas y pestañas (localStorage, flujo estándar de Supabase Auth).
+      auth: { persistSession: true, autoRefreshToken: true },
     });
   }
   return client;
