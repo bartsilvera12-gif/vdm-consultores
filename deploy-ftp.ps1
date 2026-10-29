@@ -71,9 +71,12 @@ function Upload-File($localPath, $remotePath) {
 Write-Host "Deploy a ftp://$ftpHost$remoteDir ..." -ForegroundColor Cyan
 Ensure-FtpDir $remoteDir
 
-$files = Get-ChildItem -Path $distDir -Recurse -File
+# -Force incluye archivos ocultos (dot files como .htaccess). Sin esto,
+# el .htaccess del SPA fallback nunca se subía y /admin, /servicios, ...
+# devolvían el 404 del hosting en lugar de que React Router los resolviera.
+$files = Get-ChildItem -Path $distDir -Recurse -File -Force
 # Crear subcarpetas primero (p. ej. /assets).
-$dirs = Get-ChildItem -Path $distDir -Recurse -Directory
+$dirs = Get-ChildItem -Path $distDir -Recurse -Directory -Force
 foreach ($d in $dirs) {
   $rel = $d.FullName.Substring($distDir.Length).Replace('\', '/')
   Ensure-FtpDir "$remoteDir$rel"
