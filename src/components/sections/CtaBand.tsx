@@ -34,9 +34,13 @@ export function CtaBand() {
             id="band-h"
             className="font-display text-[28px] leading-[34px] font-semibold text-on-navy md:text-h2 md:leading-h2"
           >
-            <em className="not-italic text-on-navy">Paraguay</em>, país de
-            oportunidades.
+            ¿Vas a invertir o hacer crecer tu empresa en{" "}
+            <em className="not-italic text-on-navy">Paraguay</em>?
           </h2>
+          <p className="mt-3 max-w-[560px] text-body text-on-navy-muted">
+            Cuéntanos tu proyecto. Te orientamos sobre los pasos, permisos y la
+            estructura que necesitas.
+          </p>
         </div>
         <div>
           <Button asChild variant="onNavy">
