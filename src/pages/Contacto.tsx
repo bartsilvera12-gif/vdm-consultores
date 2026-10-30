@@ -9,7 +9,7 @@ export function Contacto() {
         title="Paraguay, país de oportunidades"
         lead="Agenda tu consulta"
       />
-      <Contact embedded />
+      <Contact />
     </>
   );
 }
