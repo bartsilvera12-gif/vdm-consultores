@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   ArrowDown,
   ArrowUp,
@@ -7,6 +7,7 @@ import {
   Plus,
   Save,
   Trash2,
+  Upload,
   User,
   X,
 } from "lucide-react";
@@ -15,6 +16,11 @@ import { Button } from "@/components/ui/button";
 import { getSupabase } from "@/lib/supabase";
 import type { TeamMemberRow } from "@/hooks/useTeam";
 import { cn } from "@/lib/utils";
+
+/** Bucket público donde van las fotos subidas desde la PC. Ver migración 0003. */
+const PHOTO_BUCKET = "vdm-team";
+const MAX_PHOTO_BYTES = 2 * 1024 * 1024; // 2 MiB (alineado con el límite del bucket)
+const ALLOWED_PHOTO_TYPES = ["image/png", "image/jpeg"];
 
 type DraftMember = {
   id?: string;
@@ -296,6 +302,54 @@ function MemberForm({
 }) {
   const inputBase =
     "min-h-11 w-full rounded-md border border-line-strong bg-surface px-3 py-2 text-base text-ink focus:border-blue focus:outline-focus-ring";
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  async function handleFile(file: File) {
+    if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
+      toast.error("Formato no soportado", {
+        description: "Subí una imagen PNG o JPG.",
+      });
+      return;
+    }
+    if (file.size > MAX_PHOTO_BYTES) {
+      toast.error("La imagen pesa demasiado", {
+        description: `Máximo 2 MB (la tuya pesa ${(file.size / 1024 / 1024).toFixed(2)} MB).`,
+      });
+      return;
+    }
+    const client = getSupabase();
+    if (!client) {
+      toast.error("Supabase no está configurado.");
+      return;
+    }
+    setUploading(true);
+    // Path estable y único: team/<timestamp>-<random>.<ext>. Si el admin sube
+    // más de una foto para el mismo perfil se van acumulando (no borramos la
+    // anterior) — así nunca pisamos una URL que esté en uso en otra fila.
+    const ext = file.type === "image/png" ? "png" : "jpg";
+    const path = `team/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error: upErr } = await client.storage
+      .from(PHOTO_BUCKET)
+      .upload(path, file, { contentType: file.type, upsert: false });
+    if (upErr) {
+      setUploading(false);
+      toast.error("No pudimos subir la imagen", { description: upErr.message });
+      return;
+    }
+    const { data } = client.storage.from(PHOTO_BUCKET).getPublicUrl(path);
+    setUploading(false);
+    setDraft({ ...draft, photo_url: data.publicUrl });
+    toast.success("Imagen cargada", {
+      description: "Recordá guardar los cambios para asignarla al perfil.",
+    });
+  }
+
+  function clearPhoto() {
+    setDraft({ ...draft, photo_url: "" });
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
   return (
     <form
       onSubmit={onSubmit}
@@ -334,18 +388,83 @@ function MemberForm({
             className={inputBase}
           />
         </label>
-        <label className="grid gap-1.5 sm:col-span-2">
+        <div className="grid gap-3 sm:col-span-2">
           <span className="text-label font-semibold">
-            URL de la foto{" "}
-            <span className="font-normal text-ink-muted">(opcional)</span>
+            Foto{" "}
+            <span className="font-normal text-ink-muted">
+              (opcional · PNG o JPG, máx. 2 MB; cuadrada o 4:5 recomendada)
+            </span>
           </span>
-          <input
-            value={draft.photo_url}
-            onChange={(e) => setDraft({ ...draft, photo_url: e.target.value })}
-            placeholder="https://... (foto cuadrada o 4:5 recomendada)"
-            className={inputBase}
-          />
-        </label>
+          <div className="grid gap-3 sm:grid-cols-[112px_1fr] sm:items-start">
+            <div className="grid aspect-[4/5] h-28 w-28 place-items-center overflow-hidden rounded-md border border-line bg-surface-alt sm:h-auto">
+              {draft.photo_url ? (
+                <img
+                  src={draft.photo_url}
+                  alt="Vista previa"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <User
+                  className="size-10 text-line-strong"
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+            <div className="grid gap-2">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/png,image/jpeg"
+                className="sr-only"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) void handleFile(file);
+                }}
+              />
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                >
+                  {uploading ? (
+                    <>
+                      <Loader2
+                        className="size-4 animate-spin"
+                        aria-hidden="true"
+                      />
+                      Subiendo…
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="size-4" aria-hidden="true" />
+                      Subir imagen
+                    </>
+                  )}
+                </Button>
+                {draft.photo_url && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={clearPhoto}
+                    disabled={uploading}
+                  >
+                    Quitar foto
+                  </Button>
+                )}
+              </div>
+              <input
+                value={draft.photo_url}
+                onChange={(e) =>
+                  setDraft({ ...draft, photo_url: e.target.value })
+                }
+                placeholder="…o pegá una URL externa"
+                className={inputBase}
+              />
+            </div>
+          </div>
+        </div>
         <label className="grid gap-1.5">
           <span className="text-label font-semibold">
             Orden{" "}
