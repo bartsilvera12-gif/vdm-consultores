@@ -42,7 +42,33 @@ const emptyArea: DraftArea = {
   icon: "briefcase",
 };
 
-const ICON_NAMES = Object.keys(AREA_ICONS);
+/** Normaliza un texto a slug (sin acentos, kebab-case, solo [a-z0-9-]). */
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "") // acentos
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 60);
+}
+
+/**
+ * Catálogo de íconos visibles con su nombre amigable en español.
+ * El `name` es la clave que se guarda en DB; la etiqueta es solo UI.
+ */
+const ICON_OPTIONS: Array<{ name: string; label: string }> = [
+  { name: "scale", label: "Balanza" },
+  { name: "trending-up", label: "Crecimiento" },
+  { name: "globe", label: "Globo" },
+  { name: "factory", label: "Fábrica" },
+  { name: "briefcase", label: "Maletín" },
+  { name: "building", label: "Edificio" },
+  { name: "leaf", label: "Hoja" },
+  { name: "key", label: "Llave" },
+];
 
 export function EditAreas() {
   const [areas, setAreas] = useState<AreaRow[]>([]);
@@ -95,13 +121,19 @@ export function EditAreas() {
     e.preventDefault();
     const client = getSupabase();
     if (!client) return;
-    if (!draft.slug.trim() || !draft.title.trim()) {
-      toast.error("Slug y título son obligatorios");
+    if (!draft.eyebrow.trim() || !draft.title.trim()) {
+      toast.error("Título breve y título largo son obligatorios");
       return;
     }
     setSaving(true);
+    // Slug: en nuevas áreas lo generamos del eyebrow (nunca se muestra al
+    // usuario); al editar, mantenemos el que ya tenía (es la clave de los
+    // links internos como /servicios#juridico y no debería moverse).
+    const slug = draft.id
+      ? draft.slug.trim()
+      : slugify(draft.eyebrow);
     const payload = {
-      slug: draft.slug.trim(),
+      slug,
       position: draft.position,
       eyebrow: draft.eyebrow.trim(),
       title: draft.title.trim(),
@@ -315,20 +347,11 @@ function AreaForm({
         </button>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <L label="Título (eyebrow)">
+        <L label="Título breve" hint="Como 'Estudio Jurídico'" className="sm:col-span-2">
           <input
             value={draft.eyebrow}
             onChange={(e) => setDraft({ ...draft, eyebrow: e.target.value })}
             placeholder="Estudio Jurídico"
-            required
-            className={inputBase}
-          />
-        </L>
-        <L label="Slug (URL)" hint="juridico, consultoria, ...">
-          <input
-            value={draft.slug}
-            onChange={(e) => setDraft({ ...draft, slug: e.target.value })}
-            placeholder="juridico"
             required
             className={inputBase}
           />
@@ -360,20 +383,11 @@ function AreaForm({
             className={inputBase}
           />
         </L>
-        <L label="Ícono">
-          <select
-            value={draft.icon}
-            onChange={(e) => setDraft({ ...draft, icon: e.target.value })}
-            className={inputBase}
-          >
-            {ICON_NAMES.map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </L>
-        <L label="Orden">
+        <div className="grid gap-1.5 sm:col-span-2">
+          <span className="text-label font-semibold">Ícono</span>
+          <IconPicker value={draft.icon} onChange={(icon) => setDraft({ ...draft, icon })} />
+        </div>
+        <L label="Orden" hint="Menor = aparece antes">
           <input
             type="number"
             value={draft.position}
@@ -599,6 +613,43 @@ function L({
       </span>
       {children}
     </label>
+  );
+}
+
+// -----------------------------------------------------------------------
+// Grilla visual para elegir ícono
+// -----------------------------------------------------------------------
+function IconPicker({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (icon: string) => void;
+}) {
+  return (
+    <div className="grid grid-cols-4 gap-2 sm:grid-cols-8">
+      {ICON_OPTIONS.map((opt) => {
+        const Icon = getAreaIcon(opt.name);
+        const selected = value === opt.name;
+        return (
+          <button
+            key={opt.name}
+            type="button"
+            onClick={() => onChange(opt.name)}
+            title={opt.label}
+            className={cn(
+              "grid aspect-square place-items-center rounded-md border transition-all",
+              selected
+                ? "border-blue bg-blue text-white shadow-card"
+                : "border-line bg-surface text-ink-muted hover:border-blue hover:text-blue",
+            )}
+          >
+            <Icon className="size-5" aria-hidden="true" />
+            <span className="sr-only">{opt.label}</span>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
