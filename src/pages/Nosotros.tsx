@@ -42,7 +42,7 @@ export function Nosotros() {
             {disciplines.map((d) => (
               <span
                 key={d}
-                className="inline-flex items-center rounded-full border border-blue/20 bg-blue/5 px-3.5 py-1.5 text-small font-semibold text-blue"
+                className="inline-flex items-center rounded-full border border-blue/20 bg-blue/5 px-3.5 py-1.5 text-small font-semibold text-blue transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-blue hover:bg-blue hover:text-white hover:shadow-sm"
               >
                 {d}
               </span>
