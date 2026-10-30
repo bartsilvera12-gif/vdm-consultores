@@ -220,7 +220,7 @@ export function EditMedia() {
               key={item.path}
               className="grid grid-rows-[auto_1fr] overflow-hidden rounded-lg border border-line bg-surface"
             >
-              <div className="aspect-video overflow-hidden bg-surface-alt">
+              <div className="aspect-square overflow-hidden bg-surface-alt">
                 <img
                   src={item.url}
                   alt={item.name}
