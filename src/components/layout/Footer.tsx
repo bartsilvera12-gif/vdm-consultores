@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { Container } from "@/components/primitives/Container";
 import { Logo } from "@/components/primitives/Logo";
-import { areas } from "@/content/areas";
+import { useAreas } from "@/hooks/useAreas";
 
 export function Footer() {
+  const { areas } = useAreas();
   return (
     <footer className="border-t border-white/10 bg-navy text-on-navy-muted">
       <Container className="grid gap-10 pt-14 pb-8">

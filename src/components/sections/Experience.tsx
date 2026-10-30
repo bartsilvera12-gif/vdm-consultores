@@ -1,8 +1,9 @@
 import { Container } from "@/components/primitives/Container";
 import { SectionHead } from "@/components/primitives/Section";
-import { sectors } from "@/content/sectors";
+import { useSectors } from "@/hooks/useSectors";
 
 export function Experience() {
+  const { sectors } = useSectors();
   return (
     <section id="experiencia" className="bg-surface-alt py-16 md:py-24">
       <Container>

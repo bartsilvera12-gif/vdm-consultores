@@ -12,6 +12,10 @@ import { AdminDashboard } from "@/pages/admin/Dashboard";
 import { EditContact } from "@/pages/admin/EditContact";
 import { EditTeam } from "@/pages/admin/EditTeam";
 import { EditTexts } from "@/pages/admin/EditTexts";
+import { EditAreas } from "@/pages/admin/EditAreas";
+import { EditSectors } from "@/pages/admin/EditSectors";
+import { EditDisciplines } from "@/pages/admin/EditDisciplines";
+import { Consultas } from "@/pages/admin/Consultas";
 
 export function App() {
   return (
@@ -30,8 +34,12 @@ export function App() {
         <Route path="admin/login" element={<AdminLogin />} />
         <Route path="admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
-          <Route path="contacto" element={<EditContact />} />
+          <Route path="consultas" element={<Consultas />} />
+          <Route path="areas" element={<EditAreas />} />
+          <Route path="experiencia" element={<EditSectors />} />
           <Route path="equipo" element={<EditTeam />} />
+          <Route path="disciplinas" element={<EditDisciplines />} />
+          <Route path="contacto" element={<EditContact />} />
           <Route path="textos" element={<EditTexts />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

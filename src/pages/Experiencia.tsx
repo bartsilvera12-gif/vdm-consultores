@@ -1,9 +1,10 @@
 import { Container } from "@/components/primitives/Container";
 import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
-import { sectors } from "@/content/sectors";
+import { useSectors } from "@/hooks/useSectors";
 
 export function Experiencia() {
+  const { sectors } = useSectors();
   return (
     <>
       <PageHero

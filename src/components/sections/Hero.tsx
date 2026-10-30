@@ -3,7 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Button } from "@/components/ui/button";
-import { areas } from "@/content/areas";
+import { useAreas } from "@/hooks/useAreas";
 import { useSiteContent } from "@/hooks/useSiteContent";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +16,7 @@ const trustPoints = [
 export function Hero() {
   const keys = useMemo(() => ["hero.lead" as const], []);
   const content = useSiteContent(keys);
+  const { areas } = useAreas();
   return (
     <section
       id="inicio"

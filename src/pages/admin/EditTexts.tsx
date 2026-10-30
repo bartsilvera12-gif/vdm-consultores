@@ -15,62 +15,98 @@ type EditableText = {
   rows: number;
 };
 
-const TEXTS: EditableText[] = [
+type Group = {
+  title: string;
+  items: EditableText[];
+};
+
+const GROUPS: Group[] = [
   {
-    key: "hero.lead",
-    label: "Hero — párrafo bajo el título",
-    hint: "Aparece en la portada (Inicio), debajo del titular grande.",
-    rows: 5,
+    title: "Inicio · Hero",
+    items: [
+      { key: "hero.eyebrow", label: "Eyebrow (línea sobre el titular)", hint: "Aparece arriba del título grande, en mayúsculas.", rows: 1 },
+      { key: "hero.title_main", label: "Titular principal", hint: "Primera parte del título grande.", rows: 2 },
+      { key: "hero.title_em", label: "Titular en azul", hint: "Segunda parte del título grande, se resalta en color.", rows: 2 },
+      { key: "hero.lead", label: "Párrafo bajo el título", hint: "Resumen de la firma en 2–3 líneas.", rows: 5 },
+      { key: "hero.panel_eyebrow", label: "Panel de áreas · Eyebrow", hint: "Encabezado del panel navy a la derecha.", rows: 1 },
+      { key: "hero.panel_title", label: "Panel de áreas · Título", hint: "Título del panel navy a la derecha.", rows: 2 },
+    ],
   },
   {
-    key: "about.intro",
-    label: "Quiénes somos — intro",
-    hint: 'Primer párrafo del apartado "Quiénes somos". El tono manda el resto del texto.',
-    rows: 5,
+    title: "Banda CTA (Inicio)",
+    items: [
+      { key: "cta.title", label: "Titular", hint: "Banda azul grande de llamado a la acción.", rows: 2 },
+      { key: "cta.body", label: "Párrafo", hint: "Descripción corta debajo del titular.", rows: 3 },
+      { key: "cta.button", label: "Texto del botón", hint: "", rows: 1 },
+    ],
   },
   {
-    key: "about.commitment",
-    label: "Quiénes somos — compromiso",
-    hint: 'Párrafo de cierre del apartado "Quiénes somos" (sobre el compromiso de VDM).',
-    rows: 6,
+    title: "Quiénes somos",
+    items: [
+      { key: "about.title", label: "Título", hint: "", rows: 2 },
+      { key: "about.intro", label: "Intro", hint: "Primer párrafo descriptivo.", rows: 5 },
+      { key: "about.commitment", label: "Compromiso", hint: "Párrafo de cierre sobre el compromiso de VDM.", rows: 6 },
+      { key: "about.slogan", label: "Slogan", hint: "Frase corta inspiracional (sin comillas).", rows: 1 },
+    ],
+  },
+  {
+    title: "Apartado Servicios",
+    items: [
+      { key: "servicios.title", label: "Título", hint: "", rows: 2 },
+      { key: "servicios.lead", label: "Párrafo descriptivo", hint: "", rows: 3 },
+    ],
+  },
+  {
+    title: "Apartado Experiencia",
+    items: [
+      { key: "experiencia.title", label: "Título", hint: "", rows: 2 },
+      { key: "experiencia.lead", label: "Párrafo descriptivo", hint: "", rows: 3 },
+    ],
+  },
+  {
+    title: "Apartado Equipo",
+    items: [
+      { key: "equipo.title", label: "Título", hint: "", rows: 2 },
+      { key: "equipo.lead", label: "Párrafo descriptivo", hint: "", rows: 3 },
+    ],
+  },
+  {
+    title: "Apartado Contacto",
+    items: [
+      { key: "contacto.title", label: "Título del PageHero", hint: "", rows: 2 },
+      { key: "contacto.lead", label: "Subtítulo del PageHero", hint: "", rows: 2 },
+    ],
   },
 ];
 
+const ALL_KEYS = GROUPS.flatMap((g) => g.items.map((i) => i.key));
+
 export function EditTexts() {
-  const [values, setValues] = useState<Record<SiteContentKey, string>>(
-    { ...siteContentDefaults },
-  );
-  const [original, setOriginal] = useState<Record<SiteContentKey, string>>(
-    { ...siteContentDefaults },
-  );
+  const [values, setValues] = useState<Record<SiteContentKey, string>>(() => ({
+    ...siteContentDefaults,
+  }));
+  const [original, setOriginal] = useState<Record<SiteContentKey, string>>(() => ({
+    ...siteContentDefaults,
+  }));
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     const client = getSupabase();
     if (!client) {
-      setLoadError("Supabase no está configurado.");
       setLoading(false);
       return;
     }
     client
       .from("vdm_site_content")
       .select("key, value")
-      .in(
-        "key",
-        TEXTS.map((t) => t.key),
-      )
-      .then(({ data, error }) => {
+      .in("key", ALL_KEYS)
+      .then(({ data }) => {
         setLoading(false);
-        if (error) {
-          setLoadError(error.message);
-          return;
-        }
         if (!data) return;
-        const next = { ...values };
+        const next = { ...siteContentDefaults };
         for (const row of data as Array<{ key: string; value: unknown }>) {
-          if ((TEXTS.map((t) => t.key) as string[]).includes(row.key)) {
+          if ((ALL_KEYS as string[]).includes(row.key)) {
             next[row.key as SiteContentKey] =
               typeof row.value === "string"
                 ? row.value
@@ -80,12 +116,7 @@ export function EditTexts() {
         setValues(next);
         setOriginal(next);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  function reset(key: SiteContentKey) {
-    setValues((prev) => ({ ...prev, [key]: siteContentDefaults[key] }));
-  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -94,18 +125,13 @@ export function EditTexts() {
       toast.error("Supabase no está configurado.");
       return;
     }
-    const dirty = TEXTS.filter((t) => values[t.key] !== original[t.key]);
+    const dirty = ALL_KEYS.filter((k) => values[k] !== original[k]);
     if (dirty.length === 0) {
       toast.message("Sin cambios para guardar");
       return;
     }
     setSaving(true);
-    // Guardamos valores como JSON (jsonb). Nuestros textos son strings
-    // escapados, así que mandamos `JSON.stringify(string)` por fila.
-    const rows = dirty.map((t) => ({
-      key: t.key,
-      value: values[t.key],
-    }));
+    const rows = dirty.map((k) => ({ key: k, value: values[k] }));
     const { error } = await client.from("vdm_site_content").upsert(rows);
     setSaving(false);
     if (error) {
@@ -122,10 +148,7 @@ export function EditTexts() {
 
   if (loading) {
     return (
-      <div
-        className="grid min-h-48 place-items-center text-small text-ink-muted"
-        aria-busy="true"
-      >
+      <div className="grid min-h-48 place-items-center" aria-busy="true">
         <Loader2 className="size-5 animate-spin" aria-hidden="true" />
       </div>
     );
@@ -143,44 +166,56 @@ export function EditTexts() {
         </p>
       </header>
 
-      {loadError && (
-        <p className="rounded-sm border border-[#B3261E]/40 bg-[#FEEEEC] px-3 py-2 text-small text-[#B3261E]">
-          {loadError}
-        </p>
-      )}
-
       <form onSubmit={handleSubmit} className="grid gap-5">
-        {TEXTS.map((t) => (
-          <fieldset
-            key={t.key}
-            className="grid gap-2 rounded-lg border border-line bg-surface p-5 sm:p-6"
+        {GROUPS.map((group) => (
+          <section
+            key={group.title}
+            className="grid gap-4 rounded-lg border border-line bg-surface p-5 sm:p-6"
           >
-            <legend className="px-1 font-display text-eyebrow uppercase tracking-eyebrow text-blue">
-              {t.label}
-            </legend>
-            <p className="text-small text-ink-muted">{t.hint}</p>
-            <textarea
-              value={values[t.key]}
-              onChange={(e) =>
-                setValues((prev) => ({ ...prev, [t.key]: e.target.value }))
-              }
-              rows={t.rows}
-              className="min-h-24 w-full resize-y rounded-md border border-line-strong bg-surface p-3 text-base text-ink focus:border-blue focus:outline-focus-ring"
-            />
-            <div className="flex items-center justify-between gap-2 text-small text-ink-muted">
-              <span>{values[t.key].length} caracteres</span>
-              <button
-                type="button"
-                onClick={() => reset(t.key)}
-                className="inline-flex items-center gap-1 font-semibold text-blue hover:underline"
-              >
-                <RotateCcw className="size-3.5" aria-hidden="true" />
-                Volver al texto original
-              </button>
+            <h2 className="font-display text-eyebrow uppercase tracking-eyebrow text-blue">
+              {group.title}
+            </h2>
+            <div className="grid gap-4">
+              {group.items.map((t) => (
+                <div key={t.key} className="grid gap-1.5">
+                  <label className="flex items-start justify-between gap-2">
+                    <span className="text-label font-semibold">{t.label}</span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setValues((p) => ({ ...p, [t.key]: siteContentDefaults[t.key] }))
+                      }
+                      className="inline-flex items-center gap-1 text-small font-semibold text-blue hover:underline"
+                      title="Volver al texto original"
+                    >
+                      <RotateCcw className="size-3.5" aria-hidden="true" />
+                      Original
+                    </button>
+                  </label>
+                  {t.hint && <p className="text-small text-ink-muted">{t.hint}</p>}
+                  {t.rows > 1 ? (
+                    <textarea
+                      value={values[t.key]}
+                      onChange={(e) =>
+                        setValues((p) => ({ ...p, [t.key]: e.target.value }))
+                      }
+                      rows={t.rows}
+                      className="w-full resize-y rounded-md border border-line-strong bg-surface p-3 text-base text-ink focus:border-blue focus:outline-focus-ring"
+                    />
+                  ) : (
+                    <input
+                      value={values[t.key]}
+                      onChange={(e) =>
+                        setValues((p) => ({ ...p, [t.key]: e.target.value }))
+                      }
+                      className="min-h-11 rounded-md border border-line-strong bg-surface px-3 text-base text-ink focus:border-blue focus:outline-focus-ring"
+                    />
+                  )}
+                </div>
+              ))}
             </div>
-          </fieldset>
+          </section>
         ))}
-
         <div className="sticky bottom-4 flex items-center justify-end gap-3 rounded-lg border border-line bg-surface p-3 shadow-card">
           <Button type="submit" disabled={saving}>
             {saving ? (

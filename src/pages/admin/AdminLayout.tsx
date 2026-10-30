@@ -1,4 +1,14 @@
-import { LogOut, MessageCircleQuestion, PanelsTopLeft, Type, Users } from "lucide-react";
+import {
+  Layers,
+  LogOut,
+  Mail,
+  MessageCircleQuestion,
+  PanelsTopLeft,
+  Sparkles,
+  Tag,
+  Type,
+  Users,
+} from "lucide-react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Container } from "@/components/primitives/Container";
@@ -10,8 +20,12 @@ import { RequireAuth } from "./RequireAuth";
 
 const adminLinks = [
   { to: "/admin", end: true, label: "Resumen", icon: PanelsTopLeft },
-  { to: "/admin/contacto", end: false, label: "Datos de contacto", icon: MessageCircleQuestion },
+  { to: "/admin/consultas", end: false, label: "Consultas", icon: Mail },
+  { to: "/admin/areas", end: false, label: "Áreas de servicio", icon: Layers },
+  { to: "/admin/experiencia", end: false, label: "Experiencia", icon: Sparkles },
   { to: "/admin/equipo", end: false, label: "Equipo", icon: Users },
+  { to: "/admin/disciplinas", end: false, label: "Disciplinas", icon: Tag },
+  { to: "/admin/contacto", end: false, label: "Datos de contacto", icon: MessageCircleQuestion },
   { to: "/admin/textos", end: false, label: "Textos de secciones", icon: Type },
 ];
 

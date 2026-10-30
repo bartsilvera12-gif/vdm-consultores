@@ -2,22 +2,13 @@ import { useMemo } from "react";
 import { Container } from "@/components/primitives/Container";
 import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
+import { useDisciplines } from "@/hooks/useDisciplines";
 import { useSiteContent } from "@/hooks/useSiteContent";
-
-const disciplines = [
-  "Jurídica",
-  "Tributaria",
-  "Empresarial",
-  "Ambiental",
-  "Migratoria",
-  "Industrial",
-  "Comercio exterior",
-  "Registro de Marcas",
-];
 
 export function Nosotros() {
   const keys = useMemo(() => ["about.commitment" as const], []);
   const content = useSiteContent(keys);
+  const { disciplines } = useDisciplines();
 
   return (
     <>

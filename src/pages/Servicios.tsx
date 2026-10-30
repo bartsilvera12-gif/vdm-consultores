@@ -6,9 +6,10 @@ import { VBullet } from "@/components/primitives/VBullet";
 import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
 import { Button } from "@/components/ui/button";
-import { areas } from "@/content/areas";
+import { useAreas } from "@/hooks/useAreas";
 
 export function Servicios() {
+  const { areas } = useAreas();
   return (
     <>
       <PageHero

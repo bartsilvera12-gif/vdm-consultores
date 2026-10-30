@@ -4,10 +4,12 @@ import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { SectionHead } from "@/components/primitives/Section";
 import { VBullet } from "@/components/primitives/VBullet";
 import { Button } from "@/components/ui/button";
-import { areas, type Area } from "@/content/areas";
+import { type Area } from "@/content/areas";
+import { useAreas } from "@/hooks/useAreas";
 import { preselectArea } from "@/lib/scroll-to-contact";
 
 export function Services() {
+  const { areas } = useAreas();
   return (
     <section id="servicios" className="bg-surface py-16 md:py-24">
       <Container>

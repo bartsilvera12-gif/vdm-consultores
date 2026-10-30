@@ -5,7 +5,7 @@ import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Button } from "@/components/ui/button";
 import { Hero } from "@/components/sections/Hero";
 import { CtaBand } from "@/components/sections/CtaBand";
-import { areas } from "@/content/areas";
+import { useAreas } from "@/hooks/useAreas";
 
 /**
  * Portada. Hero + un resumen compacto de áreas que dirige al apartado
@@ -23,6 +23,7 @@ export function Home() {
 }
 
 function AreasOverview() {
+  const { areas } = useAreas();
   return (
     <section className="py-16 md:py-24">
       <Container>
