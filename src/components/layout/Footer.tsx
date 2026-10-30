@@ -1,14 +1,51 @@
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Container } from "@/components/primitives/Container";
 import { Logo } from "@/components/primitives/Logo";
 import { useAreas } from "@/hooks/useAreas";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
 export function Footer() {
   const { areas } = useAreas();
+  const contact = useContactInfo();
+  const socials: Array<{
+    key: "facebook" | "instagram" | "linkedin";
+    label: string;
+    href: string;
+    icon: typeof Facebook;
+  }> = [
+    {
+      key: "facebook",
+      label: contact.facebook.label,
+      href: contact.facebook.href ?? "#",
+      icon: Facebook,
+    },
+    {
+      key: "instagram",
+      label: contact.instagram.label,
+      href: contact.instagram.href ?? "#",
+      icon: Instagram,
+    },
+    {
+      key: "linkedin",
+      label: contact.linkedin.label,
+      href: contact.linkedin.href ?? "#",
+      icon: Linkedin,
+    },
+  ].filter((s) => {
+    const info = contact[s.key];
+    return !info.pending && info.href && info.href !== "#";
+  }) as Array<{
+    key: "facebook" | "instagram" | "linkedin";
+    label: string;
+    href: string;
+    icon: typeof Facebook;
+  }>;
+
   return (
     <footer className="border-t border-white/10 bg-navy text-on-navy-muted">
       <Container className="grid gap-10 pt-14 pb-8">
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_auto]">
           <div className="sm:col-span-2 md:col-span-1">
             <Link to="/">
               <Logo variant="white" width={129} height={52} className="h-13" />
@@ -64,6 +101,32 @@ export function Footer() {
               </li>
             </ul>
           </div>
+          {socials.length > 0 && (
+            <div>
+              <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
+                Síganos
+              </h4>
+              <ul className="flex items-center gap-2.5">
+                {socials.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <li key={s.key}>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={s.label}
+                        title={s.label}
+                        className="inline-flex size-10 items-center justify-center rounded-full border border-white/15 text-on-navy transition-all hover:-translate-y-0.5 hover:border-orange hover:bg-orange hover:text-on-orange"
+                      >
+                        <Icon className="size-4" aria-hidden="true" />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
         <div className="flex flex-wrap justify-between gap-3 border-t border-white/10 pt-6 text-small">
           <span>© 2026 VDM Consultores. Todos los derechos reservados.</span>
