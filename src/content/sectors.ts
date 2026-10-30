@@ -23,12 +23,12 @@ export const sectors: Sector[] = [
   {
     icon: TrendingUp,
     title: "Empresas consolidadas",
-    body: "Asesoría jurídica permanente, tributaria y cumplimiento normativo.",
+    body: "Asesoría jurídica en materia civil y comercial. Servicio de contabilidad y asesoría tributaria. Due diligence.",
   },
   {
     icon: Globe2,
     title: "Inversionistas extranjeros",
-    body: "Radicaciones, Investor Pass, residencia y domicilio fiscal.",
+    body: "Radicaciones, Investor Pass, residencia fiscal, representación y domicilio fiscal, adquisición de inmuebles u otros bienes en Paraguay.",
   },
   {
     icon: Factory,
