@@ -120,7 +120,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               <div className="grid gap-4">
                 <Eyebrow>Contacto</Eyebrow>
                 <h2 className="font-display text-[28px] leading-[34px] font-semibold tracking-h2 md:text-h2 md:leading-h2">
-                  Conversemos sobre tus proyectos. Estamos para asesorarte
+                  Hablemos de tu empresa o tu inversión
                 </h2>
                 <p className="text-lead text-ink-muted">
                   Escríbenos y un profesional del área te responderá.

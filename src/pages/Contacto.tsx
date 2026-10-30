@@ -6,7 +6,7 @@ export function Contacto() {
     <>
       <PageHero
         eyebrow="Contacto"
-        title="Conversemos sobre tus proyectos. Estamos para asesorarte."
+        title="Hablemos de tu empresa o tu inversión."
         lead="Escríbenos y un profesional del área te responderá."
       />
       <Contact embedded />
