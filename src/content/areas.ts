@@ -43,13 +43,13 @@ export const areas: Area[] = [
     services: [
       "Constitución de sociedades",
       "Planes de negocios",
-      "Régimen de maquila",
-      "Asesoría tributaria",
+      "Maquila, Régimen de Origen y otros",
+      "Contabilidad y asesoría tributaria",
       "Apertura de cuentas bancarias",
       "Comercio exterior",
     ],
     icon: TrendingUp,
-    summary: "Sociedades, maquila, tributaria",
+    summary: "Sociedades, maquila, contabilidad",
   },
   {
     id: "inversiones",
@@ -59,14 +59,13 @@ export const areas: Area[] = [
       "Acompañamos a inversionistas nacionales y extranjeros para desarrollar sus proyectos con seguridad jurídica y visión estratégica.",
     services: [
       "Radicaciones",
-      "Investor Pass",
       "Residencia fiscal",
-      "Domicilio fiscal",
+      "Representaciones y domicilio fiscal",
       "Inversiones inmobiliarias",
       "Negociaciones y gestión documental",
     ],
     icon: Globe2,
-    summary: "Radicaciones, Investor Pass, inmobiliarias",
+    summary: "Radicaciones, residencia fiscal, inmobiliarias",
   },
   {
     id: "habilitaciones",
