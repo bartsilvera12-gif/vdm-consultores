@@ -43,6 +43,6 @@ export const sectors: Sector[] = [
   {
     icon: KeyRound,
     title: "Inversión inmobiliaria",
-    body: "Análisis de viabilidad técnica, comercial y legal hasta el cierre.",
+    body: "Búsqueda de propiedades urbanas y rurales. Análisis y gestión documental. Tramites para adquisición de inmuebles por mandato.",
   },
 ];
