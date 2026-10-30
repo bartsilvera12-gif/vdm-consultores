@@ -18,7 +18,7 @@ export const sectors: Sector[] = [
   {
     icon: Briefcase,
     title: "Empresas en formación",
-    body: "Constitución de sociedades, planes de negocios y apertura de cuentas.",
+    body: "Constitución de empresas, planes de negocios y apertura de cuentas bancarias personales y corporativas.",
   },
   {
     icon: TrendingUp,

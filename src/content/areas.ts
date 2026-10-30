@@ -75,7 +75,7 @@ export const areas: Area[] = [
     description:
       "Gestionamos los estudios, permisos y habilitaciones necesarios para desarrollar tus actividades industriales y comerciales.",
     services: [
-      "Estudios ambientales",
+      "Estudios de impacto ambiental",
       "Licencias y permisos",
       "Habilitaciones municipales",
       "Planos arquitectónicos y técnicos",
