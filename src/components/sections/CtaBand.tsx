@@ -12,10 +12,10 @@ export function CtaBand() {
       aria-label="Llamado a la acción"
       className="relative overflow-hidden bg-navy text-on-navy"
     >
-      {/* Línea naranja superior a lo ancho. */}
+      {/* Línea azul superior a lo ancho. */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-orange"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-blue-bright"
       />
       {/* Diagonal V art, inspirado en el logo. Oculto en mobile. */}
       <div

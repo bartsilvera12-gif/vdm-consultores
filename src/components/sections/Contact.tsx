@@ -183,7 +183,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
             ref={formRef}
             onSubmit={handleSubmit}
             noValidate
-            className="grid gap-4 rounded-lg bg-surface-alt p-5 sm:p-7 md:grid-cols-2 md:gap-x-5 md:p-10"
+            className="grid gap-4 rounded-lg border border-line bg-surface p-5 shadow-card sm:p-7 md:grid-cols-2 md:gap-x-5 md:p-10"
           >
             <FormField
               id="f-nombre"
@@ -294,7 +294,7 @@ function ContactRow({
 }) {
   const content = (
     <>
-      <span className="grid size-11 place-items-center rounded-md bg-surface-alt text-blue">
+      <span className="grid size-11 place-items-center rounded-full bg-blue/10 text-blue">
         {icon}
       </span>
       <div>
@@ -364,7 +364,7 @@ function FormField(props: FormFieldProps) {
     type = "text",
   } = props;
   const inputBase =
-    "min-h-12 w-full rounded-md border border-line-strong bg-surface px-3.5 py-3 text-base text-ink transition-colors focus:border-blue focus:outline-focus-ring aria-[invalid=true]:border-[#B3261E]";
+    "min-h-12 w-full rounded-md border border-line-strong bg-surface-alt px-3.5 py-3 text-base text-ink transition-colors focus:border-blue focus:outline-focus-ring aria-[invalid=true]:border-[#B3261E]";
 
   return (
     <div className={cn("grid min-w-0 gap-1.5", className)}>

@@ -95,7 +95,7 @@ export function Footer() {
                         rel="noopener noreferrer"
                         aria-label={s.label}
                         title={s.label}
-                        className="inline-flex size-10 items-center justify-center rounded-full border border-white/15 text-on-navy transition-all hover:-translate-y-0.5 hover:border-orange hover:bg-orange hover:text-on-orange"
+                        className="inline-flex size-10 items-center justify-center rounded-full border border-white/15 text-on-navy transition-all hover:-translate-y-0.5 hover:border-blue-bright hover:bg-blue-bright hover:text-on-blue"
                       >
                         <Icon className="size-4" aria-hidden="true" />
                       </a>

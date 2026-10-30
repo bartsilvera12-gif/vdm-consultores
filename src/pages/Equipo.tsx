@@ -16,24 +16,27 @@ export function Equipo() {
         title="Profesionales especializados en cada área."
         lead="Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente."
       />
-      <section className="py-14 md:py-20">
+      <section className="bg-surface-alt py-14 md:py-20">
         <Container>
           <div
             className="grid gap-4 sm:gap-5"
             style={{
               gridTemplateColumns:
-                "repeat(auto-fill, minmax(min(180px,100%), 1fr))",
+                "repeat(auto-fill, minmax(min(200px,100%), 1fr))",
             }}
           >
             {members.map((member, i) => (
-              <article key={member.id ?? i} className="grid gap-3">
-                <div className="grid aspect-[4/5] max-w-full place-items-center overflow-hidden rounded-lg border border-dashed border-line-strong bg-surface-alt p-4 text-center text-small text-ink-muted">
+              <article
+                key={member.id ?? i}
+                className="grid gap-3 rounded-lg border border-line bg-surface p-4 shadow-card"
+              >
+                <div className="grid aspect-[4/5] max-w-full place-items-center overflow-hidden rounded-md border border-dashed border-line-strong bg-surface-alt p-4 text-center text-small text-ink-muted">
                   {member.photo ? (
                     <img
                       src={member.photo}
                       alt={member.name}
                       loading="lazy"
-                      className="h-full w-full rounded-lg object-cover"
+                      className="h-full w-full rounded-md object-cover"
                     />
                   ) : (
                     <div>

@@ -5,6 +5,7 @@ import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { VBullet } from "@/components/primitives/VBullet";
 import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
+import { ServicesCarousel } from "@/components/sections/ServicesCarousel";
 import { Button } from "@/components/ui/button";
 import { useAreas } from "@/hooks/useAreas";
 
@@ -17,7 +18,8 @@ export function Servicios() {
         title="Cuatro áreas, un mismo acompañamiento."
         lead="Desde la constitución de tu empresa hasta la concreción de tu inversión, cada área trabaja coordinada con las demás."
       />
-      <section className="py-10 md:py-14">
+      <ServicesCarousel />
+      <section className="bg-surface-alt pb-10 md:pb-16">
         <Container>
           {areas.map((area) => {
             const Icon = area.icon;
@@ -25,7 +27,7 @@ export function Servicios() {
               <article
                 key={area.id}
                 id={area.id}
-                className="grid gap-6 border-t border-line py-8 last:border-b sm:gap-7 sm:py-10 lg:grid-cols-[5fr_6fr] lg:gap-16 lg:py-14"
+                className="mb-6 grid gap-6 rounded-lg border border-line bg-surface p-6 shadow-card last:mb-0 sm:gap-7 sm:p-8 lg:grid-cols-[5fr_6fr] lg:gap-16 lg:p-10"
               >
                 <div className="grid content-start gap-3.5">
                   <div className="flex items-center gap-2.5">

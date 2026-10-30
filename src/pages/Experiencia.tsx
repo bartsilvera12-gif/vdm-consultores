@@ -12,21 +12,20 @@ export function Experiencia() {
         title="A quiénes acompañamos."
         lead="Empresas en cada etapa e inversionistas que llegan a Paraguay."
       />
-      <section className="py-14 md:py-20">
+      <section className="bg-surface-alt py-14 md:py-20">
         <Container>
-          <div className="grid grid-cols-1 border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {sectors.map((sector) => {
               const Icon = sector.icon;
               return (
                 <div
                   key={sector.title}
-                  className="grid gap-1.5 border-b border-line py-6 pr-6"
+                  className="grid content-start gap-2 rounded-lg border border-line bg-surface p-5 shadow-card"
                 >
-                  <h2 className="flex items-center gap-3 font-display text-base font-semibold leading-6 text-ink">
-                    <Icon
-                      className="size-5 shrink-0 text-blue"
-                      aria-hidden="true"
-                    />
+                  <span className="grid size-11 place-items-center rounded-full bg-blue/10 text-blue">
+                    <Icon className="size-5 shrink-0" aria-hidden="true" />
+                  </span>
+                  <h2 className="font-display text-base font-semibold leading-6 text-ink">
                     {sector.title}
                   </h2>
                   <p className="text-small leading-[23px] text-ink-muted">

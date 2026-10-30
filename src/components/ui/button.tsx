@@ -11,7 +11,7 @@ const buttonVariants = cva(
         default:
           "bg-blue text-on-blue hover:bg-blue-bright active:translate-y-px",
         accent:
-          "bg-orange text-on-orange hover:brightness-110 active:translate-y-px",
+          "bg-blue-bright text-on-blue hover:brightness-110 active:translate-y-px",
         outline:
           "border border-line text-ink hover:border-blue hover:text-blue",
         ghost: "text-ink hover:bg-surface-alt",
