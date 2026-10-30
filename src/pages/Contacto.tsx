@@ -6,8 +6,8 @@ export function Contacto() {
     <>
       <PageHero
         eyebrow="Contacto"
-        title="Hablemos de tu empresa o tu inversión."
-        lead="Escríbenos y un profesional del área te responderá."
+        title="Paraguay, país de oportunidades"
+        lead="Agenda tu consulta"
       />
       <Contact embedded />
     </>
