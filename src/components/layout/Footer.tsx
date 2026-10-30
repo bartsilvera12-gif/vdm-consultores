@@ -8,39 +8,17 @@ import { useContactInfo } from "@/hooks/useContactInfo";
 export function Footer() {
   const { areas } = useAreas();
   const contact = useContactInfo();
-  const socials: Array<{
-    key: "facebook" | "instagram" | "linkedin";
-    label: string;
-    href: string;
-    icon: typeof Facebook;
-  }> = [
-    {
-      key: "facebook",
-      label: contact.facebook.label,
-      href: contact.facebook.href ?? "#",
-      icon: Facebook,
-    },
-    {
-      key: "instagram",
-      label: contact.instagram.label,
-      href: contact.instagram.href ?? "#",
-      icon: Instagram,
-    },
-    {
-      key: "linkedin",
-      label: contact.linkedin.label,
-      href: contact.linkedin.href ?? "#",
-      icon: Linkedin,
-    },
-  ].filter((s) => {
-    const info = contact[s.key];
-    return !info.pending && info.href && info.href !== "#";
-  }) as Array<{
-    key: "facebook" | "instagram" | "linkedin";
-    label: string;
-    href: string;
-    icon: typeof Facebook;
-  }>;
+  type Social = { label: string; href: string; icon: typeof Facebook };
+  const socials: Social[] = [];
+  if (!contact.facebook.pending && contact.facebook.href && contact.facebook.href !== "#") {
+    socials.push({ label: contact.facebook.label, href: contact.facebook.href, icon: Facebook });
+  }
+  if (!contact.instagram.pending && contact.instagram.href && contact.instagram.href !== "#") {
+    socials.push({ label: contact.instagram.label, href: contact.instagram.href, icon: Instagram });
+  }
+  if (!contact.linkedin.pending && contact.linkedin.href && contact.linkedin.href !== "#") {
+    socials.push({ label: contact.linkedin.label, href: contact.linkedin.href, icon: Linkedin });
+  }
 
   return (
     <footer className="border-t border-white/10 bg-navy text-on-navy-muted">
@@ -110,7 +88,7 @@ export function Footer() {
                 {socials.map((s) => {
                   const Icon = s.icon;
                   return (
-                    <li key={s.key}>
+                    <li key={s.label}>
                       <a
                         href={s.href}
                         target="_blank"
