@@ -1,4 +1,5 @@
 import {
+  Image as ImageIcon,
   Layers,
   LogOut,
   Mail,
@@ -25,6 +26,7 @@ const adminLinks = [
   { to: "/admin/experiencia", end: false, label: "Experiencia", icon: Sparkles },
   { to: "/admin/equipo", end: false, label: "Equipo", icon: Users },
   { to: "/admin/disciplinas", end: false, label: "Disciplinas", icon: Tag },
+  { to: "/admin/imagenes", end: false, label: "Imágenes", icon: ImageIcon },
   { to: "/admin/contacto", end: false, label: "Datos de contacto", icon: MessageCircleQuestion },
   { to: "/admin/textos", end: false, label: "Textos de secciones", icon: Type },
 ];

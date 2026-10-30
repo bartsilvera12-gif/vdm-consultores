@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
+  Image as ImageIcon,
   Layers,
   Mail,
   MessageCircleQuestion,
@@ -40,6 +41,12 @@ const cards = [
     icon: Tag,
     title: "Disciplinas",
     body: "Las pastillas azules de Quiénes somos.",
+  },
+  {
+    to: "/admin/imagenes",
+    icon: ImageIcon,
+    title: "Imágenes",
+    body: "Banco general de imágenes. Subí fotos y usá la URL donde quieras.",
   },
   {
     to: "/admin/contacto",

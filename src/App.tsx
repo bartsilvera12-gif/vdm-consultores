@@ -15,6 +15,7 @@ import { EditTexts } from "@/pages/admin/EditTexts";
 import { EditAreas } from "@/pages/admin/EditAreas";
 import { EditSectors } from "@/pages/admin/EditSectors";
 import { EditDisciplines } from "@/pages/admin/EditDisciplines";
+import { EditMedia } from "@/pages/admin/EditMedia";
 import { Consultas } from "@/pages/admin/Consultas";
 
 export function App() {
@@ -39,6 +40,7 @@ export function App() {
           <Route path="experiencia" element={<EditSectors />} />
           <Route path="equipo" element={<EditTeam />} />
           <Route path="disciplinas" element={<EditDisciplines />} />
+          <Route path="imagenes" element={<EditMedia />} />
           <Route path="contacto" element={<EditContact />} />
           <Route path="textos" element={<EditTexts />} />
         </Route>
