@@ -14,7 +14,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { getSupabase } from "@/lib/supabase";
 import {
-  AREA_ICONS,
   getAreaIcon,
   type AreaRow,
   type AreaServiceRow,
