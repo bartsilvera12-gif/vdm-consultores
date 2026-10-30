@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
-import { ArrowRight, Linkedin, Loader2, Mail, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Loader2,
+  Mail,
+  MapPin,
+} from "lucide-react";
 import { toast } from "sonner";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
@@ -146,11 +154,28 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               pending={contactInfo.office.pending}
             />
             <ContactRow
-              icon={<Linkedin className="size-5" aria-hidden="true" />}
-              label={contactInfo.linkedin.label}
-              value={contactInfo.linkedin.value}
-              pending={contactInfo.linkedin.pending}
+              icon={<Facebook className="size-5" aria-hidden="true" />}
+              label={contactInfo.facebook.label}
+              value={contactInfo.facebook.value}
+              pending={contactInfo.facebook.pending}
+              href={contactInfo.facebook.href}
             />
+            <ContactRow
+              icon={<Instagram className="size-5" aria-hidden="true" />}
+              label={contactInfo.instagram.label}
+              value={contactInfo.instagram.value}
+              pending={contactInfo.instagram.pending}
+              href={contactInfo.instagram.href}
+            />
+            {!contactInfo.linkedin.pending && (
+              <ContactRow
+                icon={<Linkedin className="size-5" aria-hidden="true" />}
+                label={contactInfo.linkedin.label}
+                value={contactInfo.linkedin.value}
+                pending={contactInfo.linkedin.pending}
+                href={contactInfo.linkedin.href}
+              />
+            )}
           </div>
 
           {/* Form --------------------------------------------------------- */}
@@ -259,14 +284,16 @@ function ContactRow({
   label,
   value,
   pending,
+  href,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
   pending?: boolean;
+  href?: string;
 }) {
-  return (
-    <div className="grid grid-cols-[44px_1fr] items-start gap-3.5">
+  const content = (
+    <>
       <span className="grid size-11 place-items-center rounded-md bg-surface-alt text-blue">
         {icon}
       </span>
@@ -282,8 +309,23 @@ function ContactRow({
           {pending && " (a confirmar)"}
         </p>
       </div>
-    </div>
+    </>
   );
+  const className = "grid grid-cols-[44px_1fr] items-start gap-3.5";
+  // Si hay href válido y no está pendiente, lo volvemos clickeable.
+  if (href && href !== "#" && !pending) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cn(className, "group transition-colors")}
+      >
+        {content}
+      </a>
+    );
+  }
+  return <div className={className}>{content}</div>;
 }
 
 type BaseFieldProps = {

@@ -20,10 +20,18 @@ const emptyRow: Row = {
   office_label: "Oficina",
   office_value: "",
   office_pending: true,
-  linkedin_label: "LinkedIn y redes",
+  linkedin_label: "LinkedIn",
   linkedin_value: "",
   linkedin_href: "",
   linkedin_pending: true,
+  facebook_label: "Facebook",
+  facebook_value: "",
+  facebook_href: "",
+  facebook_pending: true,
+  instagram_label: "Instagram",
+  instagram_value: "",
+  instagram_href: "",
+  instagram_pending: true,
 };
 
 export function EditContact() {
@@ -180,7 +188,55 @@ export function EditContact() {
           />
         </Fieldset>
 
-        <Fieldset legend="LinkedIn y redes">
+        <Fieldset legend="Facebook">
+          <TextField
+            label="Etiqueta"
+            value={row.facebook_label}
+            onChange={(v) => update("facebook_label", v)}
+          />
+          <TextField
+            label="Texto visible"
+            value={row.facebook_value}
+            placeholder="facebook.com/vdmconsultores.py"
+            onChange={(v) => update("facebook_value", v)}
+          />
+          <TextField
+            label="Enlace"
+            value={row.facebook_href ?? ""}
+            placeholder="https://www.facebook.com/vdmconsultores.py"
+            onChange={(v) => update("facebook_href", v)}
+          />
+          <PendingSwitch
+            value={row.facebook_pending}
+            onChange={(v) => update("facebook_pending", v)}
+          />
+        </Fieldset>
+
+        <Fieldset legend="Instagram">
+          <TextField
+            label="Etiqueta"
+            value={row.instagram_label}
+            onChange={(v) => update("instagram_label", v)}
+          />
+          <TextField
+            label="Texto visible"
+            value={row.instagram_value}
+            placeholder="@vdmconsultores"
+            onChange={(v) => update("instagram_value", v)}
+          />
+          <TextField
+            label="Enlace"
+            value={row.instagram_href ?? ""}
+            placeholder="https://www.instagram.com/vdmconsultores/"
+            onChange={(v) => update("instagram_href", v)}
+          />
+          <PendingSwitch
+            value={row.instagram_pending}
+            onChange={(v) => update("instagram_pending", v)}
+          />
+        </Fieldset>
+
+        <Fieldset legend="LinkedIn">
           <TextField
             label="Etiqueta"
             value={row.linkedin_label}
@@ -189,11 +245,11 @@ export function EditContact() {
           <TextField
             label="Texto visible"
             value={row.linkedin_value}
-            placeholder="LinkedIn · Instagram"
+            placeholder="LinkedIn de la firma"
             onChange={(v) => update("linkedin_value", v)}
           />
           <TextField
-            label="Enlace principal"
+            label="Enlace"
             value={row.linkedin_href ?? ""}
             placeholder="https://www.linkedin.com/company/..."
             onChange={(v) => update("linkedin_href", v)}

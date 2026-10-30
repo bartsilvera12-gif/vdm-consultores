@@ -20,6 +20,14 @@ export type ContactInfoRow = {
   linkedin_value: string;
   linkedin_href: string | null;
   linkedin_pending: boolean;
+  facebook_label: string;
+  facebook_value: string;
+  facebook_href: string | null;
+  facebook_pending: boolean;
+  instagram_label: string;
+  instagram_value: string;
+  instagram_href: string | null;
+  instagram_pending: boolean;
 };
 
 function rowToContact(row: ContactInfoRow): ContactInfo {
@@ -46,6 +54,18 @@ function rowToContact(row: ContactInfoRow): ContactInfo {
       value: row.linkedin_value,
       pending: row.linkedin_pending,
       href: row.linkedin_href ?? "#",
+    },
+    facebook: {
+      label: row.facebook_label,
+      value: row.facebook_value,
+      pending: row.facebook_pending,
+      href: row.facebook_href ?? "#",
+    },
+    instagram: {
+      label: row.instagram_label,
+      value: row.instagram_value,
+      pending: row.instagram_pending,
+      href: row.instagram_href ?? "#",
     },
   };
 }

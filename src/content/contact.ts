@@ -15,30 +15,45 @@ export type ContactInfo = {
   email: ContactRow;
   office: ContactRow;
   linkedin: ContactRow;
+  facebook: ContactRow;
+  instagram: ContactRow;
 };
 
 export const contactInfo: ContactInfo = {
   whatsapp: {
     label: "WhatsApp",
-    value: "+595 9XX XXX XXX",
-    pending: true,
-    href: "https://wa.me/595000000000",
+    value: "+595 974 259 049",
+    pending: false,
+    href: "https://wa.me/595974259049",
   },
   email: {
     label: "Correo",
-    value: "contacto@dominio",
-    pending: true,
-    href: "mailto:contacto@dominio",
+    value: "asesoria@vdmconsultores.com.py",
+    pending: false,
+    href: "mailto:asesoria@vdmconsultores.com.py",
   },
   office: {
     label: "Oficina",
-    value: "Dirección a confirmar · Paraguay",
-    pending: true,
+    value:
+      "Caballero 893 casi Manuel Domínguez, Barrio La Catedral, Asunción",
+    pending: false,
   },
   linkedin: {
-    label: "LinkedIn y redes",
-    value: "Enlaces a confirmar",
+    label: "LinkedIn",
+    value: "Enlace a confirmar",
     pending: true,
     href: "#",
+  },
+  facebook: {
+    label: "Facebook",
+    value: "facebook.com/vdmconsultores.py",
+    pending: false,
+    href: "https://www.facebook.com/vdmconsultores.py",
+  },
+  instagram: {
+    label: "Instagram",
+    value: "@vdmconsultores",
+    pending: false,
+    href: "https://www.instagram.com/vdmconsultores/",
   },
 };
