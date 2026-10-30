@@ -32,7 +32,7 @@ export const areas: Area[] = [
       "Contratos y resolución de conflictos",
     ],
     icon: Scale,
-    summary: "Civil, societario, laboral, contratos",
+    summary: "Civil, comercial, laboral, administrativo",
   },
   {
     id: "consultoria",
@@ -49,7 +49,7 @@ export const areas: Area[] = [
       "Comercio exterior",
     ],
     icon: TrendingUp,
-    summary: "Sociedades, maquila, contabilidad",
+    summary: "Constitución de empresas, régimen maquila, contabilidad y tributación",
   },
   {
     id: "inversiones",
@@ -65,7 +65,7 @@ export const areas: Area[] = [
       "Negociaciones y gestión documental",
     ],
     icon: Globe2,
-    summary: "Radicaciones, residencia fiscal, inmobiliarias",
+    summary: "Radicaciones, registro de marcas y patentes, adquisición de inmuebles",
   },
   {
     id: "habilitaciones",
@@ -81,6 +81,6 @@ export const areas: Area[] = [
       "Protección contra Incendios (PCI)",
     ],
     icon: Factory,
-    summary: "Ambientales, municipales, PCI",
+    summary: "Licencia ambiental y municipal, trámites administrativos",
   },
 ];
