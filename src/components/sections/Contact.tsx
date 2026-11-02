@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
 import {
-  ArrowRight,
   Facebook,
   Instagram,
   Linkedin,
-  Loader2,
   Mail,
   MapPin,
 } from "lucide-react";
@@ -16,7 +14,7 @@ import { WhatsAppIcon } from "@/components/primitives/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { areas } from "@/content/areas";
 import { useContactInfo } from "@/hooks/useContactInfo";
-import { enviarConsulta, type Consulta } from "@/lib/supabase";
+import type { Consulta } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
 type Field = "nombre" | "email" | "telefono" | "area" | "mensaje";
@@ -29,9 +27,28 @@ const errorMsg: Record<Field, string> = {
   mensaje: "Escribe tu consulta.",
 };
 
+/**
+ * Link de WhatsApp con la consulta ya escrita. La función `enviar-consulta`
+ * (correo + panel) no está instalada en el servidor: hasta entonces el
+ * formulario sale por acá y no queda registro en `vdm_consultas`.
+ */
+function whatsappUrl(href: string, c: Consulta) {
+  const text = [
+    "Hola, quiero hacer una consulta desde la web de VDM Consultores.",
+    "",
+    `Nombre: ${c.nombre}`,
+    ...(c.empresa ? [`Empresa: ${c.empresa}`] : []),
+    `Correo: ${c.email}`,
+    `Teléfono: ${c.telefono}`,
+    `Área: ${c.area}`,
+    "",
+    `Consulta: ${c.mensaje}`,
+  ].join("\n");
+  return `${href.split("?")[0]}?text=${encodeURIComponent(text)}`;
+}
+
 export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
   const [errors, setErrors] = useState<Partial<Record<Field, boolean>>>({});
-  const [submitting, setSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const location = useLocation();
   const contactInfo = useContactInfo();
@@ -49,7 +66,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
     select.value = state.area;
   }, [location.state]);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -82,36 +99,15 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
       mensaje: String(data.get("mensaje") ?? "").trim(),
     };
 
-    setSubmitting(true);
-    const result = await enviarConsulta(payload);
-    setSubmitting(false);
-
-    if (!result.ok) {
-      if (result.status === "preview") {
-        form.reset();
-        toast.message("Vista previa", {
-          description:
-            "Supabase todavía no está configurado en este entorno. La consulta no se envió.",
-        });
-        return;
-      }
-      toast.error("No pudimos enviar tu consulta", {
-        description: result.error,
-      });
-      return;
-    }
+    const url = whatsappUrl(contactInfo.whatsapp.href ?? "", payload);
+    const tab = window.open(url, "_blank");
+    if (tab) tab.opener = null;
+    else window.location.href = url;
 
     form.reset();
-    if (result.emailStatus === "enviado") {
-      toast.success("Recibimos tu consulta", {
-        description: "Un profesional del área te responderá a la brevedad.",
-      });
-    } else {
-      toast.success("Guardamos tu consulta", {
-        description:
-          "El equipo de VDM la verá en el panel y se contactará contigo.",
-      });
-    }
+    toast.success("Abrimos WhatsApp con tu consulta", {
+      description: "Solo falta que aprietes enviar en WhatsApp.",
+    });
   }
 
   function clearError(f: Field) {
@@ -255,21 +251,9 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               <small className="max-w-[40ch] text-small text-ink-muted">
                 Usamos tus datos solo para responder esta consulta.
               </small>
-              <Button type="submit" disabled={submitting}>
-                {submitting ? (
-                  <>
-                    <Loader2
-                      className="size-4 animate-spin"
-                      aria-hidden="true"
-                    />
-                    Enviando…
-                  </>
-                ) : (
-                  <>
-                    Enviar consulta
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </>
-                )}
+              <Button type="submit">
+                <WhatsAppIcon className="size-4" />
+                Enviar por WhatsApp
               </Button>
             </div>
           </form>
