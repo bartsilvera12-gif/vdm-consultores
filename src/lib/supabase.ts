@@ -34,48 +34,24 @@ export type Consulta = {
 };
 
 export type EnviarConsultaResult =
-  | { ok: true; id: string; emailStatus: "enviado" | "error" }
-  | { ok: false; error: string; status: "preview" | "network" | "server" };
+  | { ok: true; emailStatus: "enviado" | "error" }
+  | { ok: false; error: string };
 
 /**
- * Llama a la Edge Function `enviar-consulta`, que valida, guarda la fila en
- * `public.consultas` y envía el correo a VDM a través de Resend.
+ * Llama a `public/api/consulta.php`, que envía el correo a VDM y guarda la
+ * fila en `public.vdm_consultas`. `sitio` es el campo oculto anti-bots.
  */
 export async function enviarConsulta(
-  payload: Consulta,
+  payload: Consulta & { sitio: string },
 ): Promise<EnviarConsultaResult> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    return {
-      ok: false,
-      status: "preview",
-      error:
-        "Vista previa: Supabase no está configurado en este entorno. Definí VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY para enviar la consulta.",
-    };
+  try {
+    const res = await fetch("/api/consulta.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    return (await res.json()) as EnviarConsultaResult;
+  } catch {
+    return { ok: false, error: "No pudimos enviar la consulta." };
   }
-
-  const { data, error } = await supabase.functions.invoke<
-    { ok: true; id: string; emailStatus: "enviado" | "error" } | { error: string }
-  >(env.consultasFunction, {
-    body: payload,
-  });
-
-  if (error) {
-    return {
-      ok: false,
-      status: "network",
-      error: error.message || "No pudimos enviar la consulta. Intenta de nuevo.",
-    };
-  }
-  if (!data || "error" in data) {
-    return {
-      ok: false,
-      status: "server",
-      error:
-        (data && "error" in data && data.error) ||
-        "La consulta no se registró. Intenta de nuevo.",
-    };
-  }
-
-  return { ok: true, id: data.id, emailStatus: data.emailStatus };
 }

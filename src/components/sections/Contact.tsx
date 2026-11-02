@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
 import {
+  ArrowRight,
   Facebook,
   Instagram,
   Linkedin,
+  Loader2,
   Mail,
   MapPin,
 } from "lucide-react";
@@ -14,7 +16,7 @@ import { WhatsAppIcon } from "@/components/primitives/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { areas } from "@/content/areas";
 import { useContactInfo } from "@/hooks/useContactInfo";
-import type { Consulta } from "@/lib/supabase";
+import { enviarConsulta, type Consulta } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
 type Field = "nombre" | "email" | "telefono" | "area" | "mensaje";
@@ -27,11 +29,7 @@ const errorMsg: Record<Field, string> = {
   mensaje: "Escribe tu consulta.",
 };
 
-/**
- * Link de WhatsApp con la consulta ya escrita. La función `enviar-consulta`
- * (correo + panel) no está instalada en el servidor: hasta entonces el
- * formulario sale por acá y no queda registro en `vdm_consultas`.
- */
+/** Link de WhatsApp con la consulta ya escrita, para cuando falla el envío. */
 function whatsappUrl(href: string, c: Consulta) {
   const text = [
     "Hola, quiero hacer una consulta desde la web de VDM Consultores.",
@@ -49,6 +47,7 @@ function whatsappUrl(href: string, c: Consulta) {
 
 export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
   const [errors, setErrors] = useState<Partial<Record<Field, boolean>>>({});
+  const [submitting, setSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const location = useLocation();
   const contactInfo = useContactInfo();
@@ -66,7 +65,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
     select.value = state.area;
   }, [location.state]);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -99,14 +98,32 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
       mensaje: String(data.get("mensaje") ?? "").trim(),
     };
 
-    const url = whatsappUrl(contactInfo.whatsapp.href ?? "", payload);
-    const tab = window.open(url, "_blank");
-    if (tab) tab.opener = null;
-    else window.location.href = url;
+    setSubmitting(true);
+    const result = await enviarConsulta({
+      ...payload,
+      sitio: String(data.get("sitio") ?? ""),
+    });
+    setSubmitting(false);
+
+    if (!result.ok) {
+      toast.error("No pudimos enviar tu consulta", {
+        description: result.error,
+        action: {
+          label: "Enviar por WhatsApp",
+          onClick: () =>
+            window.open(
+              whatsappUrl(contactInfo.whatsapp.href ?? "", payload),
+              "_blank",
+              "noopener",
+            ),
+        },
+      });
+      return;
+    }
 
     form.reset();
-    toast.success("Abrimos WhatsApp con tu consulta", {
-      description: "Solo falta que aprietes enviar en WhatsApp.",
+    toast.success("Recibimos tu consulta", {
+      description: "Un profesional del área te responderá a la brevedad.",
     });
   }
 
@@ -247,13 +264,33 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               className="md:col-span-2"
               as="textarea"
             />
+            <input
+              type="text"
+              name="sitio"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute -left-[9999px]"
+            />
             <div className="flex flex-wrap items-center justify-between gap-4 md:col-span-2">
               <small className="max-w-[40ch] text-small text-ink-muted">
                 Usamos tus datos solo para responder esta consulta.
               </small>
-              <Button type="submit">
-                <WhatsAppIcon className="size-4" />
-                Enviar por WhatsApp
+              <Button type="submit" disabled={submitting}>
+                {submitting ? (
+                  <>
+                    <Loader2
+                      className="size-4 animate-spin"
+                      aria-hidden="true"
+                    />
+                    Enviando…
+                  </>
+                ) : (
+                  <>
+                    Enviar consulta
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </>
+                )}
               </Button>
             </div>
           </form>
