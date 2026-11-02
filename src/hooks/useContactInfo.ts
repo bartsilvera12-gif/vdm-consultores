@@ -39,7 +39,11 @@ function rowToContact(row: ContactInfoRow): ContactInfo {
       href: row.whatsapp_href ?? "#",
     },
     email: {
-      label: row.email_label,
+      // La fila de producción tiene el correo cargado también como etiqueta.
+      label:
+        row.email_label === row.email_value
+          ? defaults.email.label
+          : row.email_label,
       value: row.email_value,
       pending: row.email_pending,
       href: row.email_href ?? "#",

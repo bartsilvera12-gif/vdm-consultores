@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
@@ -40,10 +41,10 @@ export function Hero() {
           </p>
           <div className="mt-1 flex flex-wrap gap-3">
             <Button asChild>
-              <a href="#contacto">
+              <Link to="/contacto">
                 Agenda tu consulta
                 <ArrowRight className="size-4" aria-hidden="true" />
-              </a>
+              </Link>
             </Button>
             <Button asChild variant="outline">
               <a href="#servicios">Conoce nuestros servicios</a>
@@ -88,8 +89,8 @@ export function Hero() {
                 const Icon = area.icon;
                 return (
                   <li key={area.id}>
-                    <a
-                      href={`#${area.id}`}
+                    <Link
+                      to={`/servicios#${area.id}`}
                       className="group grid grid-cols-[40px_1fr_18px] items-center gap-3.5 border-t border-white/15 py-4 text-on-navy"
                     >
                       <span className="grid size-10 place-items-center rounded-md bg-white/10 text-on-navy">
@@ -110,7 +111,7 @@ export function Hero() {
                         className="size-4 text-on-navy-muted transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-on-navy"
                         aria-hidden="true"
                       />
-                    </a>
+                    </Link>
                   </li>
                 );
               })}

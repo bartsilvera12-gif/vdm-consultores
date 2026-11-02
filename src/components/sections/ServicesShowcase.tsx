@@ -1,10 +1,12 @@
-import { useCallback, useRef } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Button } from "@/components/ui/button";
 import { useAreas } from "@/hooks/useAreas";
+import { useCarousel } from "@/hooks/useCarousel";
+import { cn } from "@/lib/utils";
 
 /**
  * Showcase de áreas para la portada (inspirado en PKF): carrusel horizontal de
@@ -13,15 +15,11 @@ import { useAreas } from "@/hooks/useAreas";
  */
 export function ServicesShowcase() {
   const { areas } = useAreas();
-  const trackRef = useRef<HTMLUListElement>(null);
+  const { trackRef, canPrev, canNext, scrollByCard, update } =
+    useCarousel<HTMLUListElement>();
 
-  const scrollByCard = useCallback((dir: 1 | -1) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const card = track.querySelector<HTMLElement>("[data-card]");
-    const amount = card ? (card.offsetWidth + 24) * 2 : track.clientWidth * 0.8;
-    track.scrollBy({ left: dir * amount, behavior: "smooth" });
-  }, []);
+  // Las áreas llegan de Supabase después del montaje.
+  useEffect(update, [areas, update]);
 
   return (
     <section id="servicios" className="bg-surface py-16 md:py-24">
@@ -37,20 +35,22 @@ export function ServicesShowcase() {
               crezca con seguridad jurídica y una estrategia clara.
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className={cn("flex gap-2", !canPrev && !canNext && "hidden")}>
             <button
               type="button"
               aria-label="Anterior"
+              disabled={!canPrev}
               onClick={() => scrollByCard(-1)}
-              className="grid size-11 place-items-center rounded-full border border-line bg-surface text-blue transition-colors hover:border-blue hover:bg-blue hover:text-on-blue"
+              className="grid size-11 place-items-center rounded-full border border-line bg-surface text-blue transition-colors enabled:hover:border-blue enabled:hover:bg-blue enabled:hover:text-on-blue disabled:cursor-default disabled:opacity-40"
             >
               <ChevronLeft className="size-5" aria-hidden="true" />
             </button>
             <button
               type="button"
               aria-label="Siguiente"
+              disabled={!canNext}
               onClick={() => scrollByCard(1)}
-              className="grid size-11 place-items-center rounded-full border border-line bg-surface text-blue transition-colors hover:border-blue hover:bg-blue hover:text-on-blue"
+              className="grid size-11 place-items-center rounded-full border border-line bg-surface text-blue transition-colors enabled:hover:border-blue enabled:hover:bg-blue enabled:hover:text-on-blue disabled:cursor-default disabled:opacity-40"
             >
               <ChevronRight className="size-5" aria-hidden="true" />
             </button>
@@ -67,7 +67,7 @@ export function ServicesShowcase() {
               <li
                 key={area.id}
                 data-card
-                className="w-[44%] shrink-0 snap-start sm:w-[30%] lg:w-[calc(25%-18px)]"
+                className="w-[44%] shrink-0 snap-start sm:w-[30%] lg:w-[calc((100%-48px)/3)]"
               >
                 <Link
                   to={`/servicios#${area.id}`}
