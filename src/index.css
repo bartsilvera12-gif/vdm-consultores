@@ -148,6 +148,29 @@
   --vdm-success: #5cc98a;
 }
 
+/* --------------------------------------------------------------------------
+ * Animaciones — brillo/luz de los íconos del carrusel de servicios (Home)
+ * ------------------------------------------------------------------------ */
+@keyframes vdm-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.22);
+  }
+}
+@keyframes vdm-shine {
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(230%) skewX(-18deg);
+  }
+}
+
 @layer base {
   html {
     font-family: var(--font-sans);

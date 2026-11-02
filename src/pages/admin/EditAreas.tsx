@@ -18,6 +18,7 @@ import {
   type AreaRow,
   type AreaServiceRow,
 } from "@/hooks/useAreas";
+import { IconPicker } from "./IconPicker";
 import { cn } from "@/lib/utils";
 
 type DraftArea = {
@@ -54,20 +55,7 @@ function slugify(text: string): string {
     .slice(0, 60);
 }
 
-/**
- * Catálogo de íconos visibles con su nombre amigable en español.
- * El `name` es la clave que se guarda en DB; la etiqueta es solo UI.
- */
-const ICON_OPTIONS: Array<{ name: string; label: string }> = [
-  { name: "scale", label: "Balanza" },
-  { name: "trending-up", label: "Crecimiento" },
-  { name: "globe", label: "Globo" },
-  { name: "factory", label: "Fábrica" },
-  { name: "briefcase", label: "Maletín" },
-  { name: "building", label: "Edificio" },
-  { name: "leaf", label: "Hoja" },
-  { name: "key", label: "Llave" },
-];
+// Catálogo + grilla visual de íconos reutilizable (ver IconPicker.tsx).
 
 export function EditAreas() {
   const [areas, setAreas] = useState<AreaRow[]>([]);
@@ -612,43 +600,6 @@ function L({
       </span>
       {children}
     </label>
-  );
-}
-
-// -----------------------------------------------------------------------
-// Grilla visual para elegir ícono
-// -----------------------------------------------------------------------
-function IconPicker({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (icon: string) => void;
-}) {
-  return (
-    <div className="grid grid-cols-4 gap-2 sm:grid-cols-8">
-      {ICON_OPTIONS.map((opt) => {
-        const Icon = getAreaIcon(opt.name);
-        const selected = value === opt.name;
-        return (
-          <button
-            key={opt.name}
-            type="button"
-            onClick={() => onChange(opt.name)}
-            title={opt.label}
-            className={cn(
-              "grid aspect-square place-items-center rounded-md border transition-all",
-              selected
-                ? "border-blue bg-blue text-white shadow-card"
-                : "border-line bg-surface text-ink-muted hover:border-blue hover:text-blue",
-            )}
-          >
-            <Icon className="size-5" aria-hidden="true" />
-            <span className="sr-only">{opt.label}</span>
-          </button>
-        );
-      })}
-    </div>
   );
 }
 

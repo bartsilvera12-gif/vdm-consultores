@@ -12,7 +12,8 @@ import {
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { getSupabase } from "@/lib/supabase";
-import { AREA_ICONS, getAreaIcon } from "@/hooks/useAreas";
+import { getAreaIcon } from "@/hooks/useAreas";
+import { IconPicker } from "./IconPicker";
 import type { SectorRow } from "@/hooks/useSectors";
 import { cn } from "@/lib/utils";
 
@@ -30,8 +31,6 @@ const emptyDraft: Draft = {
   body: "",
   icon: "briefcase",
 };
-
-const ICON_NAMES = Object.keys(AREA_ICONS);
 
 export function EditSectors() {
   const [rows, setRows] = useState<SectorRow[]>([]);
@@ -253,20 +252,13 @@ function SectorForm({
             className={cn(inputBase, "min-h-20 resize-y")}
           />
         </label>
-        <label className="grid gap-1.5">
+        <div className="grid gap-1.5 sm:col-span-2">
           <span className="text-label font-semibold">Ícono</span>
-          <select
+          <IconPicker
             value={draft.icon}
-            onChange={(e) => setDraft({ ...draft, icon: e.target.value })}
-            className={inputBase}
-          >
-            {ICON_NAMES.map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </label>
+            onChange={(icon) => setDraft({ ...draft, icon })}
+          />
+        </div>
         <label className="grid gap-1.5">
           <span className="text-label font-semibold">Orden</span>
           <input
