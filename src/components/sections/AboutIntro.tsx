@@ -1,9 +1,7 @@
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Button } from "@/components/ui/button";
-import { useSiteContent } from "@/hooks/useSiteContent";
 import giselleVera from "@/assets/equipo/giselle-vera.webp";
 
 /**
@@ -12,8 +10,6 @@ import giselleVera from "@/assets/equipo/giselle-vera.webp";
  * celular, como el diseño aprobado.
  */
 export function AboutIntro() {
-  const keys = useMemo(() => ["about.intro" as const], []);
-  const content = useSiteContent(keys);
   return (
     <section id="nosotros" className="bg-surface-alt py-12 md:py-24">
       <Container className="grid grid-cols-2 items-center gap-4 sm:gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
@@ -24,8 +20,11 @@ export function AboutIntro() {
             </h2>
             <span className="h-[3px] w-12 bg-orange" aria-hidden="true" />
           </div>
-          <p className="text-small text-ink-muted sm:text-base md:text-lead">
-            {content["about.intro"]}
+          <p className="text-[13px] leading-[20px] text-ink-muted sm:text-base sm:leading-[26px] md:text-lead">
+            Somos una consultora paraguaya especializada en brindar asesoría
+            jurídica, empresarial y de inversiones, con un enfoque integral,
+            técnico y estratégico, orientado a la seguridad y al desarrollo
+            sostenible de nuestros clientes.
           </p>
           <div>
             <Button asChild variant="outline" size="sm" className="sm:h-11 sm:px-6">
