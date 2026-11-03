@@ -22,16 +22,16 @@ export function FirmHero() {
       {/* Foto + franja: ocupan la mitad derecha hasta el borde de la pantalla. */}
       <div
         aria-hidden="true"
-        className="absolute inset-y-0 right-0 w-[50%] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-500"
+        className="absolute inset-y-0 right-0 w-[50%] md:w-[40%] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-500"
       >
         <img
           src={giselleLaptop}
           alt=""
-          width={800}
-          height={1200}
-          className="absolute inset-0 h-full w-full object-cover object-[50%_35%] [clip-path:polygon(26%_0,100%_0,100%_100%,4%_100%)]"
+          width={1024}
+          height={1536}
+          className="absolute inset-x-0 top-0 h-full w-full object-cover object-[50%_35%] md:h-[80%] md:object-[50%_40%] [clip-path:polygon(26%_0,100%_0,100%_100%,4%_100%)]"
         />
-        <div className="absolute inset-x-0 bottom-0 grid min-h-[30%] content-center bg-navy py-4 pl-[18%] pr-3 [clip-path:polygon(12%_0,100%_0,100%_100%,4%_100%)] sm:pl-[16%] sm:pr-8">
+        <div className="absolute inset-x-0 bottom-0 grid min-h-[30%] content-center bg-navy md:min-h-[20%] py-4 pl-[18%] pr-3 [clip-path:polygon(12%_0,100%_0,100%_100%,4%_100%)] sm:pl-[16%] sm:pr-8">
           <span className="absolute left-[22%] top-0 h-[3px] w-[18%] bg-orange" />
           <p className="font-display text-[13px] leading-[17px] font-medium italic text-on-navy sm:text-[20px] sm:leading-[26px] lg:text-[26px] lg:leading-[34px]">
             Un solo equipo,
