@@ -85,7 +85,7 @@ export function Equipo() {
 
             {/* Grilla de integrantes ------------------------------------- */}
             <div className="grid gap-5">
-              <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-2 xl:grid-cols-4">
+              <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-2 xl:grid-cols-3">
                 {members.map((member, i) => (
                   <article
                     key={member.id ?? i}
@@ -97,7 +97,7 @@ export function Equipo() {
                           src={member.photo}
                           alt={member.name}
                           loading="lazy"
-                          className="h-full w-full rounded-lg object-cover"
+                          className="h-full w-full rounded-lg object-cover object-top"
                         />
                       ) : (
                         <span className="grid size-16 place-items-center rounded-full bg-blue/10 text-blue">
@@ -105,7 +105,7 @@ export function Equipo() {
                         </span>
                       )}
                     </div>
-                    <div>
+                    <div className="border-l-[3px] border-orange pl-3">
                       <h2 className="font-display text-base font-semibold leading-6 text-ink">
                         {member.name}
                       </h2>
