@@ -214,11 +214,11 @@ export function EditMedia() {
           </p>
         </div>
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <ul className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
           {items.map((item) => (
             <li
               key={item.path}
-              className="grid grid-rows-[auto_1fr] overflow-hidden rounded-lg border border-line bg-surface"
+              className="grid min-w-0 grid-cols-[minmax(0,1fr)] grid-rows-[auto_1fr] overflow-hidden rounded-lg border border-line bg-surface"
             >
               <div className="aspect-[4/3] overflow-hidden bg-surface-alt p-2">
                 <img
@@ -228,7 +228,7 @@ export function EditMedia() {
                   className="h-full w-full object-contain"
                 />
               </div>
-              <div className="grid gap-2 border-t border-line p-4">
+              <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 border-t border-line p-4">
                 <p
                   className="truncate font-display text-small font-semibold text-ink"
                   title={item.name}
