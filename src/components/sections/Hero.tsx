@@ -52,7 +52,7 @@ export function Hero() {
           </div>
           <ul
             role="list"
-            className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-5 text-small text-ink-muted"
+            className="mt-2 hidden flex-wrap items-center gap-x-5 md:flex gap-y-2 border-t border-line pt-5 text-small text-ink-muted"
           >
             {trustPoints.map((point) => (
               <li key={point} className="inline-flex items-center gap-2">
@@ -63,8 +63,8 @@ export function Hero() {
           </ul>
         </div>
 
-        {/* Dossier panel --------------------------------------------------- */}
-        <div className="relative min-w-0">
+        {/* Dossier panel — en celular no va: las áreas ya están en "Qué hacemos" */}
+        <div className="relative hidden min-w-0 md:block">
           <span
             aria-hidden="true"
             className="pointer-events-none absolute left-[18%] top-[-24px] bottom-[12%] hidden w-14 origin-top -skew-x-[16deg] bg-blue lg:block motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-4 motion-safe:duration-700"
