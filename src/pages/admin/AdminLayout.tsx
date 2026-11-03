@@ -17,6 +17,7 @@ import { Logo } from "@/components/primitives/Logo";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { ConsultasBell } from "./ConsultasBell";
 import { RequireAuth } from "./RequireAuth";
 
 const adminLinks = [
@@ -52,6 +53,7 @@ export function AdminLayout() {
               <Logo />
             </Link>
             <div className="flex items-center gap-2">
+              <ConsultasBell />
               <Button asChild variant="outline" size="sm" className="hidden md:inline-flex">
                 <Link to="/">Ver sitio</Link>
               </Button>

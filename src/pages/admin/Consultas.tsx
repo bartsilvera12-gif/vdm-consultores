@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { getSupabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
+import { CONSULTAS_CHANGED } from "./ConsultasBell";
 
 type ConsultaRow = {
   id: string;
@@ -76,6 +77,7 @@ export function Consultas() {
       return;
     }
     toast.success(next ? "Marcada como atendida" : "Marcada como pendiente");
+    window.dispatchEvent(new Event(CONSULTAS_CHANGED));
     void fetchAll();
   }
 
