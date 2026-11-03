@@ -6,7 +6,6 @@ import { PageCta } from "@/components/primitives/PageCta";
 import { AboutIntro } from "@/components/sections/AboutIntro";
 import { AreasStrip } from "@/components/sections/AreasStrip";
 import { FirmHero } from "@/components/sections/FirmHero";
-import { MediaGallery } from "@/components/sections/MediaGallery";
 import { useDisciplines } from "@/hooks/useDisciplines";
 import { useSiteContent } from "@/hooks/useSiteContent";
 
@@ -146,7 +145,6 @@ export function Nosotros() {
           </div>
         </Container>
       </section>
-      <MediaGallery />
       <PageCta
         title="¿Querés que te acompañemos?"
         body="Contanos tu proyecto y te ponemos en contacto con el área correcta."

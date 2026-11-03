@@ -170,8 +170,8 @@ export function EditMedia() {
             Imágenes
           </h1>
           <p className="mt-2 max-w-xl text-body text-ink-muted">
-            Las fotos que subas acá aparecen en la galería de la página Quiénes
-            somos, la más nueva primero; si borrás una, sale de la galería.
+            Las fotos que subas acá aparecen en la página Galería del sitio, la
+            más nueva primero; si borrás una, sale de la galería.
             También podés copiar su URL. PNG, JPG, WEBP, GIF o SVG · hasta 5 MB.
           </p>
         </div>
@@ -220,15 +220,15 @@ export function EditMedia() {
               key={item.path}
               className="grid grid-rows-[auto_1fr] overflow-hidden rounded-lg border border-line bg-surface"
             >
-              <div className="aspect-square overflow-hidden bg-surface-alt">
+              <div className="aspect-[4/3] overflow-hidden bg-surface-alt p-2">
                 <img
                   src={item.url}
                   alt={item.name}
                   loading="lazy"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
               </div>
-              <div className="grid gap-2 p-3">
+              <div className="grid gap-2 border-t border-line p-4">
                 <p
                   className="truncate font-display text-small font-semibold text-ink"
                   title={item.name}
@@ -238,12 +238,12 @@ export function EditMedia() {
                 <p className="text-small text-ink-muted">
                   {formatBytes(item.size)}
                 </p>
-                <div className="mt-1 flex items-center gap-2">
+                <div className="mt-2 flex items-center justify-between gap-3">
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="flex-1"
+                    className="min-w-0 flex-1"
                     onClick={() => copyUrl(item.url)}
                   >
                     <Copy className="size-4" aria-hidden="true" />
@@ -256,7 +256,7 @@ export function EditMedia() {
                     aria-label="Eliminar"
                     title="Eliminar"
                     className={cn(
-                      "inline-flex size-9 items-center justify-center rounded-md border border-line text-ink-muted transition-colors hover:border-[#B3261E] hover:text-[#B3261E]",
+                      "inline-flex size-9 flex-none items-center justify-center rounded-md border border-line text-ink-muted transition-colors hover:border-[#B3261E] hover:text-[#B3261E]",
                       deletingPath === item.path && "opacity-40",
                     )}
                   >

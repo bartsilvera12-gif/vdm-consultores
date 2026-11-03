@@ -6,6 +6,7 @@ import { Servicios } from "@/pages/Servicios";
 import { Equipo } from "@/pages/Equipo";
 import { Experiencia } from "@/pages/Experiencia";
 import { Contacto } from "@/pages/Contacto";
+import { Galeria } from "@/pages/Galeria";
 import { AdminLogin } from "@/pages/admin/Login";
 import { AdminLayout } from "@/pages/admin/AdminLayout";
 import { AdminDashboard } from "@/pages/admin/Dashboard";
@@ -29,6 +30,7 @@ export function App() {
           <Route path="servicios" element={<Servicios />} />
           <Route path="equipo" element={<Equipo />} />
           <Route path="experiencia" element={<Experiencia />} />
+          <Route path="galeria" element={<Galeria />} />
           <Route path="contacto" element={<Contacto />} />
         </Route>
         {/* Admin */}

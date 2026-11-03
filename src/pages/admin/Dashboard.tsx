@@ -46,7 +46,7 @@ const cards = [
     to: "/admin/imagenes",
     icon: ImageIcon,
     title: "Imágenes",
-    body: "Las fotos que subas acá aparecen en la galería de Quiénes somos.",
+    body: "Las fotos que subas acá aparecen en la página Galería del sitio.",
   },
   {
     to: "/admin/contacto",

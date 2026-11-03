@@ -36,7 +36,7 @@ export function Header() {
               end={link.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "rounded-md px-3 py-2 font-display text-sm font-medium transition-[color,background-color]",
+                  "whitespace-nowrap rounded-md px-2.5 py-2 font-display text-sm font-medium transition-[color,background-color] xl:px-3",
                   isActive
                     ? "bg-surface-alt text-blue"
                     : "text-ink hover:bg-surface-alt hover:text-blue",

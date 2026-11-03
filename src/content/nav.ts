@@ -11,5 +11,6 @@ export const navLinks: NavLink[] = [
   { to: "/servicios", label: "Servicios" },
   { to: "/equipo", label: "Equipo" },
   { to: "/experiencia", label: "Experiencia" },
+  { to: "/galeria", label: "Galería" },
   { to: "/contacto", label: "Contacto" },
 ];
