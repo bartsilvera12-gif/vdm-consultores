@@ -5,19 +5,19 @@ import { Button } from "@/components/ui/button";
 import giselleVera from "@/assets/equipo/giselle-vera.webp";
 
 /**
- * "Quiénes somos" de la portada: intro de la firma + retrato de la directora.
- * Lleva a /nosotros, que tiene el contenido completo. Dos columnas también en
- * celular, como el diseño aprobado.
+ * Apertura de /nosotros: intro de la firma + retrato de la directora. "Conoce
+ * más" baja al relato de la firma. Dos columnas también en celular, como el
+ * diseño aprobado.
  */
 export function AboutIntro() {
   return (
-    <section id="nosotros" className="bg-surface-alt py-12 md:py-24">
+    <section className="bg-surface-alt py-12 md:py-24">
       <Container className="grid grid-cols-2 items-center gap-4 sm:gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         <div className="grid min-w-0 content-center gap-4 sm:gap-6">
           <div className="grid gap-3">
-            <h2 className="whitespace-nowrap font-display text-[20px] leading-[26px] font-bold tracking-h2 text-ink sm:text-[28px] sm:leading-[34px] md:text-h2 md:leading-h2">
+            <h1 className="whitespace-nowrap font-display text-[20px] leading-[26px] font-bold tracking-h2 text-ink sm:text-[28px] sm:leading-[34px] md:text-h2 md:leading-h2">
               Quiénes somos
-            </h2>
+            </h1>
             <span className="h-[3px] w-12 bg-orange" aria-hidden="true" />
           </div>
           <p className="text-[13px] leading-[20px] text-ink-muted sm:text-base sm:leading-[26px] md:text-lead">
@@ -28,7 +28,7 @@ export function AboutIntro() {
           </p>
           <div>
             <Button asChild variant="outline" size="sm" className="sm:h-11 sm:px-6">
-              <Link to="/nosotros">
+              <Link to="/nosotros#la-firma">
                 Conoce más
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>

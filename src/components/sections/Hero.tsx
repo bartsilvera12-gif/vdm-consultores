@@ -1,74 +1,121 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Button } from "@/components/ui/button";
+import { useAreas } from "@/hooks/useAreas";
 import { useSiteContent } from "@/hooks/useSiteContent";
-import giselleLaptop from "@/assets/equipo/giselle-laptop.webp";
+import { cn } from "@/lib/utils";
 
-/**
- * Inicio de la portada: texto a la izquierda y foto a la derecha, cortada en
- * diagonal (la V del logo) con la franja navy del lema. Dos columnas también
- * en celular, como el diseño aprobado.
- */
+const trustPoints = [
+  "Equipo multidisciplinario",
+  "Clientes nacionales y extranjeros",
+  "Asesoría permanente",
+];
+
 export function Hero() {
   const keys = useMemo(() => ["hero.lead" as const], []);
   const content = useSiteContent(keys);
+  const { areas } = useAreas();
   return (
     <section
       id="inicio"
       className="relative overflow-hidden border-b border-line bg-surface"
     >
-      {/* Foto + franja: ocupan la mitad derecha hasta el borde de la pantalla. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-y-0 right-0 w-[50%] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-500"
-      >
-        <img
-          src={giselleLaptop}
-          alt=""
-          width={800}
-          height={1200}
-          className="absolute inset-0 h-full w-full object-cover object-[50%_35%] [clip-path:polygon(26%_0,100%_0,100%_100%,4%_100%)]"
-        />
-        <div className="absolute inset-x-0 bottom-0 grid min-h-[30%] content-center bg-navy py-4 pl-[18%] pr-3 [clip-path:polygon(12%_0,100%_0,100%_100%,4%_100%)] sm:pl-[16%] sm:pr-8">
-          <span className="absolute left-[22%] top-0 h-[3px] w-[18%] bg-orange" />
-          <p className="font-display text-[13px] leading-[17px] font-medium italic text-on-navy sm:text-[20px] sm:leading-[26px] lg:text-[26px] lg:leading-[34px]">
-            Un solo equipo,
-            <br />
-            soluciones integrales.
-          </p>
-        </div>
-      </div>
-
-      <Container className="relative py-10 sm:py-16 md:py-24 lg:py-28">
-        <div className="grid w-[50%] min-w-0 grid-cols-[minmax(0,1fr)] gap-4 pr-3 sm:gap-6 sm:pr-6 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <span className="h-[2px] w-4 shrink-0 bg-blue sm:h-[3px] sm:w-10" aria-hidden="true" />
-            <Eyebrow className="whitespace-nowrap text-[8.5px] tracking-[0.06em] sm:text-eyebrow sm:tracking-eyebrow">
-              VDM Consultores · Paraguay
-            </Eyebrow>
+      <Container className="relative grid items-center gap-10 py-12 pb-16 md:gap-14 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:py-28">
+        {/* Copy ------------------------------------------------------------- */}
+        <div className="grid min-w-0 gap-6 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500">
+          <div className="flex items-center gap-3">
+            <span className="h-[3px] w-10 bg-blue" aria-hidden="true" />
+            <Eyebrow>VDM Consultores · Paraguay</Eyebrow>
           </div>
-          <h1 className="font-display text-[24px] leading-[26px] font-bold tracking-tight text-ink sm:text-[40px] sm:leading-[44px] md:text-[52px] md:leading-[56px] lg:text-[60px] lg:leading-[62px]">
+          <h1 className="font-display text-[34px] leading-[40px] font-bold tracking-tight text-ink sm:text-[40px] sm:leading-[44px] md:text-[52px] md:leading-[56px] lg:text-[62px] lg:leading-[64px]">
             Fortaleciendo empresas,{" "}
             <em className="block not-italic text-blue">
-              potenciando inversiones.
+              potenciando inversiones<span className="text-blue">.</span>
             </em>
           </h1>
-          <p className="text-[12px] leading-[18px] text-ink-muted sm:text-base sm:leading-[26px] lg:text-lead">
+          <p className="max-w-[540px] text-base leading-[26px] text-ink-muted sm:text-lead">
             {content["hero.lead"]}
           </p>
-          <div className="grid justify-items-start gap-2.5 sm:flex sm:flex-wrap sm:gap-3">
-            <Button asChild size="sm" className="h-8 px-3 text-[11.5px] sm:h-11 sm:px-6 sm:text-label">
+          <div className="mt-1 flex flex-wrap gap-3">
+            <Button asChild>
               <Link to="/contacto">
                 Agenda tu consulta
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </Button>
-            <Button asChild size="sm" variant="outline" className="h-8 px-3 text-[11.5px] sm:h-11 sm:px-6 sm:text-label">
+            <Button asChild variant="outline">
               <a href="#servicios">Conoce nuestros servicios</a>
             </Button>
+          </div>
+          <ul
+            role="list"
+            className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-5 text-small text-ink-muted"
+          >
+            {trustPoints.map((point) => (
+              <li key={point} className="inline-flex items-center gap-2">
+                <Check className="size-4 text-blue" aria-hidden="true" />
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Dossier panel --------------------------------------------------- */}
+        <div className="relative min-w-0">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute left-[18%] top-[-24px] bottom-[12%] hidden w-14 origin-top -skew-x-[16deg] bg-blue lg:block motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-4 motion-safe:duration-700"
+          />
+          <div
+            className={cn(
+              "relative overflow-hidden rounded-lg bg-navy p-6 pb-4 text-on-navy sm:p-8 sm:pb-5 md:p-10 md:pb-6",
+              "lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%,0_9%)]",
+              "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-500",
+            )}
+          >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute right-0 top-0 bottom-0 hidden w-2.5 bg-blue-bright md:block"
+            />
+            <Eyebrow tone="onNavy">Áreas de servicio</Eyebrow>
+            <p className="mt-2.5 mb-5 font-display text-h3 leading-h3 font-semibold text-on-navy">
+              Un solo equipo, soluciones integrales.
+            </p>
+            <ul className="m-0 list-none p-0">
+              {areas.map((area) => {
+                const Icon = area.icon;
+                return (
+                  <li key={area.id}>
+                    <Link
+                      to={`/servicios#${area.id}`}
+                      className="group grid grid-cols-[40px_1fr_18px] items-center gap-3.5 border-t border-white/15 py-4 text-on-navy"
+                    >
+                      <span className="grid size-10 place-items-center rounded-md bg-white/10 text-on-navy">
+                        <Icon className="size-5" aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block font-display text-base font-semibold leading-[21px]">
+                          {area.eyebrow.replace(
+                            " Industriales y Comerciales",
+                            "",
+                          )}
+                        </span>
+                        <span className="mt-0.5 block font-sans text-small text-on-navy-muted">
+                          {area.summary}
+                        </span>
+                      </span>
+                      <ArrowRight
+                        className="size-4 text-on-navy-muted transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-on-navy"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </Container>

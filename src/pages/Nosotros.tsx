@@ -2,8 +2,10 @@ import { useMemo } from "react";
 import { ShieldCheck, Rocket } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
-import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
+import { AboutIntro } from "@/components/sections/AboutIntro";
+import { AreasStrip } from "@/components/sections/AreasStrip";
+import { FirmHero } from "@/components/sections/FirmHero";
 import { useDisciplines } from "@/hooks/useDisciplines";
 import { useSiteContent } from "@/hooks/useSiteContent";
 
@@ -27,11 +29,10 @@ export function Nosotros() {
 
   return (
     <>
-      <PageHero
-        eyebrow="Quiénes somos"
-        title="Un solo equipo, soluciones integrales."
-      />
-      <section className="bg-surface-alt py-16 md:py-24">
+      <AboutIntro />
+      <FirmHero />
+      <AreasStrip />
+      <section id="la-firma" className="bg-surface-alt py-16 md:py-24">
         <Container>
           <div className="grid items-start gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch lg:gap-8">
             {/* Columna izquierda — relato de la firma ---------------------- */}
