@@ -170,9 +170,9 @@ export function EditMedia() {
             Imágenes
           </h1>
           <p className="mt-2 max-w-xl text-body text-ink-muted">
-            Banco de imágenes del sitio. Subí fotos y logos acá; después podés
-            copiar la URL de cada una y pegarla donde la necesites (textos,
-            equipo, áreas, etc.). PNG, JPG, WEBP, GIF o SVG · hasta 5 MB.
+            Las fotos que subas acá aparecen en la galería de la página Quiénes
+            somos, la más nueva primero; si borrás una, sale de la galería.
+            También podés copiar su URL. PNG, JPG, WEBP, GIF o SVG · hasta 5 MB.
           </p>
         </div>
         <div>
