@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/Hero";
+import { AboutIntro } from "@/components/sections/AboutIntro";
 import { ServicesShowcase } from "@/components/sections/ServicesShowcase";
 import { CtaBand } from "@/components/sections/CtaBand";
 
@@ -11,6 +12,7 @@ export function Home() {
   return (
     <>
       <Hero />
+      <AboutIntro />
       <ServicesShowcase />
       <CtaBand />
     </>
