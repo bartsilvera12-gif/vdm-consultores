@@ -18,7 +18,7 @@ export function AboutIntro() {
             <h1 className="whitespace-nowrap font-display text-[20px] leading-[26px] font-bold tracking-h2 text-ink sm:text-[28px] sm:leading-[34px] md:text-h2 md:leading-h2">
               Quiénes somos
             </h1>
-            <span className="h-[3px] w-12 bg-orange" aria-hidden="true" />
+            <span className="h-[3px] w-12 bg-sky" aria-hidden="true" />
           </div>
           <p className="text-[13px] leading-[20px] text-ink-muted sm:text-base sm:leading-[26px] md:text-lead">
             Somos una consultora paraguaya especializada en brindar asesoría
@@ -47,7 +47,7 @@ export function AboutIntro() {
               className="aspect-[2/3] w-full sm:aspect-[3/4] object-cover object-top"
             />
           </div>
-          <figcaption className="absolute inset-x-2 bottom-2 rounded-md border-l-[3px] border-orange bg-surface px-2 py-1.5 shadow-card sm:inset-x-6 sm:bottom-6 sm:px-4 sm:py-3">
+          <figcaption className="absolute inset-x-2 bottom-2 rounded-md border-l-[3px] border-sky bg-surface px-2 py-1.5 shadow-card sm:inset-x-6 sm:bottom-6 sm:px-4 sm:py-3">
             <span className="block whitespace-nowrap font-display text-[12.5px] leading-[18px] font-semibold text-ink sm:text-base">
               Mgtr. Giselle Vera
             </span>

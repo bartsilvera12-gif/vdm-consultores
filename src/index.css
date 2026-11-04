@@ -17,9 +17,7 @@
   --color-blue: var(--vdm-blue);
   --color-blue-bright: var(--vdm-blue-bright);
   --color-on-blue: var(--vdm-on-blue);
-  --color-orange: var(--vdm-orange);
-  --color-orange-text: var(--vdm-orange-text);
-  --color-on-orange: var(--vdm-on-orange);
+  --color-sky: var(--vdm-sky);
   --color-on-navy: var(--vdm-on-navy);
   --color-on-navy-muted: var(--vdm-on-navy-muted);
   --color-line: var(--vdm-line);
@@ -38,8 +36,8 @@
   --color-primary-foreground: var(--vdm-on-blue);
   --color-secondary: var(--vdm-navy);
   --color-secondary-foreground: var(--vdm-on-navy);
-  --color-accent: var(--vdm-orange);
-  --color-accent-foreground: var(--vdm-on-orange);
+  --color-accent: var(--vdm-sky);
+  --color-accent-foreground: var(--vdm-on-blue);
   --color-muted: var(--vdm-surface-alt);
   --color-muted-foreground: var(--vdm-ink-muted);
   --color-border: var(--vdm-line);
@@ -113,9 +111,7 @@
   --vdm-blue: #0a56a2;
   --vdm-blue-bright: #1168b8;
   --vdm-on-blue: #ffffff;
-  --vdm-orange: #fe841f;
-  --vdm-orange-text: #a84f00;
-  --vdm-on-orange: #0f1e33;
+  --vdm-sky: #1ba3dc;
   --vdm-on-navy: #ffffff;
   --vdm-on-navy-muted: #b4c3d6;
   --vdm-line: #dce3ec;
@@ -137,9 +133,7 @@
   --vdm-blue: #5fa4ec;
   --vdm-blue-bright: #7db6f0;
   --vdm-on-blue: #0b1726;
-  --vdm-orange: #fe841f;
-  --vdm-orange-text: #ffa24d;
-  --vdm-on-orange: #0f1e33;
+  --vdm-sky: #4cb8e8;
   --vdm-on-navy: #eef3f9;
   --vdm-on-navy-muted: #b4c3d6;
   --vdm-line: #22364f;

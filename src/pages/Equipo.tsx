@@ -105,7 +105,7 @@ export function Equipo() {
                         </span>
                       )}
                     </div>
-                    <div className="border-l-[3px] border-orange pl-3">
+                    <div className="border-l-[3px] border-sky pl-3">
                       <h2 className="font-display text-base font-semibold leading-6 text-ink">
                         {member.name}
                       </h2>

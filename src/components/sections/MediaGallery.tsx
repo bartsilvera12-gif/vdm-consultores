@@ -58,7 +58,7 @@ export function MediaGallery({
             <h2 className="font-display text-[22px] leading-[28px] font-bold tracking-h2 text-ink sm:text-[28px] sm:leading-[34px] md:text-h2 md:leading-h2">
               VDM Consultores en imágenes
             </h2>
-            <span className="h-[3px] w-12 bg-orange" aria-hidden="true" />
+            <span className="h-[3px] w-12 bg-sky" aria-hidden="true" />
           </div>
         )}
         {urls.length === 0 && (

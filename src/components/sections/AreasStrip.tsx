@@ -19,7 +19,7 @@ export function AreasStrip() {
           <h2 className="font-display text-[20px] leading-[26px] font-bold tracking-h2 text-ink sm:text-[28px] sm:leading-[34px] md:text-h2 md:leading-h2">
             Áreas de servicio
           </h2>
-          <span className="h-[3px] w-12 bg-orange" aria-hidden="true" />
+          <span className="h-[3px] w-12 bg-sky" aria-hidden="true" />
         </div>
         <ul className="m-0 grid list-none grid-cols-5 gap-1.5 p-0 sm:gap-4">
           {areas.map(({ label, icon: Icon }) => (

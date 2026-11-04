@@ -104,7 +104,7 @@ export function ConsultasBell() {
       >
         <Bell className="size-4" aria-hidden="true" />
         {count > 0 && (
-          <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-orange px-1 font-display text-[11px] font-bold leading-none text-on-orange">
+          <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-blue px-1 font-display text-[11px] font-bold leading-none text-on-blue">
             {count > 99 ? "99+" : count}
           </span>
         )}

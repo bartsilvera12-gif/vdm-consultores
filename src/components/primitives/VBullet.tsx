@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Punto de lista con la silueta de la V del logo. Trazo abierto, 1.8-2.2 ancho,
- * color por currentColor para que el padre lo pinte en `orange`.
+ * color por currentColor para que el padre lo pinte.
  */
 export function VBullet({ className }: { className?: string }) {
   return (

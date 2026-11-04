@@ -1,121 +1,69 @@
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
-import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Button } from "@/components/ui/button";
-import { useAreas } from "@/hooks/useAreas";
-import { useSiteContent } from "@/hooks/useSiteContent";
-import { cn } from "@/lib/utils";
+import giselleLaptop from "@/assets/equipo/giselle-laptop.webp";
 
-const trustPoints = [
-  "Equipo multidisciplinario",
-  "Clientes nacionales y extranjeros",
-  "Asesoría permanente",
-];
-
-export function Hero() {
-  const keys = useMemo(() => ["hero.lead" as const], []);
-  const content = useSiteContent(keys);
-  const { areas } = useAreas();
+/** Rayos finos alrededor de la foto, de un radio interno a uno externo. */
+function Rays() {
+  const lines = Array.from({ length: 140 }, (_, i) => {
+    const a = (i / 140) * Math.PI * 2;
+    const r1 = 330 + (i % 3) * 18;
+    const r2 = 760;
+    return {
+      x1: 800 + Math.cos(a) * r1,
+      y1: 800 + Math.sin(a) * r1,
+      x2: 800 + Math.cos(a) * r2,
+      y2: 800 + Math.sin(a) * r2,
+    };
+  });
   return (
-    <section
-      id="inicio"
-      className="relative overflow-hidden border-b border-line bg-surface"
+    <svg
+      viewBox="0 0 1600 1600"
+      aria-hidden="true"
+      className="pointer-events-none absolute left-1/2 top-1/2 h-[230%] w-[230%] -translate-x-1/2 -translate-y-1/2"
     >
-      <Container className="relative grid items-center gap-10 py-12 pb-16 md:gap-14 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:py-28">
-        {/* Copy ------------------------------------------------------------- */}
-        <div className="grid min-w-0 gap-6 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500">
-          <div className="flex items-center gap-3">
-            <span className="h-[3px] w-10 bg-blue" aria-hidden="true" />
-            <Eyebrow>VDM Consultores · Paraguay</Eyebrow>
-          </div>
-          <h1 className="font-display text-[34px] leading-[40px] font-bold tracking-tight text-ink sm:text-[40px] sm:leading-[44px] md:text-[52px] md:leading-[56px] lg:text-[62px] lg:leading-[64px]">
-            Fortaleciendo empresas,{" "}
-            <em className="block not-italic text-blue">
-              potenciando inversiones<span className="text-blue">.</span>
-            </em>
+      <g stroke="var(--vdm-sky)" strokeWidth="1.4" opacity="0.45">
+        {lines.map((l, i) => (
+          <line key={i} {...l} />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * Portada: fondo azul con rayos, bienvenida a la izquierda y foto redonda a
+ * la derecha (referencia aprobada: portada de PKF Paraguay).
+ */
+export function Hero() {
+  return (
+    <section id="inicio" className="relative overflow-hidden bg-blue text-on-blue">
+      <Container className="relative grid items-center gap-12 py-14 md:py-20 md:min-h-[560px] md:grid-cols-[1.15fr_0.85fr] md:gap-8 lg:min-h-[640px] lg:py-24">
+        <div className="relative z-10 grid gap-6 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 md:gap-8">
+          <h1 className="font-display text-[40px] leading-[46px] font-semibold tracking-tight sm:text-[48px] sm:leading-[54px] lg:text-[64px] lg:leading-[70px]">
+            <span className="block">Bienvenidos a</span>
+            <span className="block lg:whitespace-nowrap">VDM Consultores</span>
           </h1>
-          <p className="max-w-[540px] text-base leading-[26px] text-ink-muted sm:text-lead">
-            {content["hero.lead"]}
+          <p className="font-display text-small font-medium uppercase tracking-[0.06em] text-on-navy-muted sm:text-base">
+            Fortaleciendo empresas, potenciando inversiones
           </p>
-          <div className="mt-1 flex flex-wrap gap-3">
-            <Button asChild>
-              <Link to="/contacto">
-                Agenda tu consulta
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline">
-              <a href="#servicios">Conoce nuestros servicios</a>
+          <div>
+            <Button asChild variant="onNavy" size="lg" className="text-blue">
+              <Link to="/contacto">Contáctanos</Link>
             </Button>
           </div>
-          <ul
-            role="list"
-            className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-5 text-small text-ink-muted"
-          >
-            {trustPoints.map((point) => (
-              <li key={point} className="inline-flex items-center gap-2">
-                <Check className="size-4 text-blue" aria-hidden="true" />
-                {point}
-              </li>
-            ))}
-          </ul>
         </div>
 
-        {/* Dossier panel --------------------------------------------------- */}
-        <div className="relative min-w-0">
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute left-[18%] top-[-24px] bottom-[12%] hidden w-14 origin-top -skew-x-[16deg] bg-blue lg:block motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-4 motion-safe:duration-700"
-          />
-          <div
-            className={cn(
-              "relative overflow-hidden rounded-lg bg-navy p-6 pb-4 text-on-navy sm:p-8 sm:pb-5 md:p-10 md:pb-6",
-              "lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%,0_9%)]",
-              "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-500",
-            )}
-          >
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute right-0 top-0 bottom-0 hidden w-2.5 bg-blue-bright md:block"
+        <div className="relative mx-auto w-full max-w-[300px] sm:max-w-[380px] lg:max-w-[460px]">
+          <Rays />
+          <div className="relative aspect-square overflow-hidden rounded-full motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-700">
+            <img
+              src={giselleLaptop}
+              alt="Mgtr. Giselle Vera, directora general de VDM Consultores, trabajando en la oficina"
+              width={1024}
+              height={1536}
+              className="h-full w-full object-cover object-[50%_45%]"
             />
-            <Eyebrow tone="onNavy">Áreas de servicio</Eyebrow>
-            <p className="mt-2.5 mb-5 font-display text-h3 leading-h3 font-semibold text-on-navy">
-              Un solo equipo, soluciones integrales.
-            </p>
-            <ul className="m-0 list-none p-0">
-              {areas.map((area) => {
-                const Icon = area.icon;
-                return (
-                  <li key={area.id}>
-                    <Link
-                      to={`/servicios#${area.id}`}
-                      className="group grid grid-cols-[40px_1fr_18px] items-center gap-3.5 border-t border-white/15 py-4 text-on-navy"
-                    >
-                      <span className="grid size-10 place-items-center rounded-md bg-white/10 text-on-navy">
-                        <Icon className="size-5" aria-hidden="true" />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block font-display text-base font-semibold leading-[21px]">
-                          {area.eyebrow.replace(
-                            " Industriales y Comerciales",
-                            "",
-                          )}
-                        </span>
-                        <span className="mt-0.5 block font-sans text-small text-on-navy-muted">
-                          {area.summary}
-                        </span>
-                      </span>
-                      <ArrowRight
-                        className="size-4 text-on-navy-muted transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-on-navy"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
           </div>
         </div>
       </Container>
