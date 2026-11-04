@@ -1,18 +1,33 @@
 import { User } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
-import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
 import { Reveal } from "@/components/primitives/Reveal";
-import { useAreas } from "@/hooks/useAreas";
 import { useTeam } from "@/hooks/useTeam";
 import { cn } from "@/lib/utils";
 
+/**
+ * Formas y colores de fondo que se van alternando detrás de cada retrato
+ * recortado (azules de la marca y gris claro; sin naranja).
+ */
+const SHAPES = [
+  "rounded-t-[999px] rounded-b-[28px]",
+  "rounded-[36%]",
+  "rounded-[999px]",
+  "rounded-[28px] rounded-tr-[999px]",
+];
+const COLORS = ["bg-navy", "bg-blue-bright", "bg-[#e8edf3]", "bg-sky"];
+
+type Member = { id?: string; name: string; role: string; photo?: string };
+
 export function Equipo() {
   const { members } = useTeam();
-  const { areas } = useAreas();
   const allPlaceholders =
     members.length > 0 && members.every((m) => m.name === "Nombre y apellido");
+  // Jerarquía del boceto: primero las tres que están día a día (cuerpo
+  // entero), después el resto en el orden que cargó la clienta.
+  const lead = members.slice(0, 3);
+  const rest = members.slice(3);
 
   return (
     <>
@@ -21,59 +36,29 @@ export function Equipo() {
         title="Profesionales especializados en cada área"
         lead="Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente."
       />
-      <section className="bg-surface-alt py-16 md:py-24">
-        <Container>
-          <div className="grid items-start gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:gap-8">
-            {/* Panel navy — áreas que cubre el equipo --------------------- */}
-            <aside className="relative overflow-hidden rounded-xl bg-navy p-7 text-on-navy shadow-card sm:p-9 md:p-10 lg:sticky lg:top-24">
-              <div className="relative grid gap-5">
-                <Eyebrow tone="onNavy">Un solo equipo</Eyebrow>
-                <p className="font-display text-h3 leading-h3 font-semibold text-on-navy">
-                  Profesionales que cubren cada área de tu empresa o inversión.
-                </p>
-                <ul className="m-0 grid list-none gap-3 p-0">
-                  {areas.map((area) => {
-                    const Icon = area.icon;
-                    return (
-                      <li
-                        key={area.id}
-                        className="grid grid-cols-[40px_1fr] items-center gap-3 border-t border-white/15 pt-3 first:border-t-0 first:pt-0"
-                      >
-                        <span className="grid size-10 place-items-center rounded-full bg-white/10 text-on-navy">
-                          <Icon className="size-5" aria-hidden="true" />
-                        </span>
-                        <span className="font-display text-base font-semibold leading-5 text-on-navy">
-                          {area.eyebrow}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </aside>
-
-            {/* Integrantes: primero las tres de cuerpo entero (día a día),
-                después el resto, en el orden que cargó la clienta. ------ */}
-            <div className="grid gap-5">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
-                {members.slice(0, 3).map((member, i) => (
-                  <MemberCard key={member.id ?? i} member={member} featured />
-                ))}
-              </div>
-              <div className="grid grid-cols-2 gap-4 sm:gap-5 xl:grid-cols-3">
-                {members.slice(3).map((member, i) => (
-                  <MemberCard key={member.id ?? i} member={member} />
-                ))}
-              </div>
-              {allPlaceholders && (
-                <p className="inline-flex items-center gap-2 self-start rounded-full border border-line bg-surface px-4 py-2 text-small text-ink-muted">
-                  <span className="block size-2 shrink-0 rounded-full bg-blue" />
-                  Perfiles, cargos y fotografías a completar con el material que
-                  entregue VDM.
-                </p>
-              )}
-            </div>
+      <section className="bg-surface py-16 md:py-24">
+        <Container className="grid gap-16 md:gap-24">
+          <div className="mx-auto grid w-full max-w-[980px] grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+            {lead.map((member, i) => (
+              <MemberCard key={member.id ?? i} member={member} index={i} featured />
+            ))}
           </div>
+
+          {rest.length > 0 && (
+            <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-6">
+              {rest.map((member, i) => (
+                <MemberCard key={member.id ?? i} member={member} index={i + 3} />
+              ))}
+            </div>
+          )}
+
+          {allPlaceholders && (
+            <p className="inline-flex items-center gap-2 justify-self-center rounded-full border border-line bg-surface px-4 py-2 text-small text-ink-muted">
+              <span className="block size-2 shrink-0 rounded-full bg-blue" />
+              Perfiles, cargos y fotografías a completar con el material que
+              entregue VDM.
+            </p>
+          )}
         </Container>
       </section>
       <PageCta />
@@ -83,19 +68,25 @@ export function Equipo() {
 
 function MemberCard({
   member,
+  index,
   featured = false,
 }: {
-  member: { name: string; role: string; photo?: string };
+  member: Member;
+  index: number;
   featured?: boolean;
 }) {
   return (
-    <Reveal as="article" className="grid content-start gap-3 rounded-xl border border-line bg-surface p-3 shadow-card sm:p-4">
+    <Reveal
+      as="article"
+      delay={(index % (featured ? 3 : 5)) * 90}
+      className="group grid content-start justify-items-center gap-5 text-center"
+    >
       <div
         className={cn(
-          "grid max-w-full place-items-center overflow-hidden rounded-lg text-center text-small text-ink-muted",
-          // Cuerpo entero: alto y recortado arriba. El resto: foto completa
-          // sobre blanco, como en el boceto (fondo blanco de los retratos).
-          featured ? "aspect-[3/5] bg-surface-alt" : "aspect-[4/3] bg-white",
+          "relative w-full overflow-hidden",
+          SHAPES[index % SHAPES.length],
+          COLORS[index % COLORS.length],
+          featured ? "aspect-[3/4]" : "aspect-square",
         )}
       >
         {member.photo ? (
@@ -104,21 +95,33 @@ function MemberCard({
             alt={member.name}
             loading="lazy"
             className={cn(
-              "h-full w-full rounded-lg",
-              featured ? "object-cover object-top" : "object-contain",
+              "absolute inset-x-0 bottom-0 mx-auto w-auto max-w-full object-contain object-bottom transition-[filter,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-1 group-hover:grayscale",
+              featured ? "h-[94%]" : "h-[90%]",
             )}
           />
         ) : (
-          <span className="grid size-16 place-items-center rounded-full bg-blue/10 text-blue">
-            <User className="size-8" aria-hidden="true" />
+          <span className="absolute inset-0 grid place-items-center text-on-navy">
+            <User className="size-10" aria-hidden="true" />
           </span>
         )}
       </div>
-      <div className="border-l-[3px] border-sky pl-3">
-        <h2 className="font-display text-base font-semibold leading-6 text-ink">
+      <div className="grid gap-1.5">
+        <h2
+          className={cn(
+            "font-semibold text-ink",
+            featured ? "text-[22px] leading-[28px]" : "text-[17px] leading-[22px]",
+          )}
+        >
           {member.name}
         </h2>
-        <p className="text-small text-ink-muted">{member.role}</p>
+        <p
+          className={cn(
+            "mx-auto max-w-[28ch] text-ink-muted",
+            featured ? "text-small" : "text-[13px] leading-[18px]",
+          )}
+        >
+          {member.role}
+        </p>
       </div>
     </Reveal>
   );
