@@ -79,7 +79,7 @@ function MemberCard({
     <Reveal
       as="article"
       delay={(index % (featured ? 3 : 5)) * 90}
-      className="group grid content-start justify-items-center gap-5 text-center"
+      className="grid content-start justify-items-center gap-5 text-center"
     >
       <div
         className={cn(
@@ -95,7 +95,7 @@ function MemberCard({
             alt={member.name}
             loading="lazy"
             className={cn(
-              "absolute inset-x-0 bottom-0 mx-auto w-auto max-w-full object-contain object-bottom transition-[filter,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-1 group-hover:grayscale",
+              "absolute inset-x-0 bottom-0 mx-auto w-auto max-w-full object-contain object-bottom",
               featured ? "h-[94%]" : "h-[90%]",
             )}
           />
