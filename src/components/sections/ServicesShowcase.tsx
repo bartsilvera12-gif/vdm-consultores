@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
+import { TwoToneIcon } from "@/components/primitives/TwoToneIcon";
 import { Button } from "@/components/ui/button";
 import { useCarousel } from "@/hooks/useCarousel";
 import { cn } from "@/lib/utils";
@@ -28,19 +29,6 @@ const services: Array<{ label: string; icon: LucideIcon }> = [
   { label: "Comercio Exterior", icon: Ship },
   { label: "Habilitaciones Industriales", icon: Factory },
 ];
-
-/** Ícono de línea en dos tonos: azul, con la mitad inferior derecha en celeste. */
-function TwoToneIcon({ icon: Icon }: { icon: LucideIcon }) {
-  return (
-    <span className="relative block size-24 md:size-28" aria-hidden="true">
-      <Icon className="absolute inset-0 size-full text-blue" strokeWidth={1.25} />
-      <Icon
-        className="absolute inset-0 size-full text-sky [clip-path:polygon(100%_25%,100%_100%,25%_100%)]"
-        strokeWidth={1.25}
-      />
-    </span>
-  );
-}
 
 const arrowClass =
   "absolute top-[48px] z-10 grid h-12 w-14 place-items-center rounded-lg bg-surface-alt text-blue shadow-card transition-[opacity,background-color] hover:bg-line disabled:pointer-events-none disabled:opacity-0 md:top-[56px]";
@@ -90,7 +78,7 @@ export function ServicesShowcase() {
                   className="group grid justify-items-center gap-5 px-2 text-center"
                 >
                   <span className="transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-1">
-                    <TwoToneIcon icon={icon} />
+                    <TwoToneIcon icon={icon} className="size-24 md:size-28" />
                   </span>
                   <span className="max-w-[160px] font-display text-base leading-6 text-blue md:text-lg md:leading-7">
                     {label}
