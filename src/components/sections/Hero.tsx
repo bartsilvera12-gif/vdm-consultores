@@ -10,7 +10,7 @@ const enter = `motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-f
 
 /**
  * Portada: fondo azul tinta, bienvenida a la izquierda y la fachada del
- * edificio de VDM a la derecha, cortada en la diagonal de la V del logo. Al
+ * edificio de VDM en blanco y negro a la derecha, cortada en la diagonal de la V del logo. Al
  * cargar, la foto entra desde la derecha y el texto aparece línea por línea.
  * En celular la foto va debajo del texto.
  */
@@ -25,7 +25,7 @@ export function Hero() {
             alt=""
             width={920}
             height={1448}
-            className={`h-full w-full object-cover object-[50%_30%] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-right-8 motion-safe:duration-1000 ${ease}`}
+            className={`h-full w-full object-cover object-[50%_30%] grayscale motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-right-8 motion-safe:duration-1000 ${ease}`}
           />
         </div>
       </div>
@@ -64,7 +64,7 @@ export function Hero() {
             width={920}
             height={1448}
             loading="lazy"
-            className="h-full w-full object-cover object-[50%_35%]"
+            className="h-full w-full object-cover object-[50%_35%] grayscale"
           />
         </div>
       </div>

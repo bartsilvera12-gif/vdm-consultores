@@ -93,7 +93,7 @@ export function Experiencia() {
                     to="/contacto"
                     className="group inline-flex items-center gap-2 justify-self-start font-display font-semibold text-on-navy"
                   >
-                    Hablemos de tu caso
+                    Agenda tu consulta
                     <ArrowRight
                       className="size-4 transition-transform duration-200 group-hover:translate-x-1"
                       aria-hidden="true"

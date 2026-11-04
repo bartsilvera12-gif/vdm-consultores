@@ -3,8 +3,10 @@ import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { PageHero } from "@/components/primitives/PageHero";
 import { PageCta } from "@/components/primitives/PageCta";
+import { Reveal } from "@/components/primitives/Reveal";
 import { useAreas } from "@/hooks/useAreas";
 import { useTeam } from "@/hooks/useTeam";
+import { cn } from "@/lib/utils";
 
 export function Equipo() {
   const { members } = useTeam();
@@ -50,35 +52,17 @@ export function Equipo() {
               </div>
             </aside>
 
-            {/* Grilla de integrantes ------------------------------------- */}
+            {/* Integrantes: primero las tres de cuerpo entero (día a día),
+                después el resto, en el orden que cargó la clienta. ------ */}
             <div className="grid gap-5">
-              <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-2 xl:grid-cols-3">
-                {members.map((member, i) => (
-                  <article
-                    key={member.id ?? i}
-                    className="grid gap-3 rounded-xl border border-line bg-surface p-4 shadow-card"
-                  >
-                    <div className="grid aspect-[4/5] max-w-full place-items-center overflow-hidden rounded-lg bg-surface-alt text-center text-small text-ink-muted">
-                      {member.photo ? (
-                        <img
-                          src={member.photo}
-                          alt={member.name}
-                          loading="lazy"
-                          className="h-full w-full rounded-lg object-cover object-top"
-                        />
-                      ) : (
-                        <span className="grid size-16 place-items-center rounded-full bg-blue/10 text-blue">
-                          <User className="size-8" aria-hidden="true" />
-                        </span>
-                      )}
-                    </div>
-                    <div className="border-l-[3px] border-sky pl-3">
-                      <h2 className="font-display text-base font-semibold leading-6 text-ink">
-                        {member.name}
-                      </h2>
-                      <p className="text-small text-ink-muted">{member.role}</p>
-                    </div>
-                  </article>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
+                {members.slice(0, 3).map((member, i) => (
+                  <MemberCard key={member.id ?? i} member={member} featured />
+                ))}
+              </div>
+              <div className="grid grid-cols-2 gap-4 sm:gap-5 xl:grid-cols-3">
+                {members.slice(3).map((member, i) => (
+                  <MemberCard key={member.id ?? i} member={member} />
                 ))}
               </div>
               {allPlaceholders && (
@@ -94,5 +78,48 @@ export function Equipo() {
       </section>
       <PageCta />
     </>
+  );
+}
+
+function MemberCard({
+  member,
+  featured = false,
+}: {
+  member: { name: string; role: string; photo?: string };
+  featured?: boolean;
+}) {
+  return (
+    <Reveal as="article" className="grid content-start gap-3 rounded-xl border border-line bg-surface p-3 shadow-card sm:p-4">
+      <div
+        className={cn(
+          "grid max-w-full place-items-center overflow-hidden rounded-lg text-center text-small text-ink-muted",
+          // Cuerpo entero: alto y recortado arriba. El resto: foto completa
+          // sobre blanco, como en el boceto (fondo blanco de los retratos).
+          featured ? "aspect-[3/5] bg-surface-alt" : "aspect-[4/3] bg-white",
+        )}
+      >
+        {member.photo ? (
+          <img
+            src={member.photo}
+            alt={member.name}
+            loading="lazy"
+            className={cn(
+              "h-full w-full rounded-lg",
+              featured ? "object-cover object-top" : "object-contain",
+            )}
+          />
+        ) : (
+          <span className="grid size-16 place-items-center rounded-full bg-blue/10 text-blue">
+            <User className="size-8" aria-hidden="true" />
+          </span>
+        )}
+      </div>
+      <div className="border-l-[3px] border-sky pl-3">
+        <h2 className="font-display text-base font-semibold leading-6 text-ink">
+          {member.name}
+        </h2>
+        <p className="text-small text-ink-muted">{member.role}</p>
+      </div>
+    </Reveal>
   );
 }

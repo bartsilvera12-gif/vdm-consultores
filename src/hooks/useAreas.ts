@@ -9,8 +9,10 @@ import {
   Leaf,
   KeyRound,
   Scale3d,
+  Ship,
   type LucideIcon,
 } from "lucide-react";
+import { StairsIcon } from "@/components/primitives/StairsIcon";
 import { getSupabase } from "@/lib/supabase";
 import { areas as defaults, type Area } from "@/content/areas";
 
@@ -44,6 +46,8 @@ export const AREA_ICONS: Record<string, LucideIcon> = {
   building: Building2,
   leaf: Leaf,
   key: KeyRound,
+  stairs: StairsIcon,
+  ship: Ship,
 };
 
 export function getAreaIcon(name: string | null | undefined): LucideIcon {

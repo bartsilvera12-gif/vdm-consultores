@@ -4,7 +4,7 @@ import {
   ArrowRight,
   Building2,
   Factory,
-  House,
+  KeyRound,
   Leaf,
   Scale,
   type LucideIcon,
@@ -26,7 +26,7 @@ const services: Array<{ label: string; icon: LucideIcon; area: string }> = [
   { label: "Asesoría en Inversiones", icon: StairsIcon, area: "inversiones" },
   { label: "Habilitaciones Industriales y Comerciales", icon: Factory, area: "habilitaciones" },
   { label: "Licencias Ambientales", icon: Leaf, area: "habilitaciones" },
-  { label: "Inversiones Inmobiliarias", icon: House, area: "inversiones" },
+  { label: "Inversiones Inmobiliarias", icon: KeyRound, area: "inversiones" },
 ];
 
 const arrowClass =

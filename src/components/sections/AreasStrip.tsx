@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { Boxes, Building2, House, Leaf, Scale } from "lucide-react";
+import { Building2, KeyRound, Leaf, Scale, Ship } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 
 const areas = [
   { label: "Jurídico", icon: Scale },
   { label: "Empresarial", icon: Building2 },
   { label: "Ambiental", icon: Leaf },
-  { label: "Comercio Exterior", icon: Boxes },
-  { label: "Inversiones Inmobiliarias", icon: House },
+  { label: "Comercio Exterior", icon: Ship },
+  { label: "Inversiones Inmobiliarias", icon: KeyRound },
 ];
 
 /** "Áreas de servicio" de la portada: cinco tarjetas con ícono, a /servicios. */

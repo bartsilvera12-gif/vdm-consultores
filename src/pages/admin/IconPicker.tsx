@@ -15,6 +15,8 @@ export const ICON_OPTIONS: Array<{ name: string; label: string }> = [
   { name: "building", label: "Edificio" },
   { name: "leaf", label: "Hoja" },
   { name: "key", label: "Llave" },
+  { name: "stairs", label: "Escalera" },
+  { name: "ship", label: "Barco" },
 ];
 
 /** Grilla visual para elegir un ícono. Click = selecciona. */

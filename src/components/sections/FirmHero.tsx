@@ -3,73 +3,67 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
+import { Reveal } from "@/components/primitives/Reveal";
 import { Button } from "@/components/ui/button";
 import { useSiteContent } from "@/hooks/useSiteContent";
-import giselleLaptop from "@/assets/equipo/giselle-laptop.webp";
+import equipoReunido from "@/assets/equipo-reunido.webp";
 
 /**
- * Cabecera de /nosotros: texto a la izquierda y foto a la derecha, cortada en
- * diagonal (la V del logo) con la franja navy del lema. Dos columnas también
- * en celular, como el diseño aprobado.
+ * "Fortaleciendo empresas" en /nosotros: texto a la izquierda y la foto del
+ * equipo reunido a la derecha, completa, con la franja navy del lema debajo
+ * (boceto de la clienta). En celular la foto va debajo del texto.
  */
 export function FirmHero() {
   const keys = useMemo(() => ["hero.lead" as const], []);
   const content = useSiteContent(keys);
   return (
-    <section
-      className="relative overflow-hidden border-b border-line bg-surface"
-    >
-      {/* Foto + franja: ocupan la mitad derecha hasta el borde de la pantalla. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-y-0 right-0 w-[50%] md:w-[40%] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-500"
-      >
-        <img
-          src={giselleLaptop}
-          alt=""
-          width={1024}
-          height={1536}
-          className="absolute inset-x-0 top-0 h-full w-full object-cover object-[50%_35%] md:h-[80%] md:object-[50%_40%] [clip-path:polygon(26%_0,100%_0,100%_100%,4%_100%)]"
-        />
-        <div className="absolute inset-x-0 bottom-0 grid min-h-[30%] content-center bg-navy md:min-h-[20%] py-4 pl-[18%] pr-3 [clip-path:polygon(12%_0,100%_0,100%_100%,4%_100%)] sm:pl-[16%] sm:pr-8">
-          <span className="absolute left-[22%] top-0 h-[3px] w-[18%] bg-sky" />
-          <p className="font-display text-[13px] leading-[17px] font-medium italic text-on-navy sm:text-[20px] sm:leading-[26px] lg:text-[26px] lg:leading-[34px]">
-            Un solo equipo,
-            <br />
-            soluciones integrales.
-          </p>
-        </div>
-      </div>
-
-      <Container className="relative py-10 sm:py-16 md:py-24 lg:py-28">
-        <div className="grid w-[50%] min-w-0 grid-cols-[minmax(0,1fr)] gap-4 pr-3 sm:gap-6 sm:pr-6 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <span className="h-[2px] w-4 shrink-0 bg-blue sm:h-[3px] sm:w-10" aria-hidden="true" />
-            <Eyebrow className="whitespace-nowrap text-[8.5px] tracking-[0.06em] sm:text-eyebrow sm:tracking-eyebrow">
-              VDM Consultores · Paraguay
-            </Eyebrow>
+    <section className="border-b border-line bg-surface">
+      <Container className="grid items-center gap-10 py-12 md:grid-cols-2 md:gap-12 md:py-20 lg:gap-16 lg:py-24">
+        <Reveal className="grid min-w-0 gap-5 sm:gap-6">
+          <div className="flex items-center gap-3">
+            <span className="h-[3px] w-10 shrink-0 bg-blue" aria-hidden="true" />
+            <Eyebrow>VDM Consultores · Paraguay</Eyebrow>
           </div>
-          <h2 className="font-display text-[24px] leading-[26px] font-bold tracking-tight text-ink sm:text-[40px] sm:leading-[44px] md:text-[52px] md:leading-[56px] lg:text-[60px] lg:leading-[62px]">
+          <h2 className="font-display text-[32px] leading-[36px] font-bold tracking-tight text-ink sm:text-[40px] sm:leading-[44px] lg:text-[52px] lg:leading-[56px]">
             Fortaleciendo empresas,{" "}
             <em className="block not-italic text-blue">
               potenciando inversiones
             </em>
           </h2>
-          <p className="text-[12px] leading-[18px] text-ink-muted sm:text-base sm:leading-[26px] lg:text-lead">
+          <p className="text-base leading-[26px] text-ink-muted lg:text-lead">
             {content["hero.lead"]}
           </p>
-          <div className="grid justify-items-start gap-2.5 sm:flex sm:flex-wrap sm:gap-3">
-            <Button asChild size="sm" className="h-8 px-3 text-[11.5px] sm:h-11 sm:px-6 sm:text-label">
+          <div className="flex flex-wrap gap-3">
+            <Button asChild>
               <Link to="/contacto">
                 Agenda tu consulta
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </Button>
-            <Button asChild size="sm" variant="outline" className="h-8 px-3 text-[11.5px] sm:h-11 sm:px-6 sm:text-label">
+            <Button asChild variant="outline">
               <Link to="/servicios">Conoce nuestros servicios</Link>
             </Button>
           </div>
-        </div>
+        </Reveal>
+
+        <Reveal delay={120} className="min-w-0">
+          <figure className="m-0 overflow-hidden rounded-xl shadow-card">
+            <img
+              src={equipoReunido}
+              alt="Equipo de VDM Consultores reunido en la oficina"
+              width={1400}
+              height={784}
+              loading="lazy"
+              className="aspect-[1400/784] w-full object-cover"
+            />
+            <figcaption className="relative bg-navy px-6 py-5 sm:px-8 sm:py-6">
+              <span className="absolute left-6 top-0 h-[3px] w-16 bg-sky sm:left-8" aria-hidden="true" />
+              <p className="font-display text-[20px] leading-[26px] font-medium italic text-on-navy sm:text-[24px] sm:leading-[32px]">
+                Un solo equipo, soluciones integrales
+              </p>
+            </figcaption>
+          </figure>
+        </Reveal>
       </Container>
     </section>
   );
