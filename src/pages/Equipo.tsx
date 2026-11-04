@@ -7,28 +7,47 @@ import { useTeam } from "@/hooks/useTeam";
 import { cn } from "@/lib/utils";
 
 /**
- * Formas de fondo detrás de cada retrato recortado, en coordenadas 0–1 del
- * propio recuadro (clipPath objectBoundingBox): un "8", un arco, un óvalo y
- * tres curvas apiladas. Se alternan con los azules de la marca y gris claro.
+ * Formas de fondo detrás de cada retrato, armadas como en el componente de
+ * referencia: rectángulos muy redondeados que se superponen (la curva suave
+ * sale sola donde se tocan) y elipses. Coordenadas 0–1 del recuadro
+ * (objectBoundingBox); `k` = alto / ancho, para que las esquinas sean redondas.
  */
-const SHAPES = [
-  "M0.2,0 H0.8 C0.91,0 1,0.09 1,0.2 V0.3 C1,0.38 0.94,0.44 0.9,0.5 C0.94,0.56 1,0.62 1,0.7 V0.8 C1,0.91 0.91,1 0.8,1 H0.2 C0.09,1 0,0.91 0,0.8 V0.7 C0,0.62 0.06,0.56 0.1,0.5 C0.06,0.44 0,0.38 0,0.3 V0.2 C0,0.09 0.09,0 0.2,0 Z",
-  "M0,0.42 C0,0.19 0.22,0 0.5,0 C0.78,0 1,0.19 1,0.42 V1 H0 Z",
-  "M0.5,0 C0.82,0 1,0.24 1,0.54 C1,0.82 0.8,1 0.5,1 C0.2,1 0,0.82 0,0.54 C0,0.24 0.18,0 0.5,0 Z",
-  "M0.15,0 H0.85 C0.93,0 1,0.07 1,0.15 V0.2 C1,0.26 0.95,0.3 0.92,0.333 C0.95,0.36 1,0.41 1,0.47 V0.53 C1,0.59 0.95,0.64 0.92,0.667 C0.95,0.7 1,0.74 1,0.8 V0.85 C1,0.93 0.93,1 0.85,1 H0.15 C0.07,1 0,0.93 0,0.85 V0.8 C0,0.74 0.05,0.7 0.08,0.667 C0.05,0.64 0,0.59 0,0.53 V0.47 C0,0.41 0.05,0.36 0.08,0.333 C0.05,0.3 0,0.26 0,0.2 V0.15 C0,0.07 0.07,0 0.15,0 Z",
+const SHAPES: Array<(k: number) => JSX.Element[]> = [
+  // Tres curvas apiladas.
+  (k) =>
+    [0, 0.31, 0.62].map((y) => (
+      <rect key={y} x="0" y={y} width="1" height="0.38" rx="0.34" ry={0.34 / k} />
+    )),
+  // Arco: medio círculo arriba, recto abajo.
+  (k) => [
+    <ellipse key="e" cx="0.5" cy={0.5 / k} rx="0.5" ry={0.5 / k} />,
+    <rect key="r" x="0" y={0.5 / k} width="1" height={1 - 0.5 / k} />,
+  ],
+  // Óvalo, apenas cortado abajo.
+  () => [<ellipse key="e" cx="0.5" cy="0.55" rx="0.5" ry="0.55" />],
+  // "8": dos rectángulos redondeados superpuestos.
+  (k) =>
+    [0, 0.44].map((y) => (
+      <rect key={y} x="0" y={y} width="1" height="0.56" rx="0.3" ry={0.3 / k} />
+    )),
 ];
-const COLORS = ["bg-blue-bright", "bg-navy", "bg-[#e8edf3]", "bg-sky"];
+const COLORS = ["bg-sky", "bg-blue-bright", "bg-[#e8edf3]", "bg-navy"];
+
+/** Alto / ancho de cada tipo de tarjeta (debe coincidir con su aspect-*). */
+const RATIOS = { tall: 16 / 9, card: 5 / 4 };
 
 /** Define una vez los recortes de las formas para usarlos con clip-path. */
 function ShapeDefs() {
   return (
     <svg width="0" height="0" aria-hidden="true" className="absolute">
       <defs>
-        {SHAPES.map((d, i) => (
-          <clipPath key={i} id={`equipo-forma-${i}`} clipPathUnits="objectBoundingBox">
-            <path d={d} />
-          </clipPath>
-        ))}
+        {Object.entries(RATIOS).flatMap(([kind, k]) =>
+          SHAPES.map((shape, i) => (
+            <clipPath key={`${kind}-${i}`} id={`equipo-${kind}-${i}`} clipPathUnits="objectBoundingBox">
+              {shape(k)}
+            </clipPath>
+          )),
+        )}
       </defs>
     </svg>
   );
@@ -104,7 +123,7 @@ function MemberCard({
           COLORS[index % COLORS.length],
           featured ? "aspect-[9/16]" : "aspect-[4/5]",
         )}
-        style={{ clipPath: `url(#equipo-forma-${index % SHAPES.length})` }}
+        style={{ clipPath: `url(#equipo-${featured ? "tall" : "card"}-${index % SHAPES.length})` }}
       >
         {member.photo ? (
           <img
