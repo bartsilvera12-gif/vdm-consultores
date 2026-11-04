@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { PageHero } from "@/components/primitives/PageHero";
@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useAreas } from "@/hooks/useAreas";
 import { cn } from "@/lib/utils";
 
-/** Qué área está en pantalla, para marcarla en el índice lateral. */
+/** Qué área está en pantalla, para marcarla en el índice. */
 function useActiveArea(ids: string[]) {
   const [active, setActive] = useState(ids[0] ?? "");
   useEffect(() => {
@@ -44,121 +44,94 @@ export function Servicios() {
         lead="Desde la constitución de tu empresa hasta la concreción de tu inversión, cada área trabaja coordinada con las demás."
       />
 
-      {/* Índice en celular: pastillas que llevan a cada área. */}
+      {/* Índice fijo arriba: lleva a cada área y marca la que está en pantalla. */}
       <nav
         aria-label="Servicios"
-        className="sticky top-[72px] z-30 border-b border-line bg-surface/95 backdrop-blur lg:hidden"
+        className="sticky top-[72px] z-30 border-b border-line bg-surface/95 backdrop-blur"
       >
-        <Container className="flex gap-2 overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <Container className="flex gap-6 overflow-x-auto [scrollbar-width:none] md:justify-center md:gap-10 [&::-webkit-scrollbar]:hidden">
           {areas.map((area) => (
             <a
               key={area.id}
               href={`#${area.id}`}
               className={cn(
-                "shrink-0 rounded-full border px-4 py-1.5 font-display text-small font-medium transition-colors",
-                active === area.id
-                  ? "border-blue bg-blue text-on-blue"
-                  : "border-line text-ink",
+                "relative shrink-0 py-4 font-display text-small font-semibold transition-colors duration-200",
+                active === area.id ? "text-blue" : "text-ink-muted hover:text-ink",
               )}
             >
               {area.eyebrow}
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "absolute inset-x-0 bottom-0 h-[2px] origin-center bg-blue transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
+                  active === area.id ? "scale-x-100" : "scale-x-0",
+                )}
+              />
             </a>
           ))}
         </Container>
       </nav>
 
-      <section className="bg-surface">
-        <Container className="grid gap-10 py-12 md:py-20 lg:grid-cols-[240px_1fr] lg:gap-16">
-          {/* Índice lateral fijo en escritorio. */}
-          <aside className="hidden lg:block">
-            <nav aria-label="Servicios" className="sticky top-28 grid gap-1">
-              <Eyebrow className="mb-3">Servicios</Eyebrow>
-              {areas.map((area, i) => (
-                <a
-                  key={area.id}
-                  href={`#${area.id}`}
-                  className={cn(
-                    "group relative grid grid-cols-[32px_1fr] items-baseline gap-2 rounded-md py-2.5 pl-4 pr-2 font-display text-small transition-colors",
-                    active === area.id
-                      ? "text-blue"
-                      : "text-ink-muted hover:text-ink",
-                  )}
-                >
+      {areas.map((area, i) => {
+        const flip = i % 2 === 1;
+        return (
+          <section
+            key={area.id}
+            id={area.id}
+            className={cn("scroll-mt-32", flip ? "bg-surface-alt" : "bg-surface")}
+          >
+            <Container className="grid gap-10 py-16 md:py-24 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+              <Reveal className={cn("grid content-start gap-6", flip && "lg:order-2")}>
+                <div className="flex items-end gap-5">
                   <span
                     aria-hidden="true"
-                    className={cn(
-                      "absolute inset-y-1.5 left-0 w-[3px] origin-top rounded-full bg-sky transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
-                      active === area.id ? "scale-y-100" : "scale-y-0",
-                    )}
-                  />
-                  <span className="font-semibold tabular-nums">
+                    className="font-display text-[64px] leading-[0.8] font-semibold tabular-nums text-blue/15 md:text-[88px]"
+                  >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="font-medium leading-5">{area.eyebrow}</span>
-                </a>
-              ))}
-            </nav>
-          </aside>
-
-          <div className="grid">
-            {areas.map((area, i) => (
-              <article
-                key={area.id}
-                id={area.id}
-                className="grid scroll-mt-36 gap-8 border-b border-line py-12 first:pt-0 last:border-b-0 md:py-16 lg:scroll-mt-28"
-              >
-                <Reveal className="flex items-end justify-between gap-6">
-                  <div className="grid gap-3">
-                    <Eyebrow>{area.eyebrow}</Eyebrow>
-                    <h2 className="max-w-[20ch] font-display text-[28px] leading-[34px] font-semibold tracking-tight text-ink md:text-[40px] md:leading-[46px]">
-                      {area.title}
-                    </h2>
-                  </div>
-                  <div className="relative hidden flex-none sm:block">
-                    <span
-                      aria-hidden="true"
-                      className="absolute -right-2 -top-10 select-none font-display text-[120px] font-bold leading-none text-blue/[0.07]"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <TwoToneIcon icon={area.icon} className="relative size-20 md:size-24" />
-                  </div>
-                </Reveal>
-
-                <Reveal delay={80}>
-                  <p className="max-w-[60ch] text-body text-ink-muted md:text-lead">
-                    {area.description}
-                  </p>
-                </Reveal>
-
-                <ul className="m-0 grid list-none gap-3 p-0 sm:grid-cols-2">
-                  {area.services.map((svc, j) => (
-                    <Reveal as="li" key={svc} delay={120 + j * 60}>
-                      <span className="group flex h-full items-start gap-3 rounded-lg border border-line bg-surface-alt px-4 py-3.5 transition-[border-color,background-color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 hover:border-blue/40 hover:bg-surface">
-                        <span className="mt-0.5 grid size-5 flex-none place-items-center rounded-full bg-sky/15 text-blue transition-colors group-hover:bg-blue group-hover:text-on-blue">
-                          <Check className="size-3" strokeWidth={3} aria-hidden="true" />
-                        </span>
-                        <span className="text-base font-semibold leading-6 text-ink">
-                          {svc}
-                        </span>
-                      </span>
-                    </Reveal>
-                  ))}
-                </ul>
-
-                <Reveal delay={160}>
-                  <Button asChild variant="outline" className="border-blue text-blue">
+                  <TwoToneIcon icon={area.icon} className="size-12 md:size-14" />
+                </div>
+                <div className="grid gap-3">
+                  <Eyebrow>{area.eyebrow}</Eyebrow>
+                  <h2 className="max-w-[18ch] font-display text-[30px] leading-[36px] font-semibold tracking-tight text-ink md:text-[42px] md:leading-[48px]">
+                    {area.title}
+                  </h2>
+                </div>
+                <p className="max-w-[46ch] text-body text-ink-muted md:text-lead">
+                  {area.description}
+                </p>
+                <div>
+                  <Button asChild variant="outline" className="group border-blue text-blue hover:bg-blue hover:text-on-blue">
                     <Link to="/contacto" state={{ area: area.eyebrow }}>
                       Consultar sobre estos servicios
-                      <ArrowRight className="size-4" aria-hidden="true" />
+                      <ArrowRight
+                        className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                        aria-hidden="true"
+                      />
                     </Link>
                   </Button>
-                </Reveal>
-              </article>
-            ))}
-          </div>
-        </Container>
-      </section>
+                </div>
+              </Reveal>
+
+              {/* Servicios: lista de líneas finas, numerada. */}
+              <ul className={cn("m-0 list-none self-center border-t border-ink/15 p-0", flip && "lg:order-1")}>
+                {area.services.map((svc, j) => (
+                  <Reveal as="li" key={svc} delay={80 + j * 50}>
+                    <span className="group flex items-baseline gap-5 border-b border-ink/15 py-4 md:py-5">
+                      <span className="w-6 flex-none font-display text-small font-semibold tabular-nums text-sky">
+                        {String(j + 1).padStart(2, "0")}
+                      </span>
+                      <span className="font-display text-[17px] leading-[24px] font-medium text-ink transition-[transform,color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:text-blue md:text-lg">
+                        {svc}
+                      </span>
+                    </span>
+                  </Reveal>
+                ))}
+              </ul>
+            </Container>
+          </section>
+        );
+      })}
 
       <PageCta />
     </>
