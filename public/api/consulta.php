@@ -49,7 +49,7 @@ function validar(array $body): array
     if (mb_strlen($datos['nombre']) < 2) responder(400, ['ok' => false, 'error' => 'Escribe tu nombre.']);
     if (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) responder(400, ['ok' => false, 'error' => 'Revisa el correo.']);
     if (mb_strlen($datos['telefono']) < 4) responder(400, ['ok' => false, 'error' => 'Deja un número para contactarte.']);
-    if (!in_array($datos['area'], AREAS, true)) responder(400, ['ok' => false, 'error' => 'Elige el área de tu consulta.']);
+    if (!in_array($datos['area'], AREAS, true)) responder(400, ['ok' => false, 'error' => 'Elige el servicio de tu consulta.']);
     if (mb_strlen($datos['mensaje']) < 5) responder(400, ['ok' => false, 'error' => 'Escribe tu consulta.']);
     return $datos;
 }
@@ -83,7 +83,7 @@ function enviarCorreo(array $d, array $config): bool
         'Empresa: ' . ($d['empresa'] !== '' ? $d['empresa'] : '—'),
         "Correo: {$d['email']}",
         "Teléfono / WhatsApp: {$d['telefono']}",
-        "Área: {$d['area']}",
+        "Servicio: {$d['area']}",
         '',
         'Mensaje:',
         $d['mensaje'],

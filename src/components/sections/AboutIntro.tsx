@@ -22,9 +22,9 @@ export function AboutIntro() {
           </div>
           <p className="text-[13px] leading-[20px] text-ink-muted sm:text-base sm:leading-[26px] md:text-lead">
             Somos una consultora paraguaya especializada en brindar asesoría
-            jurídica, empresarial y de inversiones, con un enfoque integral,
-            técnico y estratégico, orientado a la seguridad y al desarrollo
-            sostenible de nuestros clientes.
+            jurídica, empresarial y de inversiones, con un enfoque
+            multidisciplinario, integral, técnico y estratégico, orientado a
+            la seguridad y al desarrollo sostenible de nuestros clientes.
           </p>
           <div>
             <Button asChild variant="outline" size="sm" className="sm:h-11 sm:px-6">

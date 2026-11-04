@@ -17,7 +17,7 @@ export function AreasStrip() {
       <Container>
         <div className="mb-5 grid gap-3 sm:mb-8">
           <h2 className="font-display text-[20px] leading-[26px] font-bold tracking-h2 text-ink sm:text-[28px] sm:leading-[34px] md:text-h2 md:leading-h2">
-            Áreas de servicio
+            Nuestros servicios
           </h2>
           <span className="h-[3px] w-12 bg-sky" aria-hidden="true" />
         </div>

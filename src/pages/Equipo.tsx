@@ -92,10 +92,7 @@ export function Equipo() {
           </div>
         </Container>
       </section>
-      <PageCta
-        title="¿Querés hablar con un profesional del equipo?"
-        body="Contanos tu caso y te derivamos al área correcta."
-      />
+      <PageCta />
     </>
   );
 }

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
+import { Logo } from "@/components/primitives/Logo";
 import { Button } from "@/components/ui/button";
 import edificio from "@/assets/edificio-vdm.webp";
 
@@ -7,8 +9,9 @@ const ease = "ease-[cubic-bezier(0.23,1,0.32,1)]";
 
 /**
  * Portada: fondo azul tinta, bienvenida a la izquierda y la fachada del
- * edificio de VDM a la derecha, cortada en la diagonal de la V del logo. En
- * celular la foto va debajo del texto.
+ * edificio de VDM a la derecha, cortada en la diagonal de la V del logo, con un
+ * acercamiento lento y el logo en una tarjeta blanca. En celular la foto va
+ * debajo del texto.
  */
 export function Hero() {
   return (
@@ -21,8 +24,13 @@ export function Hero() {
             alt=""
             width={920}
             height={1448}
-            className={`h-full w-full object-cover object-[50%_30%] motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-105 motion-safe:duration-1000 ${ease}`}
+            className="h-full w-full object-cover object-[50%_30%] motion-safe:animate-[vdm-kenburns_18s_ease-in-out_infinite_alternate]"
           />
+        </div>
+        <div
+          className={`absolute bottom-10 left-[16%] rounded-xl bg-surface px-6 py-4 shadow-[0_18px_40px_rgba(6,17,30,0.35)] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:delay-300 motion-safe:fill-mode-both motion-safe:duration-700 lg:bottom-14 lg:px-8 lg:py-5 ${ease}`}
+        >
+          <Logo width={150} height={60} className="h-11 w-auto lg:h-14" alt="" />
         </div>
       </div>
 
@@ -41,6 +49,16 @@ export function Hero() {
             </Button>
           </div>
         </div>
+        <a
+          href="#servicios"
+          aria-label="Ver servicios"
+          className="absolute bottom-6 left-[max(1rem,env(safe-area-inset-left))] hidden size-10 place-items-center rounded-full border border-white/25 text-on-navy transition-colors hover:bg-white/10 md:left-[max(3rem,env(safe-area-inset-left))] md:grid"
+        >
+          <ChevronDown
+            className="size-5 motion-safe:animate-[vdm-nudge_1.8s_ease-in-out_infinite]"
+            aria-hidden="true"
+          />
+        </a>
       </Container>
 
       {/* Celular: la fachada debajo del texto, con el mismo corte diagonal. */}
@@ -54,6 +72,9 @@ export function Hero() {
             loading="lazy"
             className="h-full w-full object-cover object-[50%_35%]"
           />
+        </div>
+        <div className="absolute bottom-5 left-4 rounded-lg bg-surface px-4 py-3 shadow-[0_12px_28px_rgba(6,17,30,0.3)]">
+          <Logo width={110} height={44} className="h-9 w-auto" alt="" />
         </div>
       </div>
     </section>

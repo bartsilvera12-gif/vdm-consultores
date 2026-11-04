@@ -133,10 +133,7 @@ export function Experiencia() {
         </Container>
       </section>
 
-      <PageCta
-        title="¿Tu caso encaja con alguno?"
-        body="Escríbenos y te decimos qué pasos siguen para tu empresa o inversión."
-      />
+      <PageCta />
     </>
   );
 }

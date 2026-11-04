@@ -11,10 +11,7 @@ export function Galeria() {
         withHeading={false}
         emptyText="Pronto vas a ver fotos de VDM Consultores acá."
       />
-      <PageCta
-        title="¿Querés que te acompañemos?"
-        body="Contanos tu proyecto y te ponemos en contacto con el área correcta."
-      />
+      <PageCta />
     </>
   );
 }

@@ -39,7 +39,7 @@ export function Footer() {
           </div>
           <div>
             <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
-              Áreas
+              Servicios
             </h4>
             <ul className="grid gap-2">
               {areas.map((area) => (

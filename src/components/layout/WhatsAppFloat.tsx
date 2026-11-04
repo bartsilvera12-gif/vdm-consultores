@@ -5,77 +5,101 @@ import { contactInfo } from "@/content/contact";
 /** El ícono de WhatsApp del footer (Footer.tsx) donde se acopla el botón. */
 export const WA_DOCK_ID = "wa-dock";
 const FLY_MS = 420;
+const SIZE = 56;
+const MARGIN = 20;
+
+type Phase = "free" | "flying" | "docked";
 
 /**
- * Botón flotante de WhatsApp. Al llegar al footer vuela hasta su lugar junto a
- * las redes y se queda ahí como un ícono más; al volver a subir, regresa a la
- * esquina. Con prefers-reduced-motion cambia sin animación.
+ * Botón flotante de WhatsApp. Cuando el ícono del footer entra entero en
+ * pantalla, el botón vuela hasta él (siguiéndolo si se sigue bajando) y se
+ * queda ahí como un ícono más; al volver a subir, regresa a la esquina.
  */
 export function WhatsAppFloat() {
-  const btnRef = useRef<HTMLAnchorElement>(null);
+  const [phase, setPhase] = useState<Phase>("free");
   const [offset, setOffset] = useState<{ x: number; y: number; s: number } | null>(null);
-  const [hidden, setHidden] = useState(false);
+  const phaseRef = useRef<Phase>("free");
+  const startRef = useRef(0);
 
   useEffect(() => {
     const dock = document.getElementById(WA_DOCK_ID);
-    const btn = btnRef.current;
-    if (!dock || !btn) return;
+    if (!dock) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let timer = 0;
+    let frame = 0;
 
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        window.clearTimeout(timer);
-        if (entry.isIntersecting) {
-          const b = btn.getBoundingClientRect();
-          const d = dock.getBoundingClientRect();
-          setOffset({
-            x: d.left + d.width / 2 - (b.left + b.width / 2),
-            y: d.top + d.height / 2 - (b.top + b.height / 2),
-            s: d.width / b.width,
-          });
-          timer = window.setTimeout(
-            () => {
-              setHidden(true);
-              dock.dataset.docked = "true";
-            },
-            reduced ? 0 : FLY_MS,
-          );
-        } else {
-          dock.dataset.docked = "false";
-          setHidden(false);
+    const go = (next: Phase) => {
+      phaseRef.current = next;
+      setPhase(next);
+      dock.dataset.docked = next === "docked" ? "true" : "false";
+    };
+
+    const tick = () => {
+      frame = 0;
+      const d = dock.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const inView = d.top >= 0 && d.bottom <= vh && d.width > 0;
+      const p = phaseRef.current;
+
+      if (!inView) {
+        if (p !== "free") {
+          go("free");
           setOffset(null);
         }
-      },
-      { threshold: 1 },
-    );
-    io.observe(dock);
+        return;
+      }
+      // Centro del botón en su esquina (sin el transform aplicado).
+      const homeX = document.documentElement.clientWidth - MARGIN - SIZE / 2;
+      const homeY = vh - MARGIN - SIZE / 2;
+      setOffset({
+        x: d.left + d.width / 2 - homeX,
+        y: d.top + d.height / 2 - homeY,
+        s: d.width / SIZE,
+      });
+      if (p === "free") {
+        startRef.current = performance.now();
+        go(reduced ? "docked" : "flying");
+        if (!reduced) schedule();
+      } else if (p === "flying") {
+        if (performance.now() - startRef.current >= FLY_MS) go("docked");
+        else schedule();
+      }
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+
+    tick();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      window.clearTimeout(timer);
-      io.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
   }, []);
 
+  const docked = phase === "docked";
+
   return (
     <a
-      ref={btnRef}
       href={contactInfo.whatsapp.href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Escríbenos por WhatsApp"
-      aria-hidden={hidden || undefined}
-      tabIndex={hidden ? -1 : undefined}
-      className="fixed z-40 grid size-14 place-items-center rounded-full text-[#0F1E33] shadow-[0_6px_20px_rgba(0,0,0,0.22)] transition-[transform,opacity] duration-[420ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"
+      aria-hidden={docked || undefined}
+      tabIndex={docked ? -1 : undefined}
+      className="fixed z-40 grid size-14 place-items-center rounded-full text-[#0F1E33] shadow-[0_6px_20px_rgba(0,0,0,0.22)] transition-[transform,opacity] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"
       style={{
         backgroundColor: "#25D366",
-        right: "max(1.25rem, env(safe-area-inset-right))",
-        bottom: "max(1.25rem, env(safe-area-inset-bottom))",
+        right: `max(${MARGIN}px, env(safe-area-inset-right))`,
+        bottom: `max(${MARGIN}px, env(safe-area-inset-bottom))`,
         transform: offset
           ? `translate(${offset.x}px, ${offset.y}px) scale(${offset.s})`
           : undefined,
-        opacity: hidden ? 0 : 1,
-        pointerEvents: hidden || offset ? "none" : undefined,
-        transitionDuration: hidden ? "0ms" : undefined,
+        opacity: docked ? 0 : 1,
+        pointerEvents: phase === "free" ? undefined : "none",
+        // Volando se anima; acoplado sigue al ícono sin demora (y ya no se ve).
+        transitionDuration: phase === "flying" ? `${FLY_MS}ms` : docked ? "0ms" : "300ms",
       }}
     >
       <WhatsAppIcon className="size-8" />

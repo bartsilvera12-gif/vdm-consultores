@@ -25,7 +25,7 @@ const errorMsg: Record<Field, string> = {
   nombre: "Escribe tu nombre.",
   email: "Revisa el correo: falta el @ o el dominio.",
   telefono: "Deja un número para contactarte.",
-  area: "Elige el área de tu consulta.",
+  area: "Elige el servicio de tu consulta.",
   mensaje: "Escribe tu consulta.",
 };
 
@@ -38,7 +38,7 @@ function whatsappUrl(href: string, c: Consulta) {
     ...(c.empresa ? [`Empresa: ${c.empresa}`] : []),
     `Correo: ${c.email}`,
     `Teléfono: ${c.telefono}`,
-    `Área: ${c.area}`,
+    `Servicio: ${c.area}`,
     "",
     `Consulta: ${c.mensaje}`,
   ].join("\n");
@@ -238,14 +238,14 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
             <FormField
               id="f-area"
               name="area"
-              label="Área de interés"
+              label="Servicio de interés"
               required
               invalid={!!errors.area}
               onChange={() => clearError("area")}
               className="md:col-span-2"
               as="select"
             >
-              <option value="">Selecciona un área</option>
+              <option value="">Selecciona un servicio</option>
               {areas.map((a) => (
                 <option key={a.id} value={a.eyebrow}>
                   {a.eyebrow}

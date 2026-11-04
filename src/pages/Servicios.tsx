@@ -40,14 +40,13 @@ export function Servicios() {
   return (
     <>
       <PageHero
-        eyebrow="Áreas de servicio"
-        title="Cada etapa de tu proyecto, un mismo equipo"
+        title="Nuestros servicios"
         lead="Desde la constitución de tu empresa hasta la concreción de tu inversión, cada área trabaja coordinada con las demás."
       />
 
       {/* Índice en celular: pastillas que llevan a cada área. */}
       <nav
-        aria-label="Áreas"
+        aria-label="Servicios"
         className="sticky top-[72px] z-30 border-b border-line bg-surface/95 backdrop-blur lg:hidden"
       >
         <Container className="flex gap-2 overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -72,8 +71,8 @@ export function Servicios() {
         <Container className="grid gap-10 py-12 md:py-20 lg:grid-cols-[240px_1fr] lg:gap-16">
           {/* Índice lateral fijo en escritorio. */}
           <aside className="hidden lg:block">
-            <nav aria-label="Áreas" className="sticky top-28 grid gap-1">
-              <Eyebrow className="mb-3">Áreas</Eyebrow>
+            <nav aria-label="Servicios" className="sticky top-28 grid gap-1">
+              <Eyebrow className="mb-3">Servicios</Eyebrow>
               {areas.map((area, i) => (
                 <a
                   key={area.id}
@@ -150,7 +149,7 @@ export function Servicios() {
                 <Reveal delay={160}>
                   <Button asChild variant="outline" className="border-blue text-blue">
                     <Link to="/contacto" state={{ area: area.eyebrow }}>
-                      Consultar sobre esta área
+                      Consultar sobre estos servicios
                       <ArrowRight className="size-4" aria-hidden="true" />
                     </Link>
                   </Button>
@@ -161,10 +160,7 @@ export function Servicios() {
         </Container>
       </section>
 
-      <PageCta
-        title="¿No sabés por dónde empezar?"
-        body="Contanos qué necesitás y te orientamos sobre el área que mejor acompaña tu caso."
-      />
+      <PageCta />
     </>
   );
 }
