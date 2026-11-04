@@ -126,21 +126,21 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="flex flex-wrap justify-between gap-3 border-t border-white/10 pt-6 text-small">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-small">
           <span>© 2026 VDM Consultores. Todos los derechos reservados.</span>
           <span>Fortaleciendo empresas, potenciando inversiones.</span>
+          <span className="w-full text-right md:w-auto">
+            Desarrollado por{" "}
+            <a
+              href="https://neura.com.py"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-on-navy underline-offset-4 hover:underline"
+            >
+              Neura
+            </a>
+          </span>
         </div>
-        <p className="-mt-4 text-center text-[13px]">
-          Desarrollado por{" "}
-          <a
-            href="https://neura.com.py"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-on-navy underline-offset-4 hover:underline"
-          >
-            Neura
-          </a>
-        </p>
       </Container>
     </footer>
   );

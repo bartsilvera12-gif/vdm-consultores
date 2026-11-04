@@ -1,16 +1,25 @@
 import { Link } from "react-router-dom";
 import { Building2, KeyRound, Leaf, Scale, Ship } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
+// Fotos de Unsplash (licencia libre de Unsplash, uso comercial sin atribución).
+import fotoJuridico from "@/assets/servicios/juridico.webp";
+import fotoEmpresarial from "@/assets/servicios/empresarial.webp";
+import fotoAmbiental from "@/assets/servicios/ambiental.webp";
+import fotoComercio from "@/assets/servicios/comercio.webp";
+import fotoInmobiliarias from "@/assets/servicios/inmobiliarias.webp";
 
 const areas = [
-  { label: "Jurídico", icon: Scale },
-  { label: "Empresarial", icon: Building2 },
-  { label: "Ambiental", icon: Leaf },
-  { label: "Comercio Exterior", icon: Ship },
-  { label: "Inversiones Inmobiliarias", icon: KeyRound },
+  { label: "Jurídico", icon: Scale, photo: fotoJuridico },
+  { label: "Empresarial", icon: Building2, photo: fotoEmpresarial },
+  { label: "Ambiental", icon: Leaf, photo: fotoAmbiental },
+  { label: "Comercio Exterior", icon: Ship, photo: fotoComercio },
+  { label: "Inversiones Inmobiliarias", icon: KeyRound, photo: fotoInmobiliarias },
 ];
 
-/** "Áreas de servicio" de la portada: cinco tarjetas con ícono, a /servicios. */
+/**
+ * "Nuestros servicios" de /nosotros: cinco tarjetas con una foto de fondo
+ * teñida de azul y el ícono encima, a /servicios.
+ */
 export function AreasStrip() {
   return (
     <section className="bg-surface-alt py-10 md:py-24">
@@ -22,18 +31,26 @@ export function AreasStrip() {
           <span className="h-[3px] w-12 bg-sky" aria-hidden="true" />
         </div>
         <ul className="m-0 grid list-none grid-cols-5 gap-1.5 p-0 sm:gap-4">
-          {areas.map(({ label, icon: Icon }) => (
+          {areas.map(({ label, icon: Icon, photo }) => (
             <li key={label} className="min-w-0">
               <Link
                 to="/servicios"
-                className="group grid h-full content-center justify-items-center gap-2 rounded-lg border border-line bg-surface px-1 py-3 text-center shadow-card transition-[transform,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 hover:border-blue sm:gap-3 sm:px-3 sm:py-6"
+                className="group relative isolate grid h-full min-h-[96px] content-center justify-items-center gap-2 overflow-hidden rounded-lg bg-navy px-1 py-3 text-center sm:min-h-[170px] sm:gap-3 sm:px-3 sm:py-6"
               >
+                {/* Foto teñida: escala de grises mezclada con el azul de fondo. */}
+                <img
+                  src={photo}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  className="absolute inset-0 -z-10 h-full w-full object-cover opacity-35 mix-blend-luminosity transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-105 group-hover:opacity-50"
+                />
                 <Icon
-                  className="size-6 text-blue sm:size-9"
+                  className="size-6 text-on-navy sm:size-9"
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
-                <span className="font-display text-[10.5px] leading-[13px] font-medium text-ink sm:text-small md:text-base">
+                <span className="font-display text-[10.5px] leading-[13px] font-semibold text-on-navy sm:text-small md:text-base">
                   {label}
                 </span>
               </Link>
