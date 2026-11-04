@@ -157,25 +157,6 @@
     transform: translate(-50%, -50%) scale(1.22);
   }
 }
-/* Acercamiento lento y continuo de la foto del hero de Inicio. */
-@keyframes vdm-kenburns {
-  from {
-    transform: scale(1.02);
-  }
-  to {
-    transform: scale(1.1);
-  }
-}
-/* Flecha del hero que invita a bajar. */
-@keyframes vdm-nudge {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(6px);
-  }
-}
 @keyframes vdm-shine {
   0% {
     transform: translateX(-130%) skewX(-18deg);
