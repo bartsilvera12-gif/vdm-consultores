@@ -27,7 +27,7 @@ export function Header() {
         </Link>
         <nav
           aria-label="Principal"
-          className="hidden items-center gap-1 lg:flex"
+          className="hidden items-center gap-1 lg:flex xl:gap-2"
         >
           {navLinks.map((link) => (
             <NavLink
@@ -36,14 +36,24 @@ export function Header() {
               end={link.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "whitespace-nowrap rounded-md px-2.5 py-2 font-display text-sm font-medium transition-[color,background-color] xl:px-3",
-                  isActive
-                    ? "bg-surface-alt text-blue"
-                    : "text-ink hover:bg-surface-alt hover:text-blue",
+                  "group relative whitespace-nowrap px-2.5 py-2 font-display text-sm font-semibold tracking-[0.01em] transition-colors duration-200 xl:px-3",
+                  isActive ? "text-blue" : "text-ink hover:text-blue",
                 )
               }
             >
-              {link.label}
+              {({ isActive }) => (
+                <>
+                  {link.label}
+                  {/* Línea fina que crece desde el centro al pasar o en la página actual. */}
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "absolute inset-x-2.5 -bottom-0.5 h-[2px] origin-center rounded-full bg-blue transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] xl:inset-x-3",
+                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+                    )}
+                  />
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
