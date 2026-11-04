@@ -55,7 +55,7 @@ export function Equipo() {
       <section className="bg-surface py-16 md:py-24">
         <ShapeDefs />
         <Container className="grid gap-16 md:gap-24">
-          <div className="mx-auto grid w-full max-w-[980px] grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+          <div className="mx-auto grid w-full max-w-[880px] grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6 lg:gap-10">
             {lead.map((member, i) => (
               <MemberCard key={member.id ?? i} member={member} index={i} featured />
             ))}
@@ -102,7 +102,7 @@ function MemberCard({
         className={cn(
           "relative w-full overflow-hidden",
           COLORS[index % COLORS.length],
-          featured ? "aspect-[3/4]" : "aspect-[4/5]",
+          featured ? "aspect-[9/16]" : "aspect-[4/5]",
         )}
         style={{ clipPath: `url(#equipo-forma-${index % SHAPES.length})` }}
       >
@@ -111,9 +111,12 @@ function MemberCard({
             src={member.photo}
             alt={member.name}
             loading="lazy"
-            // Llena el ancho de la forma con aire arriba de la cabeza, como el
-            // componente de referencia; lo que sobra abajo queda recortado.
-            className="absolute inset-x-0 bottom-0 h-[90%] w-full object-cover object-top"
+            // La foto entera, sin recortar: apoyada abajo y con aire arriba.
+            // Las tres principales van de cuerpo entero, en una forma alta.
+            className={cn(
+              "absolute inset-x-0 bottom-0 w-full object-contain object-bottom",
+              featured ? "h-[95%]" : "h-[90%]",
+            )}
           />
         ) : (
           <span className="absolute inset-0 grid place-items-center text-on-navy">
