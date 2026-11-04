@@ -5,29 +5,30 @@ import { Button } from "@/components/ui/button";
 import giselleMesa from "@/assets/equipo/giselle-mesa.webp";
 
 /**
- * Apertura de /nosotros: intro de la firma y el retrato de la directora con su
- * nombre como pie de foto, como en el boceto de la clienta. Sobrio: sin
- * sombras ni elementos flotando. Dos columnas también en celular.
+ * Apertura de /nosotros, como el diseño aprobado: texto a la izquierda y el
+ * retrato de la directora a la derecha, con la esquina cortada en diagonal y la
+ * tarjeta del nombre sobre la parte de abajo. La foto se limita al alto de la
+ * pantalla para que el bloque entre completo. Dos columnas también en celular.
  */
 export function AboutIntro() {
   return (
-    <section className="bg-surface-alt py-10 md:py-16 lg:py-20">
-      <Container className="grid grid-cols-2 items-center gap-5 sm:gap-10 md:items-start lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-        <div className="grid min-w-0 content-center gap-4 sm:gap-7 md:pt-4 lg:pt-8">
-          <div className="grid gap-3 sm:gap-5">
-            <h1 className="whitespace-nowrap font-display text-[20px] leading-[26px] font-bold tracking-h2 text-ink sm:text-[30px] sm:leading-[36px] md:text-[44px] md:leading-[50px] lg:text-[56px] lg:leading-[60px]">
+    <section className="bg-surface-alt py-10 md:py-12">
+      <Container className="grid grid-cols-2 items-center gap-5 sm:gap-10 lg:gap-16">
+        <div className="grid min-w-0 content-center gap-4 sm:gap-6">
+          <div className="grid gap-3 sm:gap-4">
+            <h1 className="whitespace-nowrap font-display text-[20px] leading-[26px] font-bold tracking-h2 text-ink sm:text-[30px] sm:leading-[36px] md:text-[44px] md:leading-[50px] lg:text-[52px] lg:leading-[58px]">
               Quiénes somos
             </h1>
-            <span className="h-[3px] w-12 bg-sky" aria-hidden="true" />
+            <span className="h-[3px] w-12 bg-sky sm:w-16" aria-hidden="true" />
           </div>
-          <p className="max-w-[34rem] text-[13px] leading-[20px] text-ink-muted sm:border-l-2 sm:border-sky sm:pl-5 sm:text-base sm:leading-[26px] md:pl-6 md:text-[19px] md:leading-[33px]">
+          <p className="max-w-[34rem] text-[13px] leading-[20px] text-ink-muted sm:text-base sm:leading-[26px] md:text-[18px] md:leading-[31px]">
             Somos una consultora paraguaya especializada en brindar asesoría
             jurídica, empresarial y de inversiones, con un enfoque
             multidisciplinario, integral, técnico y estratégico, orientado a
             la seguridad y al desarrollo sostenible de nuestros clientes.
           </p>
           <div>
-            <Button asChild variant="outline" size="sm" className="group border-ink/30 text-ink hover:border-ink sm:h-11 sm:px-6">
+            <Button asChild variant="outline" size="sm" className="group border-blue text-blue sm:h-11 sm:px-6">
               <Link to="/nosotros#la-firma">
                 Conoce más
                 <ArrowRight
@@ -39,17 +40,19 @@ export function AboutIntro() {
           </div>
         </div>
 
-        <figure className="m-0 w-full min-w-0 md:max-w-[330px] md:justify-self-end">
-          <img
-            src={giselleMesa}
-            alt="Mgtr. Giselle Vera, directora general de VDM Consultores"
-            width={760}
-            height={1342}
-            loading="lazy"
-            className="aspect-[9/16] w-full rounded-sm object-cover object-top"
-          />
-          <figcaption className="mt-3 border-t border-line pt-3 sm:mt-4 sm:pt-4">
-            <span className="block font-display text-[12.5px] leading-[18px] font-semibold text-ink sm:text-base">
+        <figure className="relative m-0 w-full min-w-0 md:w-auto md:justify-self-end">
+          <div className="overflow-hidden rounded-xl bg-[#e9ebee] [clip-path:polygon(12%_0,100%_0,100%_100%,0_100%,0_8%)]">
+            <img
+              src={giselleMesa}
+              alt="Mgtr. Giselle Vera, directora general de VDM Consultores"
+              width={760}
+              height={1342}
+              loading="lazy"
+              className="block h-auto w-full md:h-[min(640px,calc(100vh-180px))] md:min-h-[420px] md:w-auto"
+            />
+          </div>
+          <figcaption className="absolute inset-x-2 bottom-2 rounded-md border-l-[3px] border-sky bg-surface px-2.5 py-1.5 sm:inset-x-6 sm:bottom-6 sm:px-5 sm:py-3">
+            <span className="block whitespace-nowrap font-display text-[12.5px] leading-[18px] font-semibold text-ink sm:text-[17px] sm:leading-[24px]">
               Mgtr. Giselle Vera
             </span>
             <span className="block text-[12px] leading-[16px] text-ink-muted sm:text-small">

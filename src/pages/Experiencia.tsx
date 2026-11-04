@@ -1,4 +1,3 @@
-import { useRef, useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
@@ -8,32 +7,20 @@ import { PageCta } from "@/components/primitives/PageCta";
 import { Reveal } from "@/components/primitives/Reveal";
 import { useSectors } from "@/hooks/useSectors";
 import { cn } from "@/lib/utils";
+// Palacio de López, Asunción. Foto de André Piske en Unsplash (licencia libre).
+import fotoPalacio from "@/assets/sectores/palacio.webp";
 
-const ease = "ease-[cubic-bezier(0.23,1,0.32,1)]";
+type Sector = ReturnType<typeof useSectors>["sectors"][number];
 
 /**
- * Experiencia como índice tipográfico: los seis sectores son titulares que
- * ocupan el ancho; el elegido pasa a tinta plena y su detalle se abre debajo,
- * corrido hacia la derecha de la grilla. Un solo acento: la raya azul sobre el
- * sector activo. Se elige con clic o con las flechas del teclado.
+ * Experiencia: los sectores en dos columnas, a los lados de una foto de
+ * Asunción. En celular la foto va arriba y los sectores debajo.
  */
 export function Experiencia() {
   const { sectors } = useSectors();
-  const [index, setIndex] = useState(0);
-  const active = Math.min(index, Math.max(sectors.length - 1, 0));
-  const tabsRef = useRef<Array<HTMLButtonElement | null>>([]);
-
-  const onKey = (e: KeyboardEvent<HTMLElement>) => {
-    const step: Record<string, number> = { ArrowDown: 1, ArrowUp: -1 };
-    let next = active;
-    if (e.key in step) next = (active + step[e.key] + sectors.length) % sectors.length;
-    else if (e.key === "Home") next = 0;
-    else if (e.key === "End") next = sectors.length - 1;
-    else return;
-    e.preventDefault();
-    setIndex(next);
-    tabsRef.current[next]?.focus();
-  };
+  const half = Math.ceil(sectors.length / 2);
+  const left = sectors.slice(0, half);
+  const right = sectors.slice(half);
 
   return (
     <>
@@ -43,127 +30,85 @@ export function Experiencia() {
         lead="Empresas en cada etapa e inversionistas que llegan a Paraguay."
       />
 
-      <section className="bg-surface pt-16 pb-6 md:pt-28 md:pb-10">
+      <section className="bg-surface-alt py-16 md:py-24">
         <Container>
-          <Reveal className="grid gap-5 pb-12 md:pb-20 lg:grid-cols-12 lg:gap-8">
-            <Eyebrow tone="muted" className="lg:col-span-3 lg:pt-4">
-              Sectores que acompañamos
-            </Eyebrow>
-            <h2 className="text-[38px] leading-[42px] font-bold tracking-[-0.03em] text-ink sm:text-[52px] sm:leading-[56px] lg:col-span-9 lg:text-[68px] lg:leading-[72px]">
-              Cada cliente llega
-              <br />
-              con un desafío distinto
+          <Reveal className="mb-12 grid justify-items-center gap-4 text-center md:mb-16">
+            <Eyebrow>Sectores que acompañamos</Eyebrow>
+            <h2 className="max-w-[22ch] text-[32px] leading-[38px] font-bold tracking-tight text-ink md:text-[44px] md:leading-[50px]">
+              Cada cliente llega con un desafío distinto
             </h2>
+            <span className="h-[3px] w-16 bg-sky" aria-hidden="true" />
           </Reveal>
 
-          <div role="tablist" aria-label="Sectores" aria-orientation="vertical" onKeyDown={onKey}>
-            {sectors.map((sector, i) => {
-              const selected = i === active;
-              const Icon = sector.icon;
-              return (
-                <div key={sector.title} className="relative border-t border-ink/12 last:border-b">
-                  {/* Único acento: la raya azul sobre el sector elegido. */}
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      `absolute -top-px left-0 h-[2px] w-full origin-left bg-blue transition-transform duration-700 ${ease} motion-reduce:transition-none`,
-                      selected ? "scale-x-100" : "scale-x-0",
-                    )}
-                  />
-                  <button
-                    ref={(el) => {
-                      tabsRef.current[i] = el;
-                    }}
-                    id={`sector-tab-${i}`}
-                    type="button"
-                    role="tab"
-                    aria-selected={selected}
-                    aria-controls={`sector-panel-${i}`}
-                    tabIndex={selected ? 0 : -1}
-                    onClick={() => setIndex(i)}
-                    className="group grid w-full grid-cols-[32px_1fr] items-baseline gap-x-4 py-6 text-left outline-none focus-visible:bg-surface-alt md:py-8 lg:grid-cols-12 lg:gap-x-8"
-                  >
-                    <span
-                      className={cn(
-                        "font-display text-[12px] font-semibold tabular-nums tracking-[0.08em] transition-colors duration-300 lg:col-span-1",
-                        selected ? "text-ink" : "text-ink/35",
-                      )}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span
-                      className={cn(
-                        `font-heading text-[28px] leading-[32px] font-bold tracking-[-0.02em] transition-colors duration-500 ${ease} sm:text-[38px] sm:leading-[42px] lg:col-span-11 lg:text-[52px] lg:leading-[56px]`,
-                        selected ? "text-ink" : "text-ink/20 group-hover:text-ink/45",
-                      )}
-                    >
-                      {sector.title}
-                    </span>
-                  </button>
+          <div className="grid items-center gap-12 md:grid-cols-[1fr_minmax(260px,340px)_1fr] md:gap-10 lg:gap-14">
+            <SectorColumn sectors={left} from="left" />
 
-                  {/* Detalle: se abre debajo del titular, corrido a la derecha. */}
-                  <div
-                    id={`sector-panel-${i}`}
-                    role="tabpanel"
-                    aria-labelledby={`sector-tab-${i}`}
-                    aria-hidden={!selected}
-                    className={cn(
-                      `grid transition-[grid-template-rows] duration-700 ${ease} motion-reduce:transition-none`,
-                      selected ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
-                    )}
+            <Reveal delay={100} className="order-first mx-auto w-full max-w-[340px] md:order-none">
+              <figure className="group relative m-0 overflow-hidden rounded-md">
+                <img
+                  src={fotoPalacio}
+                  alt="Palacio de López, en Asunción"
+                  width={900}
+                  height={1200}
+                  loading="lazy"
+                  className="aspect-[3/4] w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03] motion-reduce:transition-none"
+                />
+                <div className="absolute inset-0 flex items-end justify-center bg-[linear-gradient(to_top,rgba(10,39,71,0.6),transparent_45%)] p-5">
+                  <Link
+                    to="/contacto"
+                    className="group/cta inline-flex items-center gap-2 rounded-full bg-surface px-5 py-2.5 font-display text-small font-semibold text-ink transition-colors hover:bg-white"
                   >
-                    <div className="overflow-hidden">
-                      <div
-                        className={cn(
-                          `grid grid-cols-[32px_1fr] gap-x-4 pb-10 transition-[opacity,transform] duration-500 ${ease} motion-reduce:transition-none md:pb-14 lg:grid-cols-12 lg:gap-x-8`,
-                          selected ? "translate-y-0 opacity-100 delay-150" : "-translate-y-2 opacity-0",
-                        )}
-                      >
-                        <Icon
-                          aria-hidden="true"
-                          strokeWidth={1.25}
-                          className="col-start-1 mt-1 size-6 text-ink/50 lg:col-start-6 lg:mt-1.5 lg:size-7"
-                        />
-                        <div className="col-start-2 grid gap-8 lg:col-span-6 lg:col-start-7">
-                          <p className="max-w-[40ch] text-[17px] leading-[30px] text-ink-muted md:text-[20px] md:leading-[34px]">
-                            {sector.body}
-                          </p>
-                          <Link
-                            to="/contacto"
-                            tabIndex={selected ? undefined : -1}
-                            className="group/cta inline-flex items-center gap-3 justify-self-start font-display text-base font-semibold text-ink"
-                          >
-                            <span className="relative pb-1">
-                              Agenda tu consulta
-                              <span
-                                aria-hidden="true"
-                                className={`absolute bottom-0 left-0 h-px w-full origin-left bg-ink transition-transform duration-500 ${ease} group-hover/cta:scale-x-0`}
-                              />
-                            </span>
-                            <ArrowRight
-                              aria-hidden="true"
-                              className={`size-4 transition-transform duration-500 ${ease} group-hover/cta:translate-x-1.5`}
-                            />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    Agenda tu consulta
+                    <ArrowRight
+                      className="size-4 transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </Link>
                 </div>
-              );
-            })}
+              </figure>
+            </Reveal>
+
+            <SectorColumn sectors={right} from="right" />
           </div>
 
-          <p className="pt-10 text-small text-ink-muted lg:grid lg:grid-cols-12 lg:gap-8">
-            <span className="lg:col-span-9 lg:col-start-4">
-              Espacio para casos y proyectos: se publican solo con autorización
-              del cliente.
-            </span>
+          <p className="mt-14 text-center text-small text-ink-muted">
+            Espacio para casos y proyectos: se publican solo con autorización
+            del cliente.
           </p>
         </Container>
       </section>
 
       <PageCta />
     </>
+  );
+}
+
+function SectorColumn({ sectors, from }: { sectors: Sector[]; from: "left" | "right" }) {
+  return (
+    <div className="grid gap-10 md:gap-14">
+      {sectors.map((sector, i) => {
+        const Icon = sector.icon;
+        return (
+          <Reveal key={sector.title} delay={150 + i * 120}>
+            <article
+              className={cn(
+                "group grid gap-3 transition-transform duration-200 ease-out hover:-translate-y-1 motion-reduce:transition-none",
+                from === "right" && "md:pl-2",
+              )}
+            >
+              <div className="flex items-center gap-3">
+                <span className="grid size-12 flex-none place-items-center rounded-md bg-blue/10 text-blue transition-colors duration-300 group-hover:bg-blue group-hover:text-on-navy">
+                  <Icon className="size-6" strokeWidth={1.5} aria-hidden="true" />
+                </span>
+                <h3 className="text-[19px] leading-[25px] font-semibold text-ink transition-colors duration-300 group-hover:text-blue">
+                  {sector.title}
+                </h3>
+              </div>
+              <p className="pl-[60px] text-small leading-[23px] text-ink-muted">{sector.body}</p>
+            </article>
+          </Reveal>
+        );
+      })}
+    </div>
   );
 }
