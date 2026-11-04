@@ -51,10 +51,10 @@ export function FirmHero() {
             <img
               src={equipoReunido}
               alt="Equipo de VDM Consultores reunido en la oficina"
-              width={1400}
-              height={784}
+              width={1600}
+              height={895}
               loading="lazy"
-              className="aspect-[1400/784] w-full object-cover"
+              className="aspect-[1600/895] w-full object-cover"
             />
             <figcaption className="relative bg-navy px-6 py-5 sm:px-8 sm:py-6">
               <span className="absolute left-6 top-0 h-[3px] w-16 bg-sky sm:left-8" aria-hidden="true" />
