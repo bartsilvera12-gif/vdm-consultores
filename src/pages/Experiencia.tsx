@@ -45,7 +45,7 @@ export function Experiencia() {
     <>
       <PageHero
         eyebrow="Experiencia"
-        title="A quiénes acompañamos."
+        title="A quiénes acompañamos"
         lead="Empresas en cada etapa e inversionistas que llegan a Paraguay."
       />
 
@@ -54,7 +54,7 @@ export function Experiencia() {
           <Reveal className="mb-10 grid gap-3 md:mb-14">
             <Eyebrow>Sectores que acompañamos</Eyebrow>
             <h2 className="max-w-[24ch] font-display text-[28px] leading-[34px] font-semibold tracking-tight text-ink md:text-[40px] md:leading-[46px]">
-              Cada cliente llega con un desafío distinto.
+              Cada cliente llega con un desafío distinto
             </h2>
           </Reveal>
 
@@ -112,7 +112,7 @@ export function Experiencia() {
                   className="relative grid gap-6 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-300"
                 >
                   <TwoToneIcon icon={current.icon} tone="onNavy" className="size-20" />
-                  <h3 className="font-display text-[32px] leading-[38px] font-semibold">
+                  <h3 className="font-heading text-[32px] leading-[38px] font-semibold">
                     {current.title}
                   </h3>
                   <p className="max-w-[46ch] text-lead text-on-navy-muted">{current.body}</p>
@@ -143,7 +143,7 @@ export function Experiencia() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <TwoToneIcon icon={sector.icon} tone="onNavy" className="mb-5 size-14" />
-                  <h3 className="mb-2 font-display text-[22px] leading-[28px] font-semibold">
+                  <h3 className="mb-2 font-heading text-[22px] leading-[28px] font-semibold">
                     {sector.title}
                   </h3>
                   <p className="text-small leading-[23px] text-on-navy-muted">{sector.body}</p>

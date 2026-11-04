@@ -16,7 +16,7 @@ export function Equipo() {
     <>
       <PageHero
         eyebrow="Equipo profesional"
-        title="Profesionales especializados en cada área."
+        title="Profesionales especializados en cada área"
         lead="Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente."
       />
       <section className="bg-surface-alt py-16 md:py-24">

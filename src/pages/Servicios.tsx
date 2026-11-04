@@ -41,7 +41,7 @@ export function Servicios() {
     <>
       <PageHero
         eyebrow="Áreas de servicio"
-        title="Cada etapa de tu proyecto, un mismo equipo."
+        title="Cada etapa de tu proyecto, un mismo equipo"
         lead="Desde la constitución de tu empresa hasta la concreción de tu inversión, cada área trabaja coordinada con las demás."
       />
 

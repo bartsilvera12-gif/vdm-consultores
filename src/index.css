@@ -49,6 +49,7 @@
   /* Typography families */
   --font-display: "Montserrat", "Avenir Next", system-ui, sans-serif;
   --font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-heading: Arial, Helvetica, sans-serif;
 
   /* Named type scale (use as text-hero, text-h2, leading-hero, etc.) */
   --text-hero: 56px;
@@ -201,4 +202,11 @@
       scroll-behavior: auto !important;
     }
   }
+}
+
+/* Títulos grandes en Arial (boceto aprobado por la clienta). Fuera de @layer
+ * para ganarle a la utilidad font-display que llevan los h1/h2. */
+h1,
+h2 {
+  font-family: var(--font-heading);
 }

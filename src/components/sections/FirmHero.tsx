@@ -52,7 +52,7 @@ export function FirmHero() {
           <h2 className="font-display text-[24px] leading-[26px] font-bold tracking-tight text-ink sm:text-[40px] sm:leading-[44px] md:text-[52px] md:leading-[56px] lg:text-[60px] lg:leading-[62px]">
             Fortaleciendo empresas,{" "}
             <em className="block not-italic text-blue">
-              potenciando inversiones.
+              potenciando inversiones
             </em>
           </h2>
           <p className="text-[12px] leading-[18px] text-ink-muted sm:text-base sm:leading-[26px] lg:text-lead">
