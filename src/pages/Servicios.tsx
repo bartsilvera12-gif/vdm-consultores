@@ -47,7 +47,7 @@ export function Servicios() {
       {/* Índice fijo arriba: lleva a cada área y marca la que está en pantalla. */}
       <nav
         aria-label="Servicios"
-        className="sticky top-[72px] z-30 border-b border-line bg-surface/95 backdrop-blur"
+        className="sticky top-[72px] z-30 border-y border-white/10 bg-navy"
       >
         <Container className="flex gap-6 overflow-x-auto [scrollbar-width:none] md:justify-center md:gap-10 [&::-webkit-scrollbar]:hidden">
           {areas.map((area) => (
@@ -56,14 +56,14 @@ export function Servicios() {
               href={`#${area.id}`}
               className={cn(
                 "relative shrink-0 py-4 font-display text-small font-semibold transition-colors duration-200",
-                active === area.id ? "text-blue" : "text-ink-muted hover:text-ink",
+                active === area.id ? "text-on-navy" : "text-on-navy-muted hover:text-on-navy",
               )}
             >
               {area.eyebrow}
               <span
                 aria-hidden="true"
                 className={cn(
-                  "absolute inset-x-0 bottom-0 h-[2px] origin-center bg-blue transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
+                  "absolute inset-x-0 bottom-0 h-[2px] origin-center bg-sky transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
                   active === area.id ? "scale-x-100" : "scale-x-0",
                 )}
               />
