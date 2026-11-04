@@ -7,21 +7,14 @@ const ease = "ease-[cubic-bezier(0.23,1,0.32,1)]";
 
 /**
  * Portada: fondo azul tinta, bienvenida a la izquierda y la fachada del
- * edificio de VDM a la derecha, cortada en la diagonal de la V del logo con
- * dos franjas azules paralelas. En celular la foto va debajo del texto.
+ * edificio de VDM a la derecha, cortada en la diagonal de la V del logo. En
+ * celular la foto va debajo del texto.
  */
 export function Hero() {
   return (
     <section id="inicio" className="relative overflow-hidden bg-ink text-on-navy">
       {/* Escritorio: foto a sangre hasta el borde derecho. */}
       <div aria-hidden="true" className="absolute inset-y-0 right-0 hidden w-[52%] md:block">
-        {/* Franjas de la V, paralelas al corte de la foto. */}
-        <span
-          className={`absolute inset-y-0 left-[-2%] w-[14%] bg-blue-bright [clip-path:polygon(78%_0,100%_0,22%_100%,0_100%)] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-left-6 motion-safe:duration-700 ${ease}`}
-        />
-        <span
-          className={`absolute inset-y-0 left-[6%] w-[10%] bg-blue [clip-path:polygon(70%_0,100%_0,30%_100%,0_100%)] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-left-4 motion-safe:duration-700 motion-safe:delay-100 ${ease}`}
-        />
         <div className="absolute inset-0 overflow-hidden [clip-path:polygon(22%_0,100%_0,100%_100%,8%_100%)]">
           <img
             src={edificio}
@@ -52,7 +45,6 @@ export function Hero() {
 
       {/* Celular: la fachada debajo del texto, con el mismo corte diagonal. */}
       <div aria-hidden="true" className="relative h-[380px] sm:h-[460px] md:hidden">
-        <span className="absolute inset-0 bg-blue-bright [clip-path:polygon(0_3%,100%_33%,100%_40%,0_10%)]" />
         <div className="absolute inset-0 overflow-hidden [clip-path:polygon(0_10%,100%_40%,100%_100%,0_100%)]">
           <img
             src={edificio}

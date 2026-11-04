@@ -4,6 +4,8 @@ import { Container } from "@/components/primitives/Container";
 import { Logo } from "@/components/primitives/Logo";
 import { useAreas } from "@/hooks/useAreas";
 import { useContactInfo } from "@/hooks/useContactInfo";
+import { WhatsAppIcon } from "@/components/primitives/WhatsAppIcon";
+import { WA_DOCK_ID } from "@/components/layout/WhatsAppFloat";
 
 export function Footer() {
   const { areas } = useAreas();
@@ -84,37 +86,61 @@ export function Footer() {
               </li>
             </ul>
           </div>
-          {socials.length > 0 && (
-            <div>
-              <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
-                Síganos
-              </h4>
-              <ul className="flex items-center gap-2.5">
-                {socials.map((s) => {
-                  const Icon = s.icon;
-                  return (
-                    <li key={s.label}>
-                      <a
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={s.label}
-                        title={s.label}
-                        className="inline-flex size-10 items-center justify-center rounded-full border border-white/15 text-on-navy transition-all hover:-translate-y-0.5 hover:border-blue-bright hover:bg-blue-bright hover:text-on-blue"
-                      >
-                        <Icon className="size-4" aria-hidden="true" />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
+          <div>
+            <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
+              Síganos
+            </h4>
+            <ul className="flex items-center gap-2.5">
+              {socials.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <li key={s.label}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      title={s.label}
+                      className="inline-flex size-10 items-center justify-center rounded-full border border-white/15 text-on-navy transition-all hover:-translate-y-0.5 hover:border-blue-bright hover:bg-blue-bright hover:text-on-blue"
+                    >
+                      <Icon className="size-4" aria-hidden="true" />
+                    </a>
+                  </li>
+                );
+              })}
+              {/* Acá se acopla el botón flotante de WhatsApp al llegar al footer. */}
+              <li>
+                <a
+                  id={WA_DOCK_ID}
+                  data-docked="false"
+                  href={contact.whatsapp.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  title="WhatsApp"
+                  className="inline-flex size-10 scale-75 items-center justify-center rounded-full bg-[#25D366] text-[#0F1E33] opacity-0 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 data-[docked=true]:scale-100 data-[docked=true]:opacity-100 motion-reduce:transition-none"
+                >
+                  <WhatsAppIcon className="size-5" />
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="flex flex-wrap justify-between gap-3 border-t border-white/10 pt-6 text-small">
           <span>© 2026 VDM Consultores. Todos los derechos reservados.</span>
           <span>Fortaleciendo empresas, potenciando inversiones.</span>
         </div>
+        <p className="-mt-4 text-center text-[13px]">
+          Desarrollado por{" "}
+          <a
+            href="https://neura.com.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-on-navy underline-offset-4 hover:underline"
+          >
+            Neura
+          </a>
+        </p>
       </Container>
     </footer>
   );

@@ -6,11 +6,11 @@ import {
   Factory,
   House,
   Leaf,
-  Lightbulb,
   Scale,
   type LucideIcon,
 } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
+import { StairsIcon } from "@/components/primitives/StairsIcon";
 import { TwoToneIcon } from "@/components/primitives/TwoToneIcon";
 import { Button } from "@/components/ui/button";
 import { useCarousel } from "@/hooks/useCarousel";
@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 const services: Array<{ label: string; icon: LucideIcon; area: string }> = [
   { label: "Estudio Jurídico", icon: Scale, area: "juridico" },
   { label: "Consultoría Empresarial", icon: Building2, area: "consultoria" },
-  { label: "Asesoría en Inversiones", icon: Lightbulb, area: "inversiones" },
+  { label: "Asesoría en Inversiones", icon: StairsIcon, area: "inversiones" },
   { label: "Habilitaciones Industriales y Comerciales", icon: Factory, area: "habilitaciones" },
   { label: "Licencias Ambientales", icon: Leaf, area: "habilitaciones" },
   { label: "Inversiones Inmobiliarias", icon: House, area: "inversiones" },

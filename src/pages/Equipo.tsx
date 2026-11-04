@@ -24,39 +24,6 @@ export function Equipo() {
           <div className="grid items-start gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:gap-8">
             {/* Panel navy — áreas que cubre el equipo --------------------- */}
             <aside className="relative overflow-hidden rounded-xl bg-navy p-7 text-on-navy shadow-card sm:p-9 md:p-10 lg:sticky lg:top-24">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 right-0 w-2/3 opacity-70"
-              >
-                <svg
-                  viewBox="0 0 400 500"
-                  preserveAspectRatio="xMaxYMid slice"
-                  className="h-full w-full"
-                >
-                  <g
-                    stroke="var(--vdm-blue-bright)"
-                    fill="none"
-                    opacity="0.3"
-                    vectorEffect="non-scaling-stroke"
-                  >
-                    {Array.from({ length: 11 }).map((_, i) => {
-                      const angle = (118 + i * 9) * (Math.PI / 180);
-                      const x2 = 400 + Math.cos(angle) * 760;
-                      const y2 = 120 + Math.sin(angle) * 760;
-                      return (
-                        <line
-                          key={i}
-                          x1="400"
-                          y1="120"
-                          x2={x2}
-                          y2={y2}
-                          vectorEffect="non-scaling-stroke"
-                        />
-                      );
-                    })}
-                  </g>
-                </svg>
-              </div>
               <div className="relative grid gap-5">
                 <Eyebrow tone="onNavy">Un solo equipo</Eyebrow>
                 <p className="font-display text-h3 leading-h3 font-semibold text-on-navy">

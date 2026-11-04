@@ -10,32 +10,6 @@ import { TwoToneIcon } from "@/components/primitives/TwoToneIcon";
 import { useSectors } from "@/hooks/useSectors";
 import { cn } from "@/lib/utils";
 
-/** Rayos finos desde la esquina, eco de la portada. */
-function PanelRays() {
-  return (
-    <svg
-      viewBox="0 0 400 400"
-      aria-hidden="true"
-      className="pointer-events-none absolute -bottom-24 -right-24 size-[420px] opacity-40"
-    >
-      <g stroke="var(--vdm-sky)" strokeWidth="1">
-        {Array.from({ length: 36 }, (_, i) => {
-          const a = Math.PI + (i / 35) * (Math.PI / 2);
-          return (
-            <line
-              key={i}
-              x1={400 + Math.cos(a) * 120}
-              y1={400 + Math.sin(a) * 120}
-              x2={400 + Math.cos(a) * 400}
-              y2={400 + Math.sin(a) * 400}
-            />
-          );
-        })}
-      </g>
-    </svg>
-  );
-}
-
 export function Experiencia() {
   const { sectors } = useSectors();
   const [index, setIndex] = useState(0);
@@ -105,7 +79,6 @@ export function Experiencia() {
                 role="tabpanel"
                 className="relative min-h-[420px] overflow-hidden rounded-xl bg-navy p-10 text-on-navy"
               >
-                <PanelRays />
                 {/* key fuerza la entrada animada al cambiar de sector. */}
                 <div
                   key={current.title}
