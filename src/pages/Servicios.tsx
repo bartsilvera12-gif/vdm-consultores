@@ -73,35 +73,49 @@ export function Servicios() {
       </nav>
 
       {areas.map((area, i) => {
-        const flip = i % 2 === 1;
+        // Intercalado: una franja azul tinta con texto blanco, una blanca.
+        const dark = i % 2 === 0;
         return (
           <section
             key={area.id}
             id={area.id}
-            className={cn("scroll-mt-32", flip ? "bg-surface-alt" : "bg-surface")}
+            className={cn("scroll-mt-32", dark ? "bg-ink text-on-navy" : "bg-surface text-ink")}
           >
-            <Container className="grid gap-10 py-16 md:py-24 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
-              <Reveal className={cn("grid content-start gap-6", flip && "lg:order-2")}>
-                <div className="flex items-end gap-5">
-                  <span
-                    aria-hidden="true"
-                    className="font-display text-[64px] leading-[0.8] font-semibold tabular-nums text-blue/15 md:text-[88px]"
+            <Container className="grid gap-12 py-20 md:py-28 lg:grid-cols-[1fr_1fr] lg:gap-24">
+              <Reveal className={cn("grid content-start gap-7", !dark && "lg:order-2")}>
+                <TwoToneIcon
+                  icon={area.icon}
+                  tone={dark ? "onNavy" : "blue"}
+                  className="size-14 md:size-16"
+                />
+                <div className="grid gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className={cn("h-px w-8", dark ? "bg-sky" : "bg-blue")} aria-hidden="true" />
+                    <Eyebrow tone={dark ? "onNavy" : "default"}>{area.eyebrow}</Eyebrow>
+                  </div>
+                  <h2
+                    className={cn(
+                      "max-w-[18ch] text-[32px] leading-[38px] font-bold tracking-tight md:text-[46px] md:leading-[52px]",
+                      dark ? "text-on-navy" : "text-ink",
+                    )}
                   >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <TwoToneIcon icon={area.icon} className="size-12 md:size-14" />
-                </div>
-                <div className="grid gap-3">
-                  <Eyebrow>{area.eyebrow}</Eyebrow>
-                  <h2 className="max-w-[18ch] font-display text-[30px] leading-[36px] font-semibold tracking-tight text-ink md:text-[42px] md:leading-[48px]">
                     {area.title}
                   </h2>
                 </div>
-                <p className="max-w-[46ch] text-body text-ink-muted md:text-lead">
+                <p
+                  className={cn(
+                    "max-w-[44ch] text-body md:text-lead",
+                    dark ? "text-on-navy-muted" : "text-ink-muted",
+                  )}
+                >
                   {area.description}
                 </p>
-                <div>
-                  <Button asChild variant="outline" className="group border-blue text-blue hover:bg-blue hover:text-on-blue">
+                <div className="pt-1">
+                  <Button
+                    asChild
+                    variant={dark ? "onNavy" : "default"}
+                    className={cn("group", dark && "text-ink")}
+                  >
                     <Link to="/contacto" state={{ area: area.eyebrow }}>
                       Consultar sobre estos servicios
                       <ArrowRight
@@ -113,15 +127,32 @@ export function Servicios() {
                 </div>
               </Reveal>
 
-              {/* Servicios: lista de líneas finas, numerada. */}
-              <ul className={cn("m-0 list-none self-center border-t border-ink/15 p-0", flip && "lg:order-1")}>
+              {/* Servicios: lista de líneas finas con un guion celeste. */}
+              <ul
+                className={cn(
+                  "m-0 list-none self-center border-t p-0",
+                  dark ? "border-white/15" : "border-ink/12",
+                  !dark && "lg:order-1",
+                )}
+              >
                 {area.services.map((svc, j) => (
                   <Reveal as="li" key={svc} delay={80 + j * 50}>
-                    <span className="group flex items-baseline gap-5 border-b border-ink/15 py-4 md:py-5">
-                      <span className="w-6 flex-none font-display text-small font-semibold tabular-nums text-sky">
-                        {String(j + 1).padStart(2, "0")}
-                      </span>
-                      <span className="font-display text-[17px] leading-[24px] font-medium text-ink transition-[transform,color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:text-blue md:text-lg">
+                    <span
+                      className={cn(
+                        "group flex items-center gap-4 border-b py-5 md:py-6",
+                        dark ? "border-white/15" : "border-ink/12",
+                      )}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="h-px w-4 flex-none bg-sky transition-[width] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:w-7"
+                      />
+                      <span
+                        className={cn(
+                          "font-display text-[17px] leading-[24px] font-medium md:text-[19px] md:leading-[26px]",
+                          dark ? "text-on-navy" : "text-ink",
+                        )}
+                      >
                         {svc}
                       </span>
                     </span>
