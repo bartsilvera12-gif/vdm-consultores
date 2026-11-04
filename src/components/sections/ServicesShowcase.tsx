@@ -4,12 +4,10 @@ import {
   ArrowRight,
   Building2,
   Factory,
+  House,
   Leaf,
   Lightbulb,
-  Plane,
-  ReceiptText,
   Scale,
-  Ship,
   type LucideIcon,
 } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
@@ -18,16 +16,17 @@ import { Button } from "@/components/ui/button";
 import { useCarousel } from "@/hooks/useCarousel";
 import { cn } from "@/lib/utils";
 
-/** Áreas y disciplinas de VDM (contenido de /servicios y de Quiénes somos). */
-const services: Array<{ label: string; icon: LucideIcon }> = [
-  { label: "Estudio Jurídico", icon: Scale },
-  { label: "Asesoría Tributaria", icon: ReceiptText },
-  { label: "Consultoría Empresarial", icon: Building2 },
-  { label: "Asesoría en Inversiones", icon: Lightbulb },
-  { label: "Gestión Ambiental", icon: Leaf },
-  { label: "Trámites Migratorios", icon: Plane },
-  { label: "Comercio Exterior", icon: Ship },
-  { label: "Habilitaciones Industriales", icon: Factory },
+/**
+ * Las 4 áreas de los flyers de VDM y los 2 servicios con texto propio que
+ * mandó la clienta. Cada uno lleva a su área en /servicios.
+ */
+const services: Array<{ label: string; icon: LucideIcon; area: string }> = [
+  { label: "Estudio Jurídico", icon: Scale, area: "juridico" },
+  { label: "Consultoría Empresarial", icon: Building2, area: "consultoria" },
+  { label: "Asesoría en Inversiones", icon: Lightbulb, area: "inversiones" },
+  { label: "Habilitaciones Industriales y Comerciales", icon: Factory, area: "habilitaciones" },
+  { label: "Licencias Ambientales", icon: Leaf, area: "habilitaciones" },
+  { label: "Inversiones Inmobiliarias", icon: House, area: "inversiones" },
 ];
 
 const arrowClass =
@@ -67,20 +66,20 @@ export function ServicesShowcase() {
             ref={trackRef}
             className="m-0 flex snap-x snap-mandatory list-none overflow-x-auto scroll-smooth p-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {services.map(({ label, icon }) => (
+            {services.map(({ label, icon, area }) => (
               <li
                 key={label}
                 data-card
-                className="w-1/2 shrink-0 snap-start sm:w-1/3 md:w-1/5 xl:w-1/6"
+                className="w-1/2 shrink-0 snap-start sm:w-1/3 md:w-1/6"
               >
                 <Link
-                  to="/servicios"
+                  to={`/servicios#${area}`}
                   className="group grid justify-items-center gap-5 px-2 text-center"
                 >
                   <span className="transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-1">
                     <TwoToneIcon icon={icon} className="size-24 md:size-28" />
                   </span>
-                  <span className="max-w-[160px] font-display text-base leading-6 text-blue md:text-lg md:leading-7">
+                  <span className="max-w-[180px] font-display text-base leading-6 text-blue md:text-lg md:leading-7">
                     {label}
                   </span>
                 </Link>

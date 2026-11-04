@@ -36,7 +36,7 @@ export function AboutIntro() {
           </div>
         </div>
 
-        <figure className="relative m-0 w-full min-w-0 md:max-w-[440px] md:justify-self-end">
+        <figure className="relative m-0 w-full min-w-0 md:max-w-[360px] md:justify-self-end">
           <div className="overflow-hidden rounded-lg bg-surface [clip-path:polygon(10%_0,100%_0,100%_100%,0_100%,0_5%)]">
             <img
               src={giselleVera}
@@ -44,7 +44,7 @@ export function AboutIntro() {
               width={720}
               height={1280}
               loading="lazy"
-              className="aspect-[2/3] w-full sm:aspect-[3/4] object-cover object-top"
+              className="aspect-[9/16] w-full object-cover object-top"
             />
           </div>
           <figcaption className="absolute inset-x-2 bottom-2 rounded-md border-l-[3px] border-sky bg-surface px-2 py-1.5 shadow-card sm:inset-x-6 sm:bottom-6 sm:px-4 sm:py-3">
