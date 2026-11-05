@@ -169,6 +169,28 @@ export function EditTeam() {
     void fetchAll();
   }
 
+  /** Mueve un perfil a otra posición y renumera todos (10, 20, 30…). */
+  async function reorder(from: number, to: number) {
+    if (from === to) return;
+    const next = [...members];
+    const [item] = next.splice(from, 1);
+    next.splice(to, 0, item);
+    const renumbered = next.map((m, i) => ({ ...m, position: (i + 1) * 10 }));
+    const changed = renumbered.filter(
+      (m) => members.find((o) => o.id === m.id)?.position !== m.position,
+    );
+    setMembers(renumbered);
+    const client = getSupabase();
+    if (!client || changed.length === 0) return;
+    const { error } = await client.from("vdm_team_members").upsert(changed);
+    if (error) {
+      toast.error("No pudimos reordenar", { description: error.message });
+      void fetchAll();
+      return;
+    }
+    toast.success("Orden guardado", { description: "Ya se ve así en el sitio." });
+  }
+
   if (loading) {
     return (
       <div
@@ -214,6 +236,8 @@ export function EditTeam() {
           isNew={editingId === "new"}
         />
       )}
+
+      {members.length > 1 && <OrderBoard members={members} onMove={reorder} />}
 
       <ul className="grid gap-3">
         {members.length === 0 && !editingId && (
@@ -282,6 +306,144 @@ export function EditTeam() {
         ))}
       </ul>
     </div>
+  );
+}
+
+/**
+ * Orden en el sitio con miniaturas, armado igual que la página: arriba las
+ * tres principales (la primera al medio) y abajo el resto. Se reordena
+ * arrastrando una foto sobre otra, o tocando una y después el lugar adonde va
+ * (sirve también en celular).
+ */
+function OrderBoard({
+  members,
+  onMove,
+}: {
+  members: TeamMemberRow[];
+  onMove: (from: number, to: number) => void;
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [dragging, setDragging] = useState<number | null>(null);
+  const [over, setOver] = useState<number | null>(null);
+  const lead = members.slice(0, 3);
+  const rest = members.slice(3);
+  // Mismo orden visual que la página pública: la primera va al medio.
+  const LEAD_ORDER = ["order-2", "order-1", "order-3"];
+
+  function pick(i: number) {
+    if (selected === null) {
+      setSelected(i);
+      return;
+    }
+    if (selected !== i) onMove(selected, i);
+    setSelected(null);
+  }
+
+  function tile(m: TeamMemberRow, i: number, featured: boolean) {
+    const isSelected = selected === i;
+    const isOver = over === i && dragging !== null && dragging !== i;
+    return (
+      <li key={m.id} className={featured ? LEAD_ORDER[i] : undefined}>
+        <button
+          type="button"
+          draggable
+          onClick={() => pick(i)}
+          onDragStart={(e) => {
+            setDragging(i);
+            setSelected(null);
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text/plain", String(i));
+          }}
+          onDragEnd={() => {
+            setDragging(null);
+            setOver(null);
+          }}
+          onDragOver={(e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = "move";
+            if (over !== i) setOver(i);
+          }}
+          onDragLeave={() => setOver((o) => (o === i ? null : o))}
+          onDrop={(e) => {
+            e.preventDefault();
+            const from = Number(e.dataTransfer.getData("text/plain"));
+            setDragging(null);
+            setOver(null);
+            if (!Number.isNaN(from)) onMove(from, i);
+          }}
+          aria-pressed={isSelected}
+          aria-label={`${m.name}, lugar ${i + 1}${isSelected ? ", elegido para mover" : ""}`}
+          className={cn(
+            "group grid w-full cursor-grab gap-1.5 rounded-md p-1.5 text-left transition-[background-color,box-shadow,opacity] duration-150 active:cursor-grabbing",
+            isSelected && "bg-blue/10 ring-2 ring-blue",
+            isOver && "bg-sky/10 ring-2 ring-sky ring-offset-2",
+            dragging === i && "opacity-40",
+            selected !== null && !isSelected && "hover:ring-2 hover:ring-sky/60",
+          )}
+        >
+          <span
+            className={cn(
+              "relative block w-full overflow-hidden bg-[#e8edf3]",
+              featured ? "aspect-[9/16]" : "aspect-[4/5]",
+            )}
+          >
+            {m.photo_url ? (
+              <img
+                src={m.photo_url}
+                alt=""
+                draggable={false}
+                loading="lazy"
+                className="absolute inset-x-0 bottom-0 h-[92%] w-full object-contain object-bottom"
+              />
+            ) : (
+              <User className="absolute inset-0 m-auto size-6 text-line-strong" aria-hidden="true" />
+            )}
+            <span className="absolute top-1.5 left-1.5 grid size-6 place-items-center rounded-full bg-ink text-[11px] font-semibold text-on-navy">
+              {i + 1}
+            </span>
+          </span>
+          <span className="truncate text-[12px] leading-[16px] font-semibold text-ink">{m.name}</span>
+        </button>
+      </li>
+    );
+  }
+
+  return (
+    <section className="grid gap-4 rounded-lg border border-line bg-surface p-4 sm:p-5">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="font-display text-h3 leading-h3 font-semibold text-ink">Orden en el sitio</h2>
+        <p className="text-small text-ink-muted">
+          {selected === null
+            ? "Arrastrá una foto hasta otro lugar, o tocala y después tocá adónde va."
+            : `Ahora tocá el lugar adonde va ${members[selected]?.name ?? ""}.`}
+          {selected !== null && (
+            <button
+              type="button"
+              onClick={() => setSelected(null)}
+              className="ml-2 font-semibold text-blue underline-offset-2 hover:underline"
+            >
+              Cancelar
+            </button>
+          )}
+        </p>
+      </div>
+      <div className="grid gap-1">
+        <p className="text-[12px] font-semibold tracking-wide text-ink-muted uppercase">
+          Principales (la 1 va al medio)
+        </p>
+        <ul className="mx-auto grid w-full max-w-[420px] grid-cols-3 gap-2">
+          {lead.map((m, i) => tile(m, i, true))}
+        </ul>
+      </div>
+      {rest.length > 0 && (
+        <div className="grid gap-1">
+          <p className="text-[12px] font-semibold tracking-wide text-ink-muted uppercase">Resto del equipo</p>
+          <ul className="grid grid-cols-3 gap-2 sm:grid-cols-6 lg:grid-cols-8">
+            {rest.map((m, i) => tile(m, i + 3, false))}
+          </ul>
+        </div>
+      )}
+    </section>
   );
 }
 
