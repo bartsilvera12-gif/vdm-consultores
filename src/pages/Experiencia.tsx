@@ -8,8 +8,6 @@ import { PageCta } from "@/components/primitives/PageCta";
 import { Reveal } from "@/components/primitives/Reveal";
 import { useSectors } from "@/hooks/useSectors";
 import { cn } from "@/lib/utils";
-// Palacio de López, Asunción. Foto de André Piske en Unsplash (licencia libre).
-import fotoPalacio from "@/assets/sectores/palacio.webp";
 // Una foto por sector (Unsplash, licencia libre), se muestra al pasar el mouse.
 import fotoFormacion from "@/assets/sectores/exp-formacion.webp";
 import fotoConsolidadas from "@/assets/sectores/exp-consolidadas.webp";
@@ -47,7 +45,7 @@ export function Experiencia() {
   const left = sectors.slice(0, half);
   const right = sectors.slice(half);
   // Sector bajo el mouse (o con foco): cambia la foto del medio.
-  const [active, setActive] = useState<number | null>(null);
+  const [active, setActive] = useState(0);
   const photos = sectors.map((s, i) => SECTOR_PHOTOS[s.title] ?? PHOTO_ORDER[i % PHOTO_ORDER.length]);
 
   return (
@@ -69,7 +67,7 @@ export function Experiencia() {
           </Reveal>
 
           <div
-            onMouseLeave={() => setActive(null)}
+            onMouseLeave={() => setActive(0)}
             className="grid gap-10 md:grid-cols-[1fr_minmax(260px,360px)_1fr] md:gap-x-10 md:gap-y-12 lg:gap-x-14">
             <Photo
               photos={photos}
@@ -83,7 +81,7 @@ export function Experiencia() {
                 side="left"
                 row={i}
                 selected={active === i}
-                onSelect={(on) => setActive(on ? i : null)}
+                onSelect={(on) => setActive(on ? i : 0)}
               />
             ))}
             {right.map((sector, i) => (
@@ -93,7 +91,7 @@ export function Experiencia() {
                 side="right"
                 row={i}
                 selected={active === i + half}
-                onSelect={(on) => setActive(on ? i + half : null)}
+                onSelect={(on) => setActive(on ? i + half : 0)}
               />
             ))}
           </div>
@@ -115,11 +113,11 @@ function rowSpan(n: number) {
 }
 
 /**
- * Foto central: el Palacio de López y, encima, la foto de cada sector, que
- * aparece con un fundido cuando se elige ese sector. Se mueve unos píxeles
+ * Foto central: la del sector elegido (por defecto, el primero), con un
+ * fundido al cambiar. Se mueve unos píxeles
  * al deslizar, contraria al scroll.
  */
-function Photo({ photos, active, className }: { photos: string[]; active: number | null; className?: string }) {
+function Photo({ photos, active, className }: { photos: string[]; active: number; className?: string }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
 
@@ -154,14 +152,6 @@ function Photo({ photos, active, className }: { photos: string[]; active: number
     <Reveal delay={100} className={cn("mx-auto w-full max-w-[360px]", className)}>
       <figure ref={frameRef} className="group relative m-0 aspect-[3/4] overflow-hidden rounded-md bg-ink">
         <div ref={layerRef} className="absolute -inset-y-[6%] inset-x-0 will-change-transform">
-          <img
-            src={fotoPalacio}
-            alt="Palacio de López, en Asunción"
-            width={900}
-            height={1200}
-            loading="lazy"
-            className={`h-full w-full object-cover transition-transform duration-700 ${ease} group-hover:scale-[1.04] motion-reduce:transition-none`}
-          />
           {photos.map((src, i) => (
             <img
               key={i}
@@ -170,7 +160,7 @@ function Photo({ photos, active, className }: { photos: string[]; active: number
               aria-hidden="true"
               width={900}
               height={1200}
-              loading="lazy"
+              loading={i === 0 ? "eager" : "lazy"}
               className={cn(
                 `absolute inset-0 h-full w-full object-cover transition-[opacity,scale] duration-700 ${ease} motion-reduce:transition-none`,
                 active === i ? "scale-100 opacity-100" : "scale-[1.06] opacity-0",
