@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
@@ -10,6 +10,24 @@ import { useSectors } from "@/hooks/useSectors";
 import { cn } from "@/lib/utils";
 // Palacio de López, Asunción. Foto de André Piske en Unsplash (licencia libre).
 import fotoPalacio from "@/assets/sectores/palacio.webp";
+// Una foto por sector (Unsplash, licencia libre), se muestra al pasar el mouse.
+import fotoFormacion from "@/assets/sectores/exp-formacion.webp";
+import fotoConsolidadas from "@/assets/sectores/exp-consolidadas.webp";
+import fotoInversionistas from "@/assets/sectores/exp-inversionistas.webp";
+import fotoIndustria from "@/assets/sectores/exp-industria.webp";
+import fotoComercio from "@/assets/sectores/exp-comercio.webp";
+import fotoInmobiliaria from "@/assets/sectores/exp-inmobiliaria.webp";
+
+/** Foto de cada sector por título; si se cambia el nombre en el panel, por orden. */
+const SECTOR_PHOTOS: Record<string, string> = {
+  "Empresas en formación": fotoFormacion,
+  "Empresas consolidadas": fotoConsolidadas,
+  "Inversionistas extranjeros": fotoInversionistas,
+  "Industria y maquila": fotoIndustria,
+  "Comercio exterior": fotoComercio,
+  "Inversión inmobiliaria": fotoInmobiliaria,
+};
+const PHOTO_ORDER = Object.values(SECTOR_PHOTOS);
 
 type Sector = ReturnType<typeof useSectors>["sectors"][number];
 
@@ -28,6 +46,9 @@ export function Experiencia() {
   const half = Math.ceil(sectors.length / 2);
   const left = sectors.slice(0, half);
   const right = sectors.slice(half);
+  // Sector bajo el mouse (o con foco): cambia la foto del medio.
+  const [active, setActive] = useState<number | null>(null);
+  const photos = sectors.map((s, i) => SECTOR_PHOTOS[s.title] ?? PHOTO_ORDER[i % PHOTO_ORDER.length]);
 
   return (
     <>
@@ -47,13 +68,33 @@ export function Experiencia() {
             <span className="h-[3px] w-16 bg-sky" aria-hidden="true" />
           </Reveal>
 
-          <div className="grid gap-10 md:grid-cols-[1fr_minmax(260px,360px)_1fr] md:gap-x-10 md:gap-y-12 lg:gap-x-14">
-            <Photo className={cn("md:col-start-2 md:row-start-1 md:self-center", rowSpan(half))} />
+          <div
+            onMouseLeave={() => setActive(null)}
+            className="grid gap-10 md:grid-cols-[1fr_minmax(260px,360px)_1fr] md:gap-x-10 md:gap-y-12 lg:gap-x-14">
+            <Photo
+              photos={photos}
+              active={active}
+              className={cn("md:col-start-2 md:row-start-1 md:self-center", rowSpan(half))}
+            />
             {left.map((sector, i) => (
-              <SectorItem key={sector.title} sector={sector} side="left" row={i} />
+              <SectorItem
+                key={sector.title}
+                sector={sector}
+                side="left"
+                row={i}
+                selected={active === i}
+                onSelect={(on) => setActive(on ? i : null)}
+              />
             ))}
             {right.map((sector, i) => (
-              <SectorItem key={sector.title} sector={sector} side="right" row={i} />
+              <SectorItem
+                key={sector.title}
+                sector={sector}
+                side="right"
+                row={i}
+                selected={active === i + half}
+                onSelect={(on) => setActive(on ? i + half : null)}
+              />
             ))}
           </div>
 
@@ -73,8 +114,12 @@ function rowSpan(n: number) {
   return ["md:row-span-1", "md:row-span-2", "md:row-span-3", "md:row-span-4"][Math.max(0, Math.min(n, 4) - 1)];
 }
 
-/** Foto central: se mueve unos píxeles al deslizar, contraria al scroll. */
-function Photo({ className }: { className?: string }) {
+/**
+ * Foto central: el Palacio de López y, encima, la foto de cada sector, que
+ * aparece con un fundido cuando se elige ese sector. Se mueve unos píxeles
+ * al deslizar, contraria al scroll.
+ */
+function Photo({ photos, active, className }: { photos: string[]; active: number | null; className?: string }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
 
@@ -117,6 +162,21 @@ function Photo({ className }: { className?: string }) {
             loading="lazy"
             className={`h-full w-full object-cover transition-transform duration-700 ${ease} group-hover:scale-[1.04] motion-reduce:transition-none`}
           />
+          {photos.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt=""
+              aria-hidden="true"
+              width={900}
+              height={1200}
+              loading="lazy"
+              className={cn(
+                `absolute inset-0 h-full w-full object-cover transition-[opacity,scale] duration-700 ${ease} motion-reduce:transition-none`,
+                active === i ? "scale-100 opacity-100" : "scale-[1.06] opacity-0",
+              )}
+            />
+          ))}
         </div>
         <div className="absolute inset-0 flex items-end justify-center bg-[linear-gradient(to_top,rgba(10,39,71,0.6),transparent_45%)] p-5">
           <Link
@@ -135,7 +195,19 @@ function Photo({ className }: { className?: string }) {
   );
 }
 
-function SectorItem({ sector, side, row }: { sector: Sector; side: "left" | "right"; row: number }) {
+function SectorItem({
+  sector,
+  side,
+  row,
+  selected,
+  onSelect,
+}: {
+  sector: Sector;
+  side: "left" | "right";
+  row: number;
+  selected: boolean;
+  onSelect: (on: boolean) => void;
+}) {
   const Icon = sector.icon;
   const isLeft = side === "left";
   return (
@@ -147,7 +219,14 @@ function SectorItem({ sector, side, row }: { sector: Sector; side: "left" | "rig
         isLeft ? "md:col-start-1" : "md:col-start-3",
       )}
     >
-      <article className="group grid gap-3">
+      <article
+        tabIndex={0}
+        aria-current={selected || undefined}
+        onMouseEnter={() => onSelect(true)}
+        onFocus={() => onSelect(true)}
+        onBlur={() => onSelect(false)}
+        className="group grid gap-3 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-sky focus-visible:ring-offset-4 focus-visible:ring-offset-surface-alt"
+      >
         <div className={cn("flex items-center gap-3", !isLeft && "md:flex-row-reverse")}>
           <span className="grid size-12 flex-none place-items-center rounded-md bg-blue/10 text-blue transition-colors duration-300 group-hover:bg-blue group-hover:text-on-navy">
             <Icon className="size-6" strokeWidth={1.5} aria-hidden="true" />
