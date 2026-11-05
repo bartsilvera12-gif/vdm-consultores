@@ -1,6 +1,7 @@
 import { User } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { PageHero } from "@/components/primitives/PageHero";
+import { useText } from "@/hooks/useSiteContent";
 import { PageCta } from "@/components/primitives/PageCta";
 import { Reveal } from "@/components/primitives/Reveal";
 import { useTeam } from "@/hooks/useTeam";
@@ -26,8 +27,8 @@ export function Equipo() {
     <>
       <PageHero
         eyebrow="Equipo profesional"
-        title="Profesionales especializados en cada área"
-        lead="Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente."
+        title={useText("equipo.hero_title")}
+        lead={useText("equipo.hero_lead")}
       />
       <section className="bg-surface py-16 md:py-24">
         <Container className="grid gap-16 md:gap-24">

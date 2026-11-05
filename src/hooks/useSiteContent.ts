@@ -30,7 +30,21 @@ export type SiteContentKey =
   | "equipo.lead"
   // Contacto (apartado)
   | "contacto.title"
-  | "contacto.lead";
+  | "contacto.lead"
+  // Textos que se ven hoy (claves nuevas: las viejas tienen guardado un diseño anterior)
+  | "inicio.title"
+  | "inicio.lead"
+  | "inicio.button"
+  | "inicio.band_button"
+  | "cierre.title"
+  | "cierre.button"
+  | "servicios.hero_title"
+  | "servicios.hero_lead"
+  | "equipo.hero_title"
+  | "equipo.hero_lead"
+  | "experiencia.hero_title"
+  | "experiencia.hero_lead"
+  | "galeria.hero_title";
 
 export const siteContentDefaults: Record<SiteContentKey, string> = {
   "hero.eyebrow": "VDM Consultores · Paraguay",
@@ -60,7 +74,28 @@ export const siteContentDefaults: Record<SiteContentKey, string> = {
     "Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente.",
   "contacto.title": "Paraguay, país de oportunidades",
   "contacto.lead": "Agenda tu consulta",
+  "inicio.title": "Su consultora de confianza en Paraguay",
+  "inicio.lead":
+    "Asesoramiento jurídico, empresarial y de inversiones con un enfoque integral y personalizado.",
+  "inicio.button": "Conozca nuestros servicios",
+  "inicio.band_button": "Contáctenos",
+  "cierre.title": "Contactá con nuestro equipo y te asesoramos",
+  "cierre.button": "Agenda tu consulta",
+  "servicios.hero_title": "Nuestros servicios",
+  "servicios.hero_lead":
+    "Desde la constitución de tu empresa hasta la concreción de tu inversión, cada área trabaja coordinada con las demás.",
+  "equipo.hero_title": "Profesionales especializados en cada área",
+  "equipo.hero_lead":
+    "Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente.",
+  "experiencia.hero_title": "A quiénes acompañamos",
+  "experiencia.hero_lead": "Empresas en cada etapa e inversionistas que llegan a Paraguay.",
+  "galeria.hero_title": "VDM Consultores en imágenes",
 };
+
+/** Un solo texto editable (con su valor por defecto mientras carga). */
+export function useText(key: SiteContentKey) {
+  return useSiteContent([key])[key];
+}
 
 type Row = { key: string; value: unknown };
 

@@ -1,4 +1,5 @@
 import { PageHero } from "@/components/primitives/PageHero";
+import { useText } from "@/hooks/useSiteContent";
 import { PageCta } from "@/components/primitives/PageCta";
 import { MediaGallery } from "@/components/sections/MediaGallery";
 
@@ -6,7 +7,7 @@ import { MediaGallery } from "@/components/sections/MediaGallery";
 export function Galeria() {
   return (
     <>
-      <PageHero eyebrow="Galería" title="VDM Consultores en imágenes" />
+      <PageHero eyebrow="Galería" title={useText("galeria.hero_title")} />
       <MediaGallery
         withHeading={false}
         emptyText="Pronto vas a ver fotos de VDM Consultores acá."

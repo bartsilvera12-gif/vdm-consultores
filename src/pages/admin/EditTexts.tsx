@@ -22,59 +22,58 @@ type Group = {
 
 const GROUPS: Group[] = [
   {
-    title: "Inicio · Hero",
+    title: "Inicio · Portada",
     items: [
-      { key: "hero.eyebrow", label: "Eyebrow (línea sobre el titular)", hint: "Aparece arriba del título grande, en mayúsculas.", rows: 1 },
-      { key: "hero.title_main", label: "Titular principal", hint: "Primera parte del título grande.", rows: 2 },
-      { key: "hero.title_em", label: "Titular en azul", hint: "Segunda parte del título grande, se resalta en color.", rows: 2 },
-      { key: "hero.lead", label: "Párrafo bajo el título", hint: "Resumen de la firma en 2–3 líneas.", rows: 5 },
-      { key: "hero.panel_eyebrow", label: "Panel de áreas · Eyebrow", hint: "Encabezado del panel navy a la derecha.", rows: 1 },
-      { key: "hero.panel_title", label: "Panel de áreas · Título", hint: "Título del panel navy a la derecha.", rows: 2 },
-    ],
-  },
-  {
-    title: "Banda CTA (Inicio)",
-    items: [
-      { key: "cta.title", label: "Titular", hint: "Banda azul grande de llamado a la acción.", rows: 2 },
-      { key: "cta.body", label: "Párrafo", hint: "Descripción corta debajo del titular.", rows: 3 },
-      { key: "cta.button", label: "Texto del botón", hint: "", rows: 1 },
+      { key: "inicio.title", label: "Titular", hint: "Título grande sobre el fondo azul.", rows: 2 },
+      { key: "inicio.lead", label: "Párrafo bajo el titular", hint: "", rows: 3 },
+      { key: "inicio.button", label: "Texto del botón", hint: "Lleva a Servicios.", rows: 1 },
+      { key: "inicio.band_button", label: "Botón de la franja azul", hint: "Franja al final del inicio, lleva a Contacto.", rows: 1 },
     ],
   },
   {
     title: "Quiénes somos",
     items: [
-      { key: "about.title", label: "Título", hint: "", rows: 2 },
-      { key: "about.intro", label: "Intro", hint: "Primer párrafo descriptivo.", rows: 5 },
-      { key: "about.commitment", label: "Compromiso", hint: "Párrafo de cierre sobre el compromiso de VDM.", rows: 6 },
-      { key: "about.slogan", label: "Slogan", hint: "Frase corta inspiracional (sin comillas).", rows: 1 },
+      { key: "hero.lead", label: "Párrafo bajo “Fortaleciendo empresas”", hint: "Junto a la foto del equipo reunido.", rows: 5 },
+      { key: "about.commitment", label: "Compromiso", hint: "Párrafo sobre el compromiso de VDM.", rows: 6 },
     ],
   },
   {
-    title: "Apartado Servicios",
+    title: "Servicios",
     items: [
-      { key: "servicios.title", label: "Título", hint: "", rows: 2 },
-      { key: "servicios.lead", label: "Párrafo descriptivo", hint: "", rows: 3 },
+      { key: "servicios.hero_title", label: "Título", hint: "", rows: 2 },
+      { key: "servicios.hero_lead", label: "Párrafo", hint: "", rows: 3 },
     ],
   },
   {
-    title: "Apartado Experiencia",
+    title: "Equipo",
     items: [
-      { key: "experiencia.title", label: "Título", hint: "", rows: 2 },
-      { key: "experiencia.lead", label: "Párrafo descriptivo", hint: "", rows: 3 },
+      { key: "equipo.hero_title", label: "Título", hint: "", rows: 2 },
+      { key: "equipo.hero_lead", label: "Párrafo", hint: "", rows: 3 },
     ],
   },
   {
-    title: "Apartado Equipo",
+    title: "Experiencia",
     items: [
-      { key: "equipo.title", label: "Título", hint: "", rows: 2 },
-      { key: "equipo.lead", label: "Párrafo descriptivo", hint: "", rows: 3 },
+      { key: "experiencia.hero_title", label: "Título", hint: "", rows: 2 },
+      { key: "experiencia.hero_lead", label: "Párrafo", hint: "", rows: 3 },
     ],
   },
   {
-    title: "Apartado Contacto",
+    title: "Galería",
+    items: [{ key: "galeria.hero_title", label: "Título", hint: "", rows: 2 }],
+  },
+  {
+    title: "Contacto",
     items: [
-      { key: "contacto.title", label: "Título del PageHero", hint: "", rows: 2 },
-      { key: "contacto.lead", label: "Subtítulo del PageHero", hint: "", rows: 2 },
+      { key: "contacto.title", label: "Título", hint: "", rows: 2 },
+      { key: "contacto.lead", label: "Subtítulo", hint: "", rows: 2 },
+    ],
+  },
+  {
+    title: "Cierre de cada página",
+    items: [
+      { key: "cierre.title", label: "Frase", hint: "Franja azul al final de Quiénes somos, Servicios, Equipo, Experiencia y Galería.", rows: 2 },
+      { key: "cierre.button", label: "Texto del botón", hint: "Lleva a Contacto.", rows: 1 },
     ],
   },
 ];

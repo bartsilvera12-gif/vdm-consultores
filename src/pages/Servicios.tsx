@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { PageHero } from "@/components/primitives/PageHero";
+import { useText } from "@/hooks/useSiteContent";
 import { PageCta } from "@/components/primitives/PageCta";
 import { Reveal } from "@/components/primitives/Reveal";
 import { TwoToneIcon } from "@/components/primitives/TwoToneIcon";
@@ -40,8 +41,8 @@ export function Servicios() {
   return (
     <>
       <PageHero
-        title="Nuestros servicios"
-        lead="Desde la constitución de tu empresa hasta la concreción de tu inversión, cada área trabaja coordinada con las demás."
+        title={useText("servicios.hero_title")}
+        lead={useText("servicios.hero_lead")}
       />
 
       {/* Índice fijo arriba: lleva a cada área y marca la que está en pantalla. */}

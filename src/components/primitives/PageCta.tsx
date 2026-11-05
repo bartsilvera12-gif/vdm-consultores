@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Container } from "./Container";
 import { Button } from "@/components/ui/button";
+import { useText } from "@/hooks/useSiteContent";
 
 type PageCtaProps = {
   title?: string;
@@ -13,11 +14,11 @@ type PageCtaProps = {
  * CTA de cierre al final de cada apartado interno: banda navy con una sola
  * línea alineada al botón. Lleva al apartado de contacto por defecto.
  */
-export function PageCta({
-  title = "Contactá con nuestro equipo y te asesoramos",
-  to = "/contacto",
-  cta = "Agenda tu consulta",
-}: PageCtaProps) {
+export function PageCta({ title: titleProp, to = "/contacto", cta: ctaProp }: PageCtaProps) {
+  const savedTitle = useText("cierre.title");
+  const savedCta = useText("cierre.button");
+  const title = titleProp ?? savedTitle;
+  const cta = ctaProp ?? savedCta;
   return (
     <section className="relative overflow-hidden bg-navy text-on-navy">
       <Container className="relative z-10 grid gap-5 py-14 md:grid-cols-[1fr_auto] md:items-center md:py-16">

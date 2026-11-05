@@ -1,4 +1,5 @@
 import { PageHero } from "@/components/primitives/PageHero";
+import { useText } from "@/hooks/useSiteContent";
 import { Contact } from "@/components/sections/Contact";
 
 export function Contacto() {
@@ -6,8 +7,8 @@ export function Contacto() {
     <>
       <PageHero
         eyebrow="Contacto"
-        title="Paraguay, país de oportunidades"
-        lead="Agenda tu consulta"
+        title={useText("contacto.title")}
+        lead={useText("contacto.lead")}
       />
       <Contact />
     </>

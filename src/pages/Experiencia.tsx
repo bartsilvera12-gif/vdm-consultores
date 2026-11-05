@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { PageHero } from "@/components/primitives/PageHero";
+import { useText } from "@/hooks/useSiteContent";
 import { PageCta } from "@/components/primitives/PageCta";
 import { Reveal } from "@/components/primitives/Reveal";
 import { useSectors } from "@/hooks/useSectors";
@@ -52,8 +53,8 @@ export function Experiencia() {
     <>
       <PageHero
         eyebrow="Experiencia"
-        title="A quiénes acompañamos"
-        lead="Empresas en cada etapa e inversionistas que llegan a Paraguay."
+        title={useText("experiencia.hero_title")}
+        lead={useText("experiencia.hero_lead")}
       />
 
       <section className="overflow-hidden bg-surface-alt py-16 md:py-24">
