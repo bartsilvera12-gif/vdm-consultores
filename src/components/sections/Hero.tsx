@@ -18,8 +18,9 @@ const enter = `motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-f
 export function Hero() {
   return (
     <section id="inicio" className="bg-surface">
-      <div className="bg-ink text-on-navy">
-        <Container className="grid gap-6 py-14 md:gap-7 md:py-16 lg:py-20">
+      {/* El azul ocupa toda la pantalla, debajo del menú (72px). */}
+      <div className="flex min-h-[calc(100svh-72px)] items-center bg-ink text-on-navy">
+        <Container className="grid w-full content-center gap-6 py-14 md:gap-7 md:py-16 lg:py-20">
           <h1 className="max-w-[20ch] font-display text-[38px] leading-[44px] font-semibold tracking-tight sm:text-[48px] sm:leading-[54px] lg:text-[60px] lg:leading-[66px]">
             <span className={`block ${enter}`}>Su consultora de confianza en Paraguay</span>
           </h1>
