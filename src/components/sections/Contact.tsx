@@ -12,6 +12,7 @@ import {
 import { toast } from "sonner";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
+import { SelectField } from "@/components/primitives/SelectField";
 import { WhatsAppIcon } from "@/components/primitives/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { areas } from "@/content/areas";
@@ -63,6 +64,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
     ) as HTMLSelectElement | null;
     if (!select) return;
     select.value = state.area;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
   }, [location.state]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -244,15 +246,12 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               onChange={() => clearError("area")}
               className="md:col-span-2"
               as="select"
-            >
-              <option value="">Selecciona un servicio</option>
-              {areas.map((a) => (
-                <option key={a.id} value={a.eyebrow}>
-                  {a.eyebrow}
-                </option>
-              ))}
-              <option value="Otra consulta">Otra consulta</option>
-            </FormField>
+              placeholder="Selecciona un servicio"
+              options={[
+                ...areas.map((a) => ({ value: a.eyebrow, label: a.eyebrow })),
+                { value: "Otra consulta", label: "Otra consulta" },
+              ]}
+            />
             <FormField
               id="f-mensaje"
               name="mensaje"
@@ -366,7 +365,7 @@ type BaseFieldProps = {
 type FormFieldProps = BaseFieldProps &
   (
     | { as?: undefined }
-    | { as: "select"; children: React.ReactNode }
+    | { as: "select"; options: { value: string; label: string }[] }
     | { as: "textarea"; children?: never }
   );
 
@@ -389,23 +388,22 @@ function FormField(props: FormFieldProps) {
 
   return (
     <div className={cn("grid min-w-0 gap-1.5", className)}>
-      <label htmlFor={id} className="text-label font-semibold">
+      <label id={`${id}-label`} htmlFor={id} className="text-label font-semibold">
         {label}
         {hint && (
           <span className="ml-1 font-normal text-ink-muted">{hint}</span>
         )}
       </label>
       {props.as === "select" ? (
-        <select
+        <SelectField
           id={id}
           name={name}
+          placeholder={placeholder ?? ""}
+          options={props.options}
           required={required}
-          aria-invalid={invalid || undefined}
+          invalid={invalid}
           onChange={onChange}
-          className={inputBase}
-        >
-          {props.children}
-        </select>
+        />
       ) : props.as === "textarea" ? (
         <textarea
           id={id}

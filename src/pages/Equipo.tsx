@@ -98,8 +98,12 @@ function MemberCard({
             // La foto entera, sin recortar: apoyada abajo y con aire arriba.
             // Las tres principales van de cuerpo entero, en una forma alta.
             className={cn(
-              "absolute inset-x-0 bottom-0 w-full object-contain object-bottom",
-              featured ? "h-[95%]" : "h-[90%]",
+              featured
+                ? "absolute inset-x-0 bottom-0 h-[95%] w-full object-contain object-bottom"
+                : // Bustos: todos a la misma altura; si la foto es apaisada
+                  // (Javier, María Beatriz) se recortan los costados de los
+                  // hombros para que no quede chiquita.
+                  "absolute bottom-0 left-1/2 h-[84%] w-auto max-w-none -translate-x-1/2",
             )}
           />
         ) : (
