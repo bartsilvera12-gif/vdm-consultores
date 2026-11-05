@@ -31,6 +31,8 @@ const SHAPES: Array<(k: number) => JSX.Element[]> = [
       <rect key={y} x="0" y={y} width="1" height="0.56" rx="0.3" ry={0.3 / k} />
     )),
 ];
+/** Orden en pantalla de las tres principales: la primera (directora) al medio. */
+const LEAD_ORDER = ["sm:order-2", "sm:order-1", "sm:order-3"];
 const COLORS = ["bg-sky", "bg-blue-bright", "bg-[#e8edf3]", "bg-navy"];
 
 /** Alto / ancho de cada tipo de tarjeta (debe coincidir con su aspect-*). */
@@ -76,7 +78,14 @@ export function Equipo() {
         <Container className="grid gap-16 md:gap-24">
           <div className="mx-auto grid w-full max-w-[880px] grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6 lg:gap-10">
             {lead.map((member, i) => (
-              <MemberCard key={member.id ?? i} member={member} index={i} featured />
+              <MemberCard
+                key={member.id ?? i}
+                member={member}
+                index={i}
+                featured
+                // La directora va al medio (en celular, primera), con su forma.
+                className={LEAD_ORDER[i]}
+              />
             ))}
           </div>
 
@@ -106,16 +115,18 @@ function MemberCard({
   member,
   index,
   featured = false,
+  className,
 }: {
   member: Member;
   index: number;
   featured?: boolean;
+  className?: string;
 }) {
   return (
     <Reveal
       as="article"
       delay={(index % (featured ? 3 : 5)) * 90}
-      className="grid content-start justify-items-center gap-5 text-center"
+      className={cn("grid content-start justify-items-center gap-5 text-center", className)}
     >
       <div
         className={cn(
