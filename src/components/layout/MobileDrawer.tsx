@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Drawer } from "vaul";
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { navLinks } from "@/content/nav";
 import { Button } from "@/components/ui/button";
@@ -21,9 +21,18 @@ export function MobileDrawer() {
         <button
           type="button"
           aria-label="Abrir menú"
-          className="inline-flex size-11 items-center justify-center rounded-md border border-line text-ink lg:hidden"
+          className="group inline-flex size-11 flex-col items-end justify-center gap-[5px] rounded-md pr-1.5 lg:hidden"
         >
-          <Menu className="size-5" aria-hidden="true" />
+          {/* Tres rayas, una por color de la marca: navy, azul y celeste. */}
+          <span aria-hidden="true" className="block h-[3px] w-7 rounded-full bg-navy" />
+          <span
+            aria-hidden="true"
+            className="block h-[3px] w-5 rounded-full bg-blue transition-[width] duration-200 ease-out group-hover:w-7"
+          />
+          <span
+            aria-hidden="true"
+            className="block h-[3px] w-3.5 rounded-full bg-sky transition-[width] duration-200 ease-out group-hover:w-7"
+          />
         </button>
       </Drawer.Trigger>
       <Drawer.Portal>
