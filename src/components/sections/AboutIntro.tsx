@@ -14,7 +14,7 @@ export function AboutIntro() {
   return (
     <section className="bg-surface-alt py-10 md:py-12">
       <Container className="grid grid-cols-2 items-center gap-5 sm:gap-10 lg:gap-16">
-        <div className="grid min-w-0 content-center gap-4 sm:gap-6">
+        <div className="grid min-w-0 content-start gap-4 self-start sm:gap-6 md:pt-10">
           <div className="grid gap-3 sm:gap-4">
             <h1 className="whitespace-nowrap font-display text-[20px] leading-[26px] font-bold tracking-h2 text-ink sm:text-[30px] sm:leading-[36px] md:text-[44px] md:leading-[50px] lg:text-[52px] lg:leading-[58px]">
               Quiénes somos
