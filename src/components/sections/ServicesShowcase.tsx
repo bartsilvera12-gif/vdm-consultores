@@ -58,28 +58,28 @@ export function ServicesShowcase() {
             aria-label="Anterior"
             disabled={!canPrev}
             onClick={() => scrollByCard(-1)}
-            className={cn(arrowClass, "left-0")}
+            className={cn(arrowClass, "left-0 hidden md:grid")}
           >
             <ArrowLeft className="size-5" aria-hidden="true" />
           </button>
           <ul
             ref={trackRef}
-            className="m-0 flex snap-x snap-mandatory list-none overflow-x-auto scroll-smooth p-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="m-0 grid list-none grid-cols-3 gap-y-8 p-0 md:flex md:snap-x md:snap-mandatory md:overflow-x-auto md:scroll-smooth md:[scrollbar-width:none] md:[&::-webkit-scrollbar]:hidden"
           >
             {services.map(({ label, icon, area }) => (
               <li
                 key={label}
                 data-card
-                className="w-1/2 shrink-0 snap-start sm:w-1/3 md:w-1/6"
+                className="min-w-0 md:w-1/6 md:shrink-0 md:snap-start"
               >
                 <Link
                   to={`/servicios#${area}`}
-                  className="group grid justify-items-center gap-5 px-2 text-center"
+                  className="group grid justify-items-center gap-3 px-1 text-center md:gap-5 md:px-2"
                 >
                   <span className="transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-1">
-                    <TwoToneIcon icon={icon} className="size-24 md:size-28" />
+                    <TwoToneIcon icon={icon} className="size-16 sm:size-20 md:size-28" />
                   </span>
-                  <span className="max-w-[180px] font-display text-base leading-6 text-blue md:text-lg md:leading-7">
+                  <span className="max-w-[180px] font-display text-[13px] leading-[18px] text-blue sm:text-base sm:leading-6 md:text-lg md:leading-7">
                     {label}
                   </span>
                 </Link>
@@ -91,7 +91,7 @@ export function ServicesShowcase() {
             aria-label="Siguiente"
             disabled={!canNext}
             onClick={() => scrollByCard(1)}
-            className={cn(arrowClass, "right-0")}
+            className={cn(arrowClass, "right-0 hidden md:grid")}
           >
             <ArrowRight className="size-5" aria-hidden="true" />
           </button>
