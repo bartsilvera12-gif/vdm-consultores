@@ -48,7 +48,7 @@ export function AboutIntro() {
               width={760}
               height={1342}
               loading="lazy"
-              className="block h-auto w-full md:h-[min(640px,calc(100vh-180px))] md:min-h-[420px] md:w-auto"
+              className="block h-auto w-full md:h-[min(800px,calc(100vh-110px))] md:min-h-[480px] md:w-auto"
             />
           </div>
           <figcaption className="absolute inset-x-2 bottom-2 rounded-md border-l-[3px] border-sky bg-surface px-2.5 py-1.5 sm:inset-x-6 sm:bottom-6 sm:px-5 sm:py-3">

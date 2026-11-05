@@ -18,7 +18,7 @@ export function FirmHero() {
   const content = useSiteContent(keys);
   return (
     <section className="border-b border-line bg-surface">
-      <Container className="grid items-center gap-10 py-12 md:grid-cols-2 md:gap-12 md:py-20 lg:gap-16 lg:py-24">
+      <Container className="grid items-center gap-10 pt-8 pb-12 md:grid-cols-2 md:gap-12 md:pt-10 md:pb-20 lg:gap-16 lg:pt-12 lg:pb-24">
         <Reveal className="grid min-w-0 gap-5 sm:gap-6">
           <div className="flex items-center gap-3">
             <span className="h-[3px] w-10 shrink-0 bg-blue" aria-hidden="true" />
