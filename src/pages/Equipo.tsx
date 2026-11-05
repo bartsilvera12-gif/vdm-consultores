@@ -6,54 +6,10 @@ import { Reveal } from "@/components/primitives/Reveal";
 import { useTeam } from "@/hooks/useTeam";
 import { cn } from "@/lib/utils";
 
-/**
- * Formas de fondo detrás de cada retrato, armadas como en el componente de
- * referencia: rectángulos muy redondeados que se superponen (la curva suave
- * sale sola donde se tocan) y elipses. Coordenadas 0–1 del recuadro
- * (objectBoundingBox); `k` = alto / ancho, para que las esquinas sean redondas.
- */
-const SHAPES: Array<(k: number) => JSX.Element[]> = [
-  // Tres curvas apiladas.
-  (k) =>
-    [0, 0.31, 0.62].map((y) => (
-      <rect key={y} x="0" y={y} width="1" height="0.38" rx="0.34" ry={0.34 / k} />
-    )),
-  // Arco: medio círculo arriba, recto abajo.
-  (k) => [
-    <ellipse key="e" cx="0.5" cy={0.5 / k} rx="0.5" ry={0.5 / k} />,
-    <rect key="r" x="0" y={0.5 / k} width="1" height={1 - 0.5 / k} />,
-  ],
-  // Óvalo, apenas cortado abajo.
-  () => [<ellipse key="e" cx="0.5" cy="0.55" rx="0.5" ry="0.55" />],
-  // "8": dos rectángulos redondeados superpuestos.
-  (k) =>
-    [0, 0.44].map((y) => (
-      <rect key={y} x="0" y={y} width="1" height="0.56" rx="0.3" ry={0.3 / k} />
-    )),
-];
 /** Orden en pantalla de las tres principales: la primera (directora) al medio. */
 const LEAD_ORDER = ["sm:order-2", "sm:order-1", "sm:order-3"];
-const COLORS = ["bg-sky", "bg-blue-bright", "bg-[#e8edf3]", "bg-navy"];
-
-/** Alto / ancho de cada tipo de tarjeta (debe coincidir con su aspect-*). */
-const RATIOS = { tall: 16 / 9, card: 5 / 4 };
-
-/** Define una vez los recortes de las formas para usarlos con clip-path. */
-function ShapeDefs() {
-  return (
-    <svg width="0" height="0" aria-hidden="true" className="absolute">
-      <defs>
-        {Object.entries(RATIOS).flatMap(([kind, k]) =>
-          SHAPES.map((shape, i) => (
-            <clipPath key={`${kind}-${i}`} id={`equipo-${kind}-${i}`} clipPathUnits="objectBoundingBox">
-              {shape(k)}
-            </clipPath>
-          )),
-        )}
-      </defs>
-    </svg>
-  );
-}
+/** Fondo de todos los retratos: el gris claro que pidió la clienta. */
+const PHOTO_BG = "bg-[#e8edf3]";
 
 type Member = { id?: string; name: string; role: string; photo?: string };
 
@@ -74,7 +30,6 @@ export function Equipo() {
         lead="Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente."
       />
       <section className="bg-surface py-16 md:py-24">
-        <ShapeDefs />
         <Container className="grid gap-16 md:gap-24">
           <div className="mx-auto grid w-full max-w-[880px] grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6 lg:gap-10">
             {lead.map((member, i) => (
@@ -131,10 +86,9 @@ function MemberCard({
       <div
         className={cn(
           "relative w-full overflow-hidden",
-          COLORS[index % COLORS.length],
+          PHOTO_BG,
           featured ? "aspect-[9/16]" : "aspect-[4/5]",
         )}
-        style={{ clipPath: `url(#equipo-${featured ? "tall" : "card"}-${index % SHAPES.length})` }}
       >
         {member.photo ? (
           <img
