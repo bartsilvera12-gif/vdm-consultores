@@ -7,6 +7,9 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  # www → dominio sin www (una sola versión del sitio para Google).
+  RewriteCond %{HTTP_HOST} ^www\.vdmconsultores\.com\.py$ [NC]
+  RewriteRule ^(.*)$ https://vdmconsultores.com.py/$1 [R=301,L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.html [L]

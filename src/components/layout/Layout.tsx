@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { PageMeta } from "@/components/layout/PageMeta";
 
 /**
  * Al cambiar de ruta, llevamos al top. Si la URL trae un hash vamos al ancla:
@@ -32,6 +33,7 @@ export function Layout() {
   return (
     <div className="flex min-h-screen flex-col bg-surface text-ink">
       <ScrollOnNav />
+      <PageMeta />
       <Header />
       <main className="flex-1">
         <Outlet />
