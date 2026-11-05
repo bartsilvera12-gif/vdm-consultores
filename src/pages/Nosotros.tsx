@@ -80,24 +80,24 @@ export function Nosotros() {
 
             {/* Columna derecha — pilares de la firma (panel navy) --------- */}
             <aside className="relative flex flex-col justify-center overflow-hidden rounded-xl bg-navy p-7 text-on-navy shadow-card sm:p-9 md:p-10">
-              <div className="relative grid gap-6">
-                <Eyebrow tone="onNavy">Nuestro enfoque</Eyebrow>
-                <ul className="m-0 grid list-none gap-6 p-0">
+              <div className="relative grid gap-8 md:gap-10">
+                <Eyebrow tone="onNavy" className="text-[14px] md:text-[15px]">Nuestro enfoque</Eyebrow>
+                <ul className="m-0 grid list-none gap-8 p-0 md:gap-10">
                   {pillars.map((p) => {
                     const Icon = p.icon;
                     return (
                       <li
                         key={p.title}
-                        className="grid grid-cols-[48px_1fr] items-start gap-4 border-t border-white/15 pt-6 first:border-t-0 first:pt-0"
+                        className="grid grid-cols-[56px_1fr] items-start gap-5 border-t border-white/15 pt-8 first:border-t-0 first:pt-0 md:grid-cols-[64px_1fr] md:gap-6 md:pt-10"
                       >
-                        <span className="grid size-12 place-items-center rounded-full bg-white/10 text-on-navy">
-                          <Icon className="size-6" aria-hidden="true" />
+                        <span className="grid size-14 place-items-center rounded-full bg-white/10 text-on-navy md:size-16">
+                          <Icon className="size-7 md:size-8" aria-hidden="true" />
                         </span>
-                        <div className="grid gap-1.5">
-                          <h2 className="font-display text-h3 leading-h3 font-semibold text-on-navy">
+                        <div className="grid gap-3">
+                          <h2 className="font-display text-[26px] leading-[32px] font-semibold text-on-navy md:text-[32px] md:leading-[38px]">
                             {p.title}
                           </h2>
-                          <p className="text-small leading-[22px] text-on-navy-muted">
+                          <p className="text-[18px] leading-[28px] text-on-navy-muted md:text-[20px] md:leading-[31px]">
                             {p.body}
                           </p>
                         </div>
