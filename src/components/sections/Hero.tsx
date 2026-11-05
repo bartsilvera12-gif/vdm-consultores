@@ -2,41 +2,27 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Button } from "@/components/ui/button";
-import edificio from "@/assets/edificio-vdm.webp";
+// Grabado en azul hecho a partir de la foto del Palacio de López de André
+// Piske (Unsplash, licencia libre).
+import palacio from "@/assets/palacio-grabado.webp";
 
 const ease = "ease-[cubic-bezier(0.23,1,0.32,1)]";
 /** Entrada del texto: sube y aparece; cada pieza suma su retardo. */
 const enter = `motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:fill-mode-both motion-safe:duration-700 ${ease}`;
 
 /**
- * Portada: fondo azul tinta, bienvenida a la izquierda y la fachada del
- * edificio de VDM en blanco y negro a la derecha, cortada en la diagonal de la V del logo. Al
- * cargar, la foto entra desde la derecha y el texto aparece línea por línea.
- * En celular la foto va debajo del texto.
+ * Portada como el boceto de la clienta: bloque azul tinta con la bienvenida y,
+ * debajo, el Palacio de López en grabado azul sobre blanco. Justo después
+ * viene la franja de íconos de servicios (ServicesShowcase).
  */
 export function Hero() {
   return (
-    <section id="inicio" className="relative overflow-hidden bg-ink text-on-navy">
-      {/* Escritorio: foto a sangre hasta el borde derecho. */}
-      <div aria-hidden="true" className="absolute inset-y-0 right-0 hidden w-[52%] md:block">
-        <div className="absolute inset-0 overflow-hidden [clip-path:polygon(22%_0,100%_0,100%_100%,8%_100%)]">
-          <img
-            src={edificio}
-            alt=""
-            width={920}
-            height={1448}
-            className={`h-full w-full object-cover object-[50%_30%] grayscale motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-right-8 motion-safe:duration-1000 ${ease}`}
-          />
-        </div>
-      </div>
-
-      <Container className="relative grid items-center py-14 md:min-h-[560px] md:py-20 lg:min-h-[640px] lg:py-24">
-        <div className="relative z-10 grid gap-6 md:w-[48%] md:gap-8">
+    <section id="inicio" className="bg-surface">
+      <div className="bg-ink text-on-navy">
+        <Container className="grid gap-6 py-14 md:gap-7 md:py-16 lg:py-20">
           <h1 className="font-display text-[40px] leading-[46px] font-semibold tracking-tight sm:text-[48px] sm:leading-[54px] lg:text-[64px] lg:leading-[70px]">
             <span className={`block ${enter}`}>Bienvenidos a</span>
-            <span className={`block lg:whitespace-nowrap motion-safe:delay-150 ${enter}`}>
-              VDM Consultores
-            </span>
+            <span className={`block motion-safe:delay-150 ${enter}`}>VDM Consultores</span>
           </h1>
           <p className={`font-display text-small font-medium uppercase tracking-[0.06em] text-on-navy-muted sm:text-base motion-safe:delay-300 ${enter}`}>
             Fortaleciendo empresas, potenciando inversiones
@@ -52,19 +38,22 @@ export function Hero() {
               </Link>
             </Button>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
 
-      {/* Celular: la fachada debajo del texto, con el mismo corte diagonal. */}
-      <div aria-hidden="true" className="relative h-[380px] sm:h-[460px] md:hidden">
-        <div className="absolute inset-0 overflow-hidden [clip-path:polygon(0_10%,100%_40%,100%_100%,0_100%)]">
+      <div className="relative pt-5 md:pt-7">
+        <span
+          aria-hidden="true"
+          className="absolute top-0 left-1/2 z-10 h-[3px] w-12 -translate-x-1/2 bg-sky md:w-16"
+        />
+        {/* En celular el dibujo va de borde a borde, como en el boceto. */}
+        <div className="mx-auto max-w-[1180px] md:px-6">
           <img
-            src={edificio}
-            alt=""
-            width={920}
-            height={1448}
-            loading="lazy"
-            className="h-full w-full object-cover object-[50%_35%] grayscale"
+            src={palacio}
+            alt="Palacio de López, en Asunción, dibujado en azul"
+            width={1800}
+            height={1058}
+            className={`mx-auto block h-auto w-full max-w-[880px] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:fill-mode-both motion-safe:delay-300 motion-safe:duration-1000 ${ease}`}
           />
         </div>
       </div>
