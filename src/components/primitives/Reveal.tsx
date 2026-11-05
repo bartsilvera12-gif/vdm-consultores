@@ -46,6 +46,7 @@ export function Reveal({
   return (
     <Tag
       ref={ref as never}
+      data-shown={shown}
       style={{ transitionDelay: shown ? `${delay}ms` : "0ms" }}
       className={cn(
         "transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none",
