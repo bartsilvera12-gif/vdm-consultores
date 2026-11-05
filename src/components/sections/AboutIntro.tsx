@@ -12,7 +12,7 @@ import giselleMesa from "@/assets/equipo/giselle-mesa.webp";
  */
 export function AboutIntro() {
   return (
-    <section className="bg-surface-alt py-10 md:py-12">
+    <section className="bg-surface-alt pt-10 pb-6 md:pt-12 md:pb-8">
       <Container className="grid grid-cols-2 items-center gap-5 sm:gap-10 lg:gap-16">
         <div className="grid min-w-0 content-start gap-4 self-start sm:gap-6 md:pt-10">
           <div className="grid gap-3 sm:gap-4">
@@ -21,7 +21,7 @@ export function AboutIntro() {
             </h1>
             <span className="h-[3px] w-12 bg-sky sm:w-16" aria-hidden="true" />
           </div>
-          <p className="max-w-[34rem] text-[13px] leading-[20px] text-ink-muted sm:text-base sm:leading-[26px] md:text-[18px] md:leading-[31px]">
+          <p className="max-w-[36rem] text-[13px] leading-[20px] text-ink-muted sm:text-[17px] sm:leading-[28px] md:text-[21px] md:leading-[35px] lg:text-[23px] lg:leading-[38px]">
             Somos una consultora paraguaya especializada en brindar asesoría
             jurídica, empresarial y de inversiones, con un enfoque
             multidisciplinario, integral, técnico y estratégico, orientado a
