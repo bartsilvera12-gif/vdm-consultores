@@ -41,11 +41,7 @@ export function Hero() {
         </Container>
       </div>
 
-      <div className="relative pt-5 md:pt-7">
-        <span
-          aria-hidden="true"
-          className="absolute top-0 left-1/2 z-10 h-[3px] w-12 -translate-x-1/2 bg-sky md:w-16"
-        />
+      <div className="pt-5 md:pt-7">
         {/* En celular el dibujo va de borde a borde, como en el boceto. */}
         <div className="mx-auto max-w-[1180px] md:px-6">
           <img
