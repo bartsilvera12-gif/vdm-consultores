@@ -4,9 +4,18 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { getSupabase } from "@/lib/supabase";
 import {
-  siteContentDefaults,
+  defaultFor,
+  storageKey,
   type SiteContentKey,
 } from "@/hooks/useSiteContent";
+import { LANGS, LANG_NAMES, type Lang } from "@/i18n/langs";
+import { cn } from "@/lib/utils";
+
+function defaultsFor(lang: Lang) {
+  const out = {} as Record<SiteContentKey, string>;
+  for (const k of ALL_KEYS) out[k] = defaultFor(k, lang);
+  return out;
+}
 
 type EditableText = {
   key: SiteContentKey;
@@ -81,17 +90,15 @@ const GROUPS: Group[] = [
 const ALL_KEYS = GROUPS.flatMap((g) => g.items.map((i) => i.key));
 
 export function EditTexts() {
-  const [values, setValues] = useState<Record<SiteContentKey, string>>(() => ({
-    ...siteContentDefaults,
-  }));
-  const [original, setOriginal] = useState<Record<SiteContentKey, string>>(() => ({
-    ...siteContentDefaults,
-  }));
+  const [lang, setLang] = useState<Lang>("es");
+  const [values, setValues] = useState<Record<SiteContentKey, string>>(() => defaultsFor("es"));
+  const [original, setOriginal] = useState<Record<SiteContentKey, string>>(() => defaultsFor("es"));
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const client = getSupabase();
+    setLoading(true);
     if (!client) {
       setLoading(false);
       return;
@@ -99,23 +106,27 @@ export function EditTexts() {
     client
       .from("vdm_site_content")
       .select("key, value")
-      .in("key", ALL_KEYS)
+      .in("key", ALL_KEYS.map((k) => storageKey(k, lang)))
       .then(({ data }) => {
         setLoading(false);
-        if (!data) return;
-        const next = { ...siteContentDefaults };
-        for (const row of data as Array<{ key: string; value: unknown }>) {
-          if ((ALL_KEYS as string[]).includes(row.key)) {
-            next[row.key as SiteContentKey] =
-              typeof row.value === "string"
-                ? row.value
-                : JSON.stringify(row.value);
-          }
+        const next = defaultsFor(lang);
+        for (const row of (data ?? []) as Array<{ key: string; value: unknown }>) {
+          const k = ALL_KEYS.find((key) => storageKey(key, lang) === row.key);
+          if (!k) continue;
+          const text = typeof row.value === "string" ? row.value : JSON.stringify(row.value);
+          if (text.trim()) next[k] = text;
         }
         setValues(next);
         setOriginal(next);
       });
-  }, []);
+  }, [lang]);
+
+  function changeLang(next: Lang) {
+    if (next === lang) return;
+    const dirty = ALL_KEYS.some((k) => values[k] !== original[k]);
+    if (dirty && !window.confirm("Hay cambios sin guardar en este idioma. ¿Cambiar igual?")) return;
+    setLang(next);
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -130,7 +141,7 @@ export function EditTexts() {
       return;
     }
     setSaving(true);
-    const rows = dirty.map((k) => ({ key: k, value: values[k] }));
+    const rows = dirty.map((k) => ({ key: storageKey(k, lang), value: values[k] }));
     const { error } = await client.from("vdm_site_content").upsert(rows);
     setSaving(false);
     if (error) {
@@ -163,6 +174,23 @@ export function EditTexts() {
           Editá los copys principales del sitio. Los cambios se publican sin
           redeploy en el apartado correspondiente.
         </p>
+        <div role="tablist" aria-label="Idioma" className="mt-4 inline-flex rounded-md border border-line bg-surface p-1">
+          {LANGS.map((l) => (
+            <button
+              key={l}
+              type="button"
+              role="tab"
+              aria-selected={l === lang}
+              onClick={() => changeLang(l)}
+              className={cn(
+                "rounded px-3.5 py-1.5 text-small font-semibold transition-colors",
+                l === lang ? "bg-blue text-on-blue" : "text-ink-muted hover:text-ink",
+              )}
+            >
+              {LANG_NAMES[l]}
+            </button>
+          ))}
+        </div>
       </header>
 
       <form onSubmit={handleSubmit} className="grid gap-5">
@@ -182,7 +210,7 @@ export function EditTexts() {
                     <button
                       type="button"
                       onClick={() =>
-                        setValues((p) => ({ ...p, [t.key]: siteContentDefaults[t.key] }))
+                        setValues((p) => ({ ...p, [t.key]: defaultFor(t.key, lang) }))
                       }
                       className="inline-flex items-center gap-1 text-small font-semibold text-blue hover:underline"
                       title="Volver al texto original"

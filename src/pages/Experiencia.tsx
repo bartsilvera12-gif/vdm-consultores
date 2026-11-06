@@ -8,6 +8,7 @@ import { useText } from "@/hooks/useSiteContent";
 import { PageCta } from "@/components/primitives/PageCta";
 import { Reveal } from "@/components/primitives/Reveal";
 import { useSectors } from "@/hooks/useSectors";
+import { usePath, useT, useTr } from "@/i18n/context";
 import { cn } from "@/lib/utils";
 // Una foto por sector (Unsplash, licencia libre), se muestra al pasar el mouse.
 import fotoFormacion from "@/assets/sectores/exp-formacion.webp";
@@ -42,6 +43,7 @@ const ROWS = ["md:row-start-1", "md:row-start-2", "md:row-start-3", "md:row-star
  */
 export function Experiencia() {
   const { sectors } = useSectors();
+  const t = useT();
   const half = Math.ceil(sectors.length / 2);
   const left = sectors.slice(0, half);
   const right = sectors.slice(half);
@@ -52,7 +54,7 @@ export function Experiencia() {
   return (
     <>
       <PageHero
-        eyebrow="Experiencia"
+        eyebrow={t.experience.eyebrow}
         title={useText("experiencia.hero_title")}
         lead={useText("experiencia.hero_lead")}
       />
@@ -60,9 +62,9 @@ export function Experiencia() {
       <section className="overflow-hidden bg-surface-alt py-16 md:py-24">
         <Container>
           <Reveal className="mb-12 grid justify-items-center gap-4 text-center md:mb-16">
-            <Eyebrow>Sectores que acompañamos</Eyebrow>
+            <Eyebrow>{t.experience.sectorsEyebrow}</Eyebrow>
             <h2 className="max-w-[22ch] text-[32px] leading-[38px] font-bold tracking-tight text-ink md:text-[44px] md:leading-[50px]">
-              Cada cliente llega con un desafío distinto
+              {t.experience.sectorsTitle}
             </h2>
             <span className="h-[3px] w-16 bg-sky" aria-hidden="true" />
           </Reveal>
@@ -98,8 +100,7 @@ export function Experiencia() {
           </div>
 
           <p className="mt-14 text-center text-small text-ink-muted">
-            Espacio para casos y proyectos: se publican solo con autorización
-            del cliente.
+            {t.experience.note}
           </p>
         </Container>
       </section>
@@ -119,6 +120,8 @@ function rowSpan(n: number) {
  * al deslizar, contraria al scroll.
  */
 function Photo({ photos, active, className }: { photos: string[]; active: number; className?: string }) {
+  const t = useT();
+  const path = usePath();
   const frameRef = useRef<HTMLDivElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
 
@@ -171,10 +174,10 @@ function Photo({ photos, active, className }: { photos: string[]; active: number
         </div>
         <div className="absolute inset-0 flex items-end justify-center bg-[linear-gradient(to_top,rgba(10,39,71,0.6),transparent_45%)] p-5">
           <Link
-            to="/contacto"
+            to={path("contacto")}
             className="group/cta inline-flex items-center gap-2 rounded-full bg-surface px-5 py-2.5 font-display text-small font-semibold text-ink transition-colors hover:bg-white"
           >
-            Agenda tu consulta
+            {t.common.bookConsultation}
             <ArrowRight
               className="size-4 transition-transform duration-200 group-hover/cta:translate-x-0.5"
               aria-hidden="true"
@@ -201,6 +204,7 @@ function SectorItem({
 }) {
   const Icon = sector.icon;
   const isLeft = side === "left";
+  const tr = useTr();
   return (
     <Reveal
       delay={150 + row * 120 + (isLeft ? 0 : 60)}
@@ -228,7 +232,7 @@ function SectorItem({
               !isLeft && "md:text-right",
             )}
           >
-            {sector.title}
+            {tr(sector.title)}
           </h3>
           {/* Línea hasta el borde de la foto, con un punto al final. */}
           <span
@@ -262,7 +266,7 @@ function SectorItem({
             !isLeft && "md:pl-0 md:pr-[60px] md:text-right",
           )}
         >
-          {sector.body}
+          {tr(sector.body)}
         </p>
       </article>
     </Reveal>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Container } from "./Container";
 import { Button } from "@/components/ui/button";
 import { useText } from "@/hooks/useSiteContent";
+import { usePath } from "@/i18n/context";
 
 type PageCtaProps = {
   title?: string;
@@ -14,7 +15,9 @@ type PageCtaProps = {
  * CTA de cierre al final de cada apartado interno: banda navy con una sola
  * línea alineada al botón. Lleva al apartado de contacto por defecto.
  */
-export function PageCta({ title: titleProp, to = "/contacto", cta: ctaProp }: PageCtaProps) {
+export function PageCta({ title: titleProp, to: toProp, cta: ctaProp }: PageCtaProps) {
+  const path = usePath();
+  const to = toProp ?? path("contacto");
   const savedTitle = useText("cierre.title");
   const savedCta = useText("cierre.button");
   const title = titleProp ?? savedTitle;

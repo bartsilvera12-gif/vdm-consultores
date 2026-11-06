@@ -10,6 +10,8 @@ import { Reveal } from "@/components/primitives/Reveal";
 import { TwoToneIcon } from "@/components/primitives/TwoToneIcon";
 import { Button } from "@/components/ui/button";
 import { useAreas } from "@/hooks/useAreas";
+import { useLang, usePath, useT, useTr } from "@/i18n/context";
+import { anchorFor } from "@/i18n/langs";
 import { cn } from "@/lib/utils";
 
 /** Qué área está en pantalla, para marcarla en el índice. */
@@ -36,7 +38,12 @@ function useActiveArea(ids: string[]) {
 
 export function Servicios() {
   const { areas } = useAreas();
-  const active = useActiveArea(areas.map((a) => a.id));
+  const lang = useLang();
+  const t = useT();
+  const tr = useTr();
+  const path = usePath();
+  const anchor = (id: string) => anchorFor(id, lang);
+  const active = useActiveArea(areas.map((a) => anchor(a.id)));
 
   return (
     <>
@@ -47,25 +54,25 @@ export function Servicios() {
 
       {/* Índice fijo arriba: lleva a cada área y marca la que está en pantalla. */}
       <nav
-        aria-label="Servicios"
+        aria-label={t.services.indexLabel}
         className="sticky top-[72px] z-30 border-y border-white/10 bg-navy"
       >
         <Container className="flex gap-6 overflow-x-auto [scrollbar-width:none] md:justify-center md:gap-10 [&::-webkit-scrollbar]:hidden">
           {areas.map((area) => (
             <a
               key={area.id}
-              href={`#${area.id}`}
+              href={`#${anchor(area.id)}`}
               className={cn(
                 "relative shrink-0 py-4 font-display text-small font-semibold transition-colors duration-200",
-                active === area.id ? "text-on-navy" : "text-on-navy-muted hover:text-on-navy",
+                active === anchor(area.id) ? "text-on-navy" : "text-on-navy-muted hover:text-on-navy",
               )}
             >
-              {area.eyebrow}
+              {tr(area.eyebrow)}
               <span
                 aria-hidden="true"
                 className={cn(
                   "absolute inset-x-0 bottom-0 h-[2px] origin-center bg-sky transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
-                  active === area.id ? "scale-x-100" : "scale-x-0",
+                  active === anchor(area.id) ? "scale-x-100" : "scale-x-0",
                 )}
               />
             </a>
@@ -79,7 +86,7 @@ export function Servicios() {
         return (
           <section
             key={area.id}
-            id={area.id}
+            id={anchor(area.id)}
             className={cn("scroll-mt-32", dark ? "bg-ink text-on-navy" : "bg-surface text-ink")}
           >
             <Container className="grid gap-12 py-20 md:py-28 lg:grid-cols-[1fr_1fr] lg:gap-24">
@@ -92,7 +99,7 @@ export function Servicios() {
                 <div className="grid gap-4">
                   <div className="flex items-center gap-3">
                     <span className={cn("h-px w-8", dark ? "bg-sky" : "bg-blue")} aria-hidden="true" />
-                    <Eyebrow tone={dark ? "onNavy" : "default"}>{area.eyebrow}</Eyebrow>
+                    <Eyebrow tone={dark ? "onNavy" : "default"}>{tr(area.eyebrow)}</Eyebrow>
                   </div>
                   <h2
                     className={cn(
@@ -100,7 +107,7 @@ export function Servicios() {
                       dark ? "text-on-navy" : "text-ink",
                     )}
                   >
-                    {area.title}
+                    {tr(area.title)}
                   </h2>
                 </div>
                 <p
@@ -109,7 +116,7 @@ export function Servicios() {
                     dark ? "text-on-navy-muted" : "text-ink-muted",
                   )}
                 >
-                  {area.description}
+                  {tr(area.description)}
                 </p>
                 <div className="pt-1">
                   <Button
@@ -117,8 +124,8 @@ export function Servicios() {
                     variant={dark ? "onNavy" : "default"}
                     className={cn("group", dark && "text-ink")}
                   >
-                    <Link to="/contacto" state={{ area: area.eyebrow }}>
-                      Consultar sobre estos servicios
+                    <Link to={path("contacto")} state={{ area: area.eyebrow }}>
+                      {t.services.askAbout}
                       <ArrowRight
                         className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
                         aria-hidden="true"
@@ -154,7 +161,7 @@ export function Servicios() {
                           dark ? "text-on-navy" : "text-ink",
                         )}
                       >
-                        {svc}
+                        {tr(svc)}
                       </span>
                     </span>
                   </Reveal>

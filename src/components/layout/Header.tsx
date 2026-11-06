@@ -2,13 +2,17 @@ import { Link, NavLink } from "react-router-dom";
 import { Container } from "@/components/primitives/Container";
 import { Logo } from "@/components/primitives/Logo";
 import { Button } from "@/components/ui/button";
-import { navLinks } from "@/content/nav";
+import { navPages } from "@/content/nav";
+import { usePath, useT } from "@/i18n/context";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useScrolled } from "@/hooks/useScrolled";
 import { cn } from "@/lib/utils";
 import { MobileDrawer } from "./MobileDrawer";
 
 export function Header() {
   const scrolled = useScrolled();
+  const t = useT();
+  const path = usePath();
 
   return (
     <header
@@ -19,21 +23,21 @@ export function Header() {
     >
       <Container className="flex h-18 items-center justify-between gap-6">
         <Link
-          to="/"
-          aria-label="VDM Consultores, inicio"
+          to={path("home")}
+          aria-label={t.common.logoHome}
           className="flex flex-none items-center"
         >
           <Logo />
         </Link>
         <nav
-          aria-label="Principal"
+          aria-label={t.common.mainNav}
           className="hidden items-center gap-1 lg:flex xl:gap-2"
         >
-          {navLinks.map((link) => (
+          {navPages.map((page) => (
             <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === "/"}
+              key={page}
+              to={path(page)}
+              end={page === "home"}
               className={({ isActive }) =>
                 cn(
                   "group relative whitespace-nowrap px-2.5 py-2 font-display text-sm font-semibold tracking-[0.01em] transition-colors duration-200 xl:px-3",
@@ -43,7 +47,7 @@ export function Header() {
             >
               {({ isActive }) => (
                 <>
-                  {link.label}
+                  {t.nav[page]}
                   {/* Línea fina que crece desde el centro al pasar o en la página actual. */}
                   <span
                     aria-hidden="true"
@@ -58,8 +62,9 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="hidden lg:inline-flex">
-            <Link to="/contacto">Agenda tu consulta</Link>
+          <LanguageSwitcher className="hidden sm:flex" />
+          <Button asChild size="sm" className="hidden xl:inline-flex">
+            <Link to={path("contacto")}>{t.common.bookConsultation}</Link>
           </Button>
           <MobileDrawer />
         </div>

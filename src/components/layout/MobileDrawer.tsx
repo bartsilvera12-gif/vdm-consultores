@@ -2,13 +2,17 @@ import { useState } from "react";
 import { Drawer } from "vaul";
 import { X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
-import { navLinks } from "@/content/nav";
+import { navPages } from "@/content/nav";
+import { usePath, useT } from "@/i18n/context";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function MobileDrawer() {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
+  const t = useT();
+  const path = usePath();
 
   return (
     <Drawer.Root
@@ -20,7 +24,7 @@ export function MobileDrawer() {
       <Drawer.Trigger asChild>
         <button
           type="button"
-          aria-label="Abrir menú"
+          aria-label={t.common.openMenu}
           className="group inline-flex size-11 flex-col items-end justify-center gap-[5px] rounded-md pr-1.5 lg:hidden"
         >
           {/* Tres rayas, una por color de la marca: navy, azul y celeste. */}
@@ -41,20 +45,21 @@ export function MobileDrawer() {
           aria-describedby={undefined}
           className="fixed inset-y-0 right-0 z-[80] flex h-full w-[86vw] max-w-[360px] flex-col gap-1.5 bg-surface p-6 outline-none"
         >
-          <Drawer.Title className="sr-only">Menú</Drawer.Title>
+          <Drawer.Title className="sr-only">{t.common.menu}</Drawer.Title>
           <button
             type="button"
-            aria-label="Cerrar menú"
+            aria-label={t.common.closeMenu}
             onClick={close}
             className="mb-2 inline-flex size-11 items-center justify-center self-end rounded-md border border-line text-ink"
           >
             <X className="size-5" aria-hidden="true" />
           </button>
-          {navLinks.map((link) => (
+          <LanguageSwitcher className="mb-2 -ml-1.5" onNavigate={close} />
+          {navPages.map((page) => (
             <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === "/"}
+              key={page}
+              to={path(page)}
+              end={page === "home"}
               onClick={close}
               className={({ isActive }) =>
                 cn(
@@ -63,11 +68,11 @@ export function MobileDrawer() {
                 )
               }
             >
-              {link.label}
+              {t.nav[page]}
             </NavLink>
           ))}
           <Button asChild size="lg" className="mt-5 w-full" onClick={close}>
-            <Link to="/contacto">Agenda tu consulta</Link>
+            <Link to={path("contacto")}>{t.common.bookConsultation}</Link>
           </Button>
         </Drawer.Content>
       </Drawer.Portal>

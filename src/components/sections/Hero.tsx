@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { Button } from "@/components/ui/button";
 import { useSiteContent, type SiteContentKey } from "@/hooks/useSiteContent";
+import { usePath, useT } from "@/i18n/context";
 // Palacio de López dibujado en azul, la ilustración que mandó la clienta.
 import palacio from "@/assets/palacio-ilustracion.webp";
 
@@ -20,6 +21,8 @@ const enter = `motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-f
  */
 export function Hero() {
   const t = useSiteContent(HERO_KEYS);
+  const m = useT();
+  const path = usePath();
   return (
     <section id="inicio" className="bg-surface">
       {/* El azul ocupa toda la pantalla, debajo del menú (72px). */}
@@ -34,7 +37,7 @@ export function Hero() {
             </p>
             <div className={`motion-safe:delay-500 ${enter}`}>
               <Button asChild variant="onNavy" size="lg" className="group text-blue">
-                <Link to="/servicios">
+                <Link to={path("servicios")}>
                   {t["inicio.button"]}
                   <ArrowRight
                     className="size-4 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1"
@@ -65,7 +68,7 @@ export function Hero() {
       <div className="md:hidden">
         <img
           src={palacio}
-          alt="Palacio de López, en Asunción, dibujado en azul"
+          alt={m.home.palaceAlt}
           width={1774}
           height={887}
           className={`block h-auto w-full motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:fill-mode-both motion-safe:delay-300 motion-safe:duration-1000 ${ease}`}

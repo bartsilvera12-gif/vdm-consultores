@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { WhatsAppIcon } from "@/components/primitives/WhatsAppIcon";
 import { contactInfo } from "@/content/contact";
+import { useT } from "@/i18n/context";
 
 /** El ícono de WhatsApp del footer (Footer.tsx) donde se acopla el botón. */
 export const WA_DOCK_ID = "wa-dock";
@@ -20,6 +21,7 @@ export function WhatsAppFloat() {
   const [offset, setOffset] = useState<{ x: number; y: number; s: number } | null>(null);
   const phaseRef = useRef<Phase>("free");
   const startRef = useRef(0);
+  const t = useT();
 
   useEffect(() => {
     const dock = document.getElementById(WA_DOCK_ID);
@@ -85,7 +87,7 @@ export function WhatsAppFloat() {
       href={contactInfo.whatsapp.href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Escríbenos por WhatsApp"
+      aria-label={t.common.whatsappFloat}
       aria-hidden={docked || undefined}
       tabIndex={docked ? -1 : undefined}
       className="fixed z-40 grid size-14 place-items-center rounded-full text-[#0F1E33] shadow-[0_6px_20px_rgba(0,0,0,0.22)] transition-[transform,opacity] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"

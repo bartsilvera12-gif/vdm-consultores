@@ -6,10 +6,14 @@ import { useAreas } from "@/hooks/useAreas";
 import { useContactInfo } from "@/hooks/useContactInfo";
 import { WhatsAppIcon } from "@/components/primitives/WhatsAppIcon";
 import { WA_DOCK_ID } from "@/components/layout/WhatsAppFloat";
+import { usePath, useT, useTr } from "@/i18n/context";
 
 export function Footer() {
   const { areas } = useAreas();
   const contact = useContactInfo();
+  const t = useT();
+  const tr = useTr();
+  const path = usePath();
   type Social = { label: string; href: string; icon: typeof Facebook };
   const socials: Social[] = [];
   if (!contact.facebook.pending && contact.facebook.href && contact.facebook.href !== "#") {
@@ -27,28 +31,28 @@ export function Footer() {
       <Container className="grid gap-10 pt-14 pb-8">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_auto]">
           <div className="sm:col-span-2 md:col-span-1">
-            <Link to="/">
+            <Link to={path("home")} aria-label={t.common.logoHome}>
               <Logo variant="white" width={129} height={52} className="h-13" />
             </Link>
             <p className="mt-4 font-display text-base font-semibold text-on-navy">
-              Un solo equipo, soluciones integrales.
+              {t.footer.tagline}
             </p>
             <p className="mt-2 max-w-[40ch]">
-              Asesoría jurídica, empresarial y de inversiones en Paraguay.
+              {t.footer.description}
             </p>
           </div>
           <div>
             <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
-              Servicios
+              {t.footer.services}
             </h4>
             <ul className="grid gap-2">
               {areas.map((area) => (
                 <li key={area.id}>
                   <Link
-                    to={`/servicios#${area.id}`}
+                    to={path("servicios", area.id)}
                     className="transition-colors hover:text-on-navy"
                   >
-                    {area.eyebrow}
+                    {tr(area.eyebrow)}
                   </Link>
                 </li>
               ))}
@@ -56,39 +60,39 @@ export function Footer() {
           </div>
           <div>
             <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
-              Firma
+              {t.footer.firm}
             </h4>
             <ul className="grid gap-2">
               <li>
-                <Link to="/nosotros" className="hover:text-on-navy">
-                  Quiénes somos
+                <Link to={path("nosotros")} className="hover:text-on-navy">
+                  {t.nav.nosotros}
                 </Link>
               </li>
               <li>
-                <Link to="/equipo" className="hover:text-on-navy">
-                  Equipo
+                <Link to={path("equipo")} className="hover:text-on-navy">
+                  {t.nav.equipo}
                 </Link>
               </li>
               <li>
-                <Link to="/experiencia" className="hover:text-on-navy">
-                  Experiencia
+                <Link to={path("experiencia")} className="hover:text-on-navy">
+                  {t.nav.experiencia}
                 </Link>
               </li>
               <li>
-                <Link to="/galeria" className="hover:text-on-navy">
-                  Galería
+                <Link to={path("galeria")} className="hover:text-on-navy">
+                  {t.nav.galeria}
                 </Link>
               </li>
               <li>
-                <Link to="/contacto" className="hover:text-on-navy">
-                  Contacto
+                <Link to={path("contacto")} className="hover:text-on-navy">
+                  {t.nav.contacto}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
             <h4 className="mb-3 font-display text-eyebrow uppercase tracking-eyebrow text-on-navy">
-              Síganos
+              {t.footer.follow}
             </h4>
             <ul className="flex items-center gap-2.5">
               {socials.map((s) => {
@@ -127,10 +131,10 @@ export function Footer() {
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-small">
-          <span>© 2026 VDM Consultores. Todos los derechos reservados.</span>
-          <span>Fortaleciendo empresas, potenciando inversiones.</span>
+          <span>© 2026 VDM Consultores. {t.footer.rights}</span>
+          <span>{t.footer.slogan}</span>
           <span className="w-full text-right md:w-auto">
-            Desarrollado por{" "}
+            {t.footer.developedBy}{" "}
             <a
               href="https://neura.com.py"
               target="_blank"

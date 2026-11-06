@@ -1,73 +1,62 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useLang, useT } from "@/i18n/context";
+import { LANGS, LANG_TAG, pageFromPath, pathFor, type PageKey } from "@/i18n/langs";
+import { siteContentDefaults, siteContentTranslations } from "@/hooks/useSiteContent";
 
 const SITE = "https://vdmconsultores.com.py";
 const BRAND = "VDM Consultores";
 
-/**
- * Título, descripción y URL canónica de cada página, para Google. Las
- * descripciones son los textos que ya muestra cada página. La del inicio es
- * la de index.html.
- */
-const PAGES: Record<string, { title?: string; description?: string }> = {
-  "/": {},
-  "/nosotros": {
-    title: "Quiénes somos",
-    description:
-      "Somos una consultora paraguaya especializada en brindar asesoría jurídica, empresarial y de inversiones, con un enfoque multidisciplinario, integral, técnico y estratégico.",
-  },
-  "/servicios": {
-    title: "Servicios",
-    description:
-      "Desde la constitución de tu empresa hasta la concreción de tu inversión, cada área trabaja coordinada con las demás.",
-  },
-  "/equipo": {
-    title: "Equipo",
-    description:
-      "Abogados, consultores y técnicos que trabajan como un solo equipo para cada cliente.",
-  },
-  "/experiencia": {
-    title: "Experiencia",
-    description: "Empresas en cada etapa e inversionistas que llegan a Paraguay.",
-  },
-  "/galeria": { title: "Galería" },
-  "/contacto": { title: "Contacto", description: "Paraguay, país de oportunidades. Agenda tu consulta." },
-};
-
-function setMeta(selector: string, create: () => HTMLElement, attr: string, value: string) {
+function upsert(selector: string, create: () => HTMLElement, attrs: Record<string, string>) {
   let el = document.head.querySelector<HTMLElement>(selector);
   if (!el) {
     el = create();
     document.head.appendChild(el);
   }
-  el.setAttribute(attr, value);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
 }
 
+/**
+ * Título, descripción, canónica y versiones en otros idiomas (hreflang) de
+ * cada página. Las descripciones son textos que la página ya muestra.
+ */
 export function PageMeta() {
   const { pathname } = useLocation();
-  useEffect(() => {
-    const path = pathname.replace(/\/+$/, "") || "/";
-    const page = PAGES[path] ?? {};
-    const defaultDescription =
-      document.head.querySelector<HTMLMetaElement>('meta[name="description"]')?.dataset.default ??
-      document.head.querySelector<HTMLMetaElement>('meta[name="description"]')?.content ??
-      "";
-    const descEl = document.head.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (descEl && !descEl.dataset.default) descEl.dataset.default = descEl.content;
+  const lang = useLang();
+  const t = useT();
 
-    document.title = page.title ? `${page.title} | ${BRAND}` : BRAND;
-    setMeta(
-      'meta[name="description"]',
-      () => Object.assign(document.createElement("meta"), { name: "description" }),
-      "content",
-      page.description ?? defaultDescription,
-    );
-    setMeta(
-      'link[rel="canonical"]',
-      () => Object.assign(document.createElement("link"), { rel: "canonical" }),
-      "href",
-      `${SITE}${path === "/" ? "/" : path}`,
-    );
-  }, [pathname]);
+  useEffect(() => {
+    const page: PageKey = pageFromPath(pathname)?.page ?? "home";
+    const lead = (key: keyof (typeof siteContentTranslations)["en"]) =>
+      lang === "es" ? siteContentDefaults[key] : siteContentTranslations[lang][key];
+    const descriptions: Record<PageKey, string> = {
+      home: t.meta.homeDescription,
+      nosotros: t.about.intro,
+      servicios: lead("servicios.hero_lead"),
+      equipo: lead("equipo.hero_lead"),
+      experiencia: lead("experiencia.hero_lead"),
+      galeria: t.meta.homeDescription,
+      contacto: t.meta.contactDescription,
+    };
+    document.title = page === "home" ? BRAND : `${t.meta[page]} | ${BRAND}`;
+    upsert('meta[name="description"]', () => Object.assign(document.createElement("meta"), { name: "description" }), {
+      content: descriptions[page],
+    });
+    upsert('link[rel="canonical"]', () => Object.assign(document.createElement("link"), { rel: "canonical" }), {
+      href: SITE + pathFor(page, lang),
+    });
+    for (const l of LANGS) {
+      upsert(`link[rel="alternate"][hreflang="${LANG_TAG[l]}"]`, () => document.createElement("link"), {
+        rel: "alternate",
+        hreflang: LANG_TAG[l],
+        href: SITE + pathFor(page, l),
+      });
+    }
+    upsert('link[rel="alternate"][hreflang="x-default"]', () => document.createElement("link"), {
+      rel: "alternate",
+      hreflang: "x-default",
+      href: SITE + pathFor(page, "es"),
+    });
+  }, [pathname, lang, t]);
   return null;
 }

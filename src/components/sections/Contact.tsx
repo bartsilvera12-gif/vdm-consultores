@@ -19,29 +19,35 @@ import { areas } from "@/content/areas";
 import { useContactInfo } from "@/hooks/useContactInfo";
 import { enviarConsulta, type Consulta } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
+import { useT, useTr } from "@/i18n/context";
+import type { Messages } from "@/i18n/messages";
 
 type Field = "nombre" | "email" | "telefono" | "area" | "mensaje";
 
-const errorMsg: Record<Field, string> = {
-  nombre: "Escribe tu nombre.",
-  email: "Revisa el correo: falta el @ o el dominio.",
-  telefono: "Deja un número para contactarte.",
-  area: "Elige el servicio de tu consulta.",
-  mensaje: "Escribe tu consulta.",
-};
+/** Errores del servidor (consulta.php responde en español) → mensaje traducido. */
+function serverError(error: string, t: Messages["contact"]): string {
+  const map: Record<string, string> = {
+    "Escribe tu nombre.": t.errors.nombre,
+    "Revisa el correo.": t.errors.email,
+    "Deja un número para contactarte.": t.errors.telefono,
+    "Elige el servicio de tu consulta.": t.errors.area,
+    "Escribe tu consulta.": t.errors.mensaje,
+  };
+  return map[error] ?? t.failGeneric;
+}
 
 /** Link de WhatsApp con la consulta ya escrita, para cuando falla el envío. */
-function whatsappUrl(href: string, c: Consulta) {
+function whatsappUrl(href: string, c: Consulta, w: Messages["contact"]["wa"], area: string) {
   const text = [
-    "Hola, quiero hacer una consulta desde la web de VDM Consultores.",
+    w.intro,
     "",
-    `Nombre: ${c.nombre}`,
-    ...(c.empresa ? [`Empresa: ${c.empresa}`] : []),
-    `Correo: ${c.email}`,
-    `Teléfono: ${c.telefono}`,
-    `Servicio: ${c.area}`,
+    `${w.name}: ${c.nombre}`,
+    ...(c.empresa ? [`${w.company}: ${c.empresa}`] : []),
+    `${w.email}: ${c.email}`,
+    `${w.phone}: ${c.telefono}`,
+    `${w.service}: ${area}`,
     "",
-    `Consulta: ${c.mensaje}`,
+    `${w.message}: ${c.mensaje}`,
   ].join("\n");
   return `${href.split("?")[0]}?text=${encodeURIComponent(text)}`;
 }
@@ -52,6 +58,10 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
   const formRef = useRef<HTMLFormElement>(null);
   const location = useLocation();
   const contactInfo = useContactInfo();
+  const m = useT();
+  const t = m.contact;
+  const tr = useTr();
+  const areaLabel = (v: string) => (v === "Otra consulta" ? t.otherInquiry : tr(v));
 
   // Pre-selección del área al llegar desde el apartado Servicios
   // (<Link to="/contacto" state={{ area }}>) o desde el bloque de áreas en Home
@@ -108,13 +118,13 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
     setSubmitting(false);
 
     if (!result.ok) {
-      toast.error("No pudimos enviar tu consulta", {
-        description: result.error,
+      toast.error(t.failTitle, {
+        description: serverError(result.error, t),
         action: {
-          label: "Enviar por WhatsApp",
+          label: t.sendByWhatsapp,
           onClick: () =>
             window.open(
-              whatsappUrl(contactInfo.whatsapp.href ?? "", payload),
+              whatsappUrl(contactInfo.whatsapp.href ?? "", payload, t.wa, areaLabel(payload.area)),
               "_blank",
               "noopener",
             ),
@@ -124,8 +134,8 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
     }
 
     form.reset();
-    toast.success("Recibimos tu consulta", {
-      description: "Un profesional del área te responderá a la brevedad.",
+    toast.success(t.okTitle, {
+      description: t.okBody,
     });
   }
 
@@ -141,12 +151,12 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
           <div className="grid content-start gap-6">
             {!embedded && (
               <div className="grid gap-4">
-                <Eyebrow>Contacto</Eyebrow>
+                <Eyebrow>{t.eyebrow}</Eyebrow>
                 <h2 className="font-display text-[28px] leading-[34px] font-semibold tracking-h2 md:text-h2 md:leading-h2">
-                  Conversemos sobre tus proyectos. Estamos para asesorarte
+                  {t.heading}
                 </h2>
                 <p className="text-lead text-ink-muted">
-                  Escríbenos y un profesional del área te responderá.
+                  {t.lead}
                 </p>
               </div>
             )}
@@ -158,14 +168,14 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
             />
             <ContactRow
               icon={<Mail className="size-5" aria-hidden="true" />}
-              label={contactInfo.email.label}
+              label={contactInfo.email.label === "Correo" ? t.labelEmail : tr(contactInfo.email.label)}
               value={contactInfo.email.value}
               pending={contactInfo.email.pending}
             />
             <ContactRow
               icon={<MapPin className="size-5" aria-hidden="true" />}
-              label={contactInfo.office.label}
-              value={contactInfo.office.value}
+              label={contactInfo.office.label === "Oficina" ? t.labelOffice : tr(contactInfo.office.label)}
+              value={tr(contactInfo.office.value)}
               pending={contactInfo.office.pending}
             />
             <ContactRow
@@ -203,7 +213,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
             <FormField
               id="f-nombre"
               name="nombre"
-              label="Nombre y apellido"
+              label={t.name}
               autoComplete="name"
               required
               invalid={!!errors.nombre}
@@ -212,15 +222,15 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
             <FormField
               id="f-empresa"
               name="empresa"
-              label="Empresa"
-              hint="(opcional)"
+              label={t.company}
+              hint={t.optional}
               autoComplete="organization"
             />
             <FormField
               id="f-email"
               name="email"
               type="email"
-              label="Correo electrónico"
+              label={t.email}
               autoComplete="email"
               required
               invalid={!!errors.email}
@@ -230,7 +240,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               id="f-telefono"
               name="telefono"
               type="tel"
-              label="Teléfono o WhatsApp"
+              label={t.phone}
               placeholder="+595"
               autoComplete="tel"
               required
@@ -240,23 +250,23 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
             <FormField
               id="f-area"
               name="area"
-              label="Servicio de interés"
+              label={t.service}
               required
               invalid={!!errors.area}
               onChange={() => clearError("area")}
               className="md:col-span-2"
               as="select"
-              placeholder="Selecciona un servicio"
+              placeholder={t.servicePlaceholder}
               options={[
-                ...areas.map((a) => ({ value: a.eyebrow, label: a.eyebrow })),
-                { value: "Otra consulta", label: "Otra consulta" },
+                ...areas.map((a) => ({ value: a.eyebrow, label: tr(a.eyebrow) })),
+                { value: "Otra consulta", label: t.otherInquiry },
               ]}
             />
             <FormField
               id="f-mensaje"
               name="mensaje"
-              label="Tu consulta"
-              placeholder="Cuéntanos brevemente qué necesitas"
+              label={t.message}
+              placeholder={t.messagePlaceholder}
               required
               invalid={!!errors.mensaje}
               onChange={() => clearError("mensaje")}
@@ -273,7 +283,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
             />
             <div className="flex flex-wrap items-center justify-between gap-4 md:col-span-2">
               <small className="max-w-[40ch] text-small text-ink-muted">
-                Usamos tus datos solo para responder esta consulta.
+                {t.privacy}
               </small>
               <Button type="submit" disabled={submitting}>
                 {submitting ? (
@@ -282,11 +292,11 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
                       className="size-4 animate-spin"
                       aria-hidden="true"
                     />
-                    Enviando…
+                    {t.sending}
                   </>
                 ) : (
                   <>
-                    Enviar consulta
+                    {t.send}
                     <ArrowRight className="size-4" aria-hidden="true" />
                   </>
                 )}
@@ -312,6 +322,7 @@ function ContactRow({
   pending?: boolean;
   href?: string;
 }) {
+  const toBeConfirmed = useT().common.toBeConfirmed;
   const content = (
     <>
       <span className="grid size-11 place-items-center rounded-full bg-blue/10 text-blue">
@@ -326,7 +337,7 @@ function ContactRow({
           )}
         >
           {value}
-          {pending && " (a confirmar)"}
+          {pending && ` ${toBeConfirmed}`}
         </p>
       </div>
     </>
@@ -383,6 +394,7 @@ function FormField(props: FormFieldProps) {
     className,
     type = "text",
   } = props;
+  const errors = useT().contact.errors;
   const inputBase =
     "min-h-12 w-full rounded-md border border-line-strong bg-surface-alt px-3.5 py-3 text-base text-ink transition-colors focus:border-blue focus:outline-focus-ring aria-[invalid=true]:border-[#B3261E]";
 
@@ -429,7 +441,7 @@ function FormField(props: FormFieldProps) {
       )}
       {invalid && name !== "empresa" && (
         <span className="text-small text-[#B3261E]">
-          {errorMsg[name as Field]}
+          {errors[name as Field]}
         </span>
       )}
     </div>

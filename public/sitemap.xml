@@ -1,10 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://vdmconsultores.com.py/</loc><lastmod>2026-11-05</lastmod></url>
-  <url><loc>https://vdmconsultores.com.py/nosotros</loc><lastmod>2026-11-05</lastmod></url>
-  <url><loc>https://vdmconsultores.com.py/servicios</loc><lastmod>2026-11-05</lastmod></url>
-  <url><loc>https://vdmconsultores.com.py/equipo</loc><lastmod>2026-11-05</lastmod></url>
-  <url><loc>https://vdmconsultores.com.py/experiencia</loc><lastmod>2026-11-05</lastmod></url>
-  <url><loc>https://vdmconsultores.com.py/galeria</loc><lastmod>2026-11-05</lastmod></url>
-  <url><loc>https://vdmconsultores.com.py/contacto</loc><lastmod>2026-11-05</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://vdmconsultores.com.py/es</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/en</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/pt</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/es/nosotros</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/nosotros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/about"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/sobre"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/nosotros"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/en/about</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/nosotros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/about"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/sobre"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/nosotros"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/pt/sobre</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/nosotros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/about"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/sobre"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/nosotros"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/es/servicios</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/servicios"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/services"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/servicos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/servicios"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/en/services</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/servicios"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/services"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/servicos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/servicios"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/pt/servicos</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/servicios"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/services"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/servicos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/servicios"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/es/equipo</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/equipo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/team"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/equipe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/equipo"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/en/team</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/equipo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/team"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/equipe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/equipo"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/pt/equipe</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/equipo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/team"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/equipe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/equipo"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/es/experiencia</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/experiencia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/experience"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/experiencia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/experiencia"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/en/experience</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/experiencia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/experience"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/experiencia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/experiencia"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/pt/experiencia</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/experiencia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/experience"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/experiencia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/experiencia"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/es/galeria</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/galeria"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/galeria"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/galeria"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/en/gallery</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/galeria"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/galeria"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/galeria"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/pt/galeria</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/galeria"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/galeria"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/galeria"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/es/contacto</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/contato"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/contacto"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/en/contact</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/contato"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/contacto"/>
+  </url>
+  <url>
+    <loc>https://vdmconsultores.com.py/pt/contato</loc>
+    <lastmod>2026-11-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vdmconsultores.com.py/es/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vdmconsultores.com.py/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://vdmconsultores.com.py/pt/contato"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vdmconsultores.com.py/es/contacto"/>
+  </url>
 </urlset>

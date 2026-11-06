@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Home } from "@/pages/Home";
 import { Nosotros } from "@/pages/Nosotros";
@@ -18,21 +18,64 @@ import { EditSectors } from "@/pages/admin/EditSectors";
 import { EditDisciplines } from "@/pages/admin/EditDisciplines";
 import { EditMedia } from "@/pages/admin/EditMedia";
 import { Consultas } from "@/pages/admin/Consultas";
+import { LANGS, SLUGS, pathFor, type Lang, type PageKey } from "@/i18n/langs";
+
+const PAGES: Record<Exclude<PageKey, "home">, () => JSX.Element> = {
+  nosotros: Nosotros,
+  servicios: Servicios,
+  equipo: Equipo,
+  experiencia: Experiencia,
+  galeria: Galeria,
+  contacto: Contacto,
+};
+
+/** Idioma preferido del navegador entre los tres del sitio. */
+function preferredLang(): Lang {
+  const list = navigator.languages?.length ? navigator.languages : [navigator.language];
+  for (const l of list) {
+    const code = l?.slice(0, 2).toLowerCase();
+    if ((LANGS as readonly string[]).includes(code)) return code as Lang;
+  }
+  return "es";
+}
+
+/** "/" → inicio en el idioma del navegador (español si no es ninguno de los tres). */
+function RootRedirect() {
+  return <Navigate to={pathFor("home", preferredLang())} replace />;
+}
+
+/** Dirección inexistente → inicio del mismo idioma (o el del navegador). */
+function NotFound() {
+  const { pathname } = useLocation();
+  const l = pathname.split("/")[1];
+  const lang = (LANGS as readonly string[]).includes(l) ? (l as Lang) : preferredLang();
+  return <Navigate to={pathFor("home", lang)} replace />;
+}
+
+/** Direcciones viejas sin idioma (/nosotros#la-firma) → la versión en español. */
+function LegacyRedirect({ page }: { page: PageKey }) {
+  const { hash } = useLocation();
+  return <Navigate to={pathFor(page, "es") + hash} replace />;
+}
 
 export function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Sitio público */}
-        <Route element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="nosotros" element={<Nosotros />} />
-          <Route path="servicios" element={<Servicios />} />
-          <Route path="equipo" element={<Equipo />} />
-          <Route path="experiencia" element={<Experiencia />} />
-          <Route path="galeria" element={<Galeria />} />
-          <Route path="contacto" element={<Contacto />} />
-        </Route>
+        {/* Sitio público: /es, /en y /pt, cada página con su dirección. */}
+        <Route index element={<RootRedirect />} />
+        {LANGS.map((lang) => (
+          <Route key={lang} path={lang} element={<Layout lang={lang} />}>
+            <Route index element={<Home />} />
+            {(Object.keys(PAGES) as Array<keyof typeof PAGES>).map((page) => {
+              const Page = PAGES[page];
+              return <Route key={page} path={SLUGS[page][lang]} element={<Page />} />;
+            })}
+          </Route>
+        ))}
+        {(Object.keys(PAGES) as Array<keyof typeof PAGES>).map((page) => (
+          <Route key={page} path={SLUGS[page].es} element={<LegacyRedirect page={page} />} />
+        ))}
         {/* Admin */}
         <Route path="admin/login" element={<AdminLogin />} />
         <Route path="admin" element={<AdminLayout />}>
@@ -46,7 +89,7 @@ export function App() {
           <Route path="contacto" element={<EditContact />} />
           <Route path="textos" element={<EditTexts />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

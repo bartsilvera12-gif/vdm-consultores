@@ -1,16 +1,12 @@
-export type NavLink = {
-  to: string;
-  label: string;
-  /** Para resaltar el link cuando estamos en una ruta anidada o un hash. */
-  match?: (pathname: string) => boolean;
-};
+import type { PageKey } from "@/i18n/langs";
 
-export const navLinks: NavLink[] = [
-  { to: "/", label: "Inicio" },
-  { to: "/nosotros", label: "Quiénes somos" },
-  { to: "/servicios", label: "Servicios" },
-  { to: "/equipo", label: "Equipo" },
-  { to: "/experiencia", label: "Experiencia" },
-  { to: "/galeria", label: "Galería" },
-  { to: "/contacto", label: "Contacto" },
+/** Páginas del menú, en orden. El texto sale de messages.nav. */
+export const navPages: PageKey[] = [
+  "home",
+  "nosotros",
+  "servicios",
+  "equipo",
+  "experiencia",
+  "galeria",
+  "contacto",
 ];

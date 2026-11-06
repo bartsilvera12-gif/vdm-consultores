@@ -14,19 +14,21 @@ import { StairsIcon } from "@/components/primitives/StairsIcon";
 import { TwoToneIcon } from "@/components/primitives/TwoToneIcon";
 import { Button } from "@/components/ui/button";
 import { useCarousel } from "@/hooks/useCarousel";
+import { usePath, useT } from "@/i18n/context";
+import type { Messages } from "@/i18n/messages";
 import { cn } from "@/lib/utils";
 
 /**
  * Las 4 áreas de los flyers de VDM y los 2 servicios con texto propio que
  * mandó la clienta. Cada uno lleva a su área en /servicios.
  */
-const services: Array<{ label: string; icon: LucideIcon; area: string }> = [
-  { label: "Estudio Jurídico", icon: Scale, area: "juridico" },
-  { label: "Consultoría Empresarial", icon: Building2, area: "consultoria" },
-  { label: "Asesoría en Inversiones", icon: StairsIcon, area: "inversiones" },
-  { label: "Habilitaciones Industriales y Comerciales", icon: Factory, area: "habilitaciones" },
-  { label: "Licencias Ambientales", icon: Leaf, area: "habilitaciones" },
-  { label: "Inversiones Inmobiliarias", icon: KeyRound, area: "inversiones" },
+const services: Array<{ key: keyof Messages["home"]["showcase"]; icon: LucideIcon; area: string }> = [
+  { key: "juridico", icon: Scale, area: "juridico" },
+  { key: "consultoria", icon: Building2, area: "consultoria" },
+  { key: "inversiones", icon: StairsIcon, area: "inversiones" },
+  { key: "habilitaciones", icon: Factory, area: "habilitaciones" },
+  { key: "ambientales", icon: Leaf, area: "habilitaciones" },
+  { key: "inmobiliarias", icon: KeyRound, area: "inversiones" },
 ];
 
 const arrowClass =
@@ -39,23 +41,25 @@ const arrowClass =
 export function ServicesShowcase() {
   const { trackRef, canPrev, canNext, scrollByCard } =
     useCarousel<HTMLUListElement>();
+  const t = useT();
+  const path = usePath();
 
   return (
     <section id="servicios" className="bg-surface py-16 md:py-24">
       <Container>
         <div className="mb-12 flex items-center justify-between gap-4 md:mb-16">
           <h2 className="font-display text-[30px] leading-[36px] font-medium text-blue md:text-[44px] md:leading-[52px]">
-            Servicios
+            {t.home.servicesTitle}
           </h2>
           <Button asChild variant="outline" className="border-blue text-blue">
-            <Link to="/servicios">Leer más</Link>
+            <Link to={path("servicios")}>{t.home.readMore}</Link>
           </Button>
         </div>
 
         <div className="relative">
           <button
             type="button"
-            aria-label="Anterior"
+            aria-label={t.home.prev}
             disabled={!canPrev}
             onClick={() => scrollByCard(-1)}
             className={cn(arrowClass, "left-0 hidden md:grid")}
@@ -66,21 +70,21 @@ export function ServicesShowcase() {
             ref={trackRef}
             className="m-0 grid list-none grid-cols-3 gap-y-8 p-0 md:flex md:snap-x md:snap-mandatory md:overflow-x-auto md:scroll-smooth md:[scrollbar-width:none] md:[&::-webkit-scrollbar]:hidden"
           >
-            {services.map(({ label, icon, area }) => (
+            {services.map(({ key, icon, area }) => (
               <li
-                key={label}
+                key={key}
                 data-card
                 className="min-w-0 md:w-1/6 md:shrink-0 md:snap-start"
               >
                 <Link
-                  to={`/servicios#${area}`}
+                  to={path("servicios", area)}
                   className="group grid justify-items-center gap-3 px-1 text-center md:gap-5 md:px-2"
                 >
                   <span className="transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-1">
                     <TwoToneIcon icon={icon} className="size-16 sm:size-20 md:size-28" />
                   </span>
                   <span className="max-w-[180px] font-display text-[13px] leading-[18px] text-blue sm:text-base sm:leading-6 md:text-lg md:leading-7">
-                    {label}
+                    {t.home.showcase[key]}
                   </span>
                 </Link>
               </li>
@@ -88,7 +92,7 @@ export function ServicesShowcase() {
           </ul>
           <button
             type="button"
-            aria-label="Siguiente"
+            aria-label={t.home.next}
             disabled={!canNext}
             onClick={() => scrollByCard(1)}
             className={cn(arrowClass, "right-0 hidden md:grid")}

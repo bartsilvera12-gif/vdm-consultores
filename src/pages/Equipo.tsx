@@ -5,6 +5,8 @@ import { useText } from "@/hooks/useSiteContent";
 import { PageCta } from "@/components/primitives/PageCta";
 import { Reveal } from "@/components/primitives/Reveal";
 import { useTeam } from "@/hooks/useTeam";
+import { useLang, useT, useTr } from "@/i18n/context";
+import { translateName } from "@/i18n/content";
 import { cn } from "@/lib/utils";
 
 /** Orden en pantalla de las tres principales: la primera (directora) al medio. */
@@ -16,6 +18,7 @@ type Member = { id?: string; name: string; role: string; photo?: string };
 
 export function Equipo() {
   const { members } = useTeam();
+  const t = useT();
   const allPlaceholders =
     members.length > 0 && members.every((m) => m.name === "Nombre y apellido");
   // Jerarquía del boceto: primero las tres que están día a día (cuerpo
@@ -26,7 +29,7 @@ export function Equipo() {
   return (
     <>
       <PageHero
-        eyebrow="Equipo profesional"
+        eyebrow={t.team.eyebrow}
         title={useText("equipo.hero_title")}
         lead={useText("equipo.hero_lead")}
       />
@@ -56,8 +59,7 @@ export function Equipo() {
           {allPlaceholders && (
             <p className="inline-flex items-center gap-2 justify-self-center rounded-full border border-line bg-surface px-4 py-2 text-small text-ink-muted">
               <span className="block size-2 shrink-0 rounded-full bg-blue" />
-              Perfiles, cargos y fotografías a completar con el material que
-              entregue VDM.
+              {t.team.placeholderNote}
             </p>
           )}
         </Container>
@@ -78,6 +80,9 @@ function MemberCard({
   featured?: boolean;
   className?: string;
 }) {
+  const lang = useLang();
+  const tr = useTr();
+  const name = translateName(member.name, lang);
   return (
     <Reveal
       as="article"
@@ -94,7 +99,7 @@ function MemberCard({
         {member.photo ? (
           <img
             src={member.photo}
-            alt={member.name}
+            alt={name}
             loading="lazy"
             // La foto entera, sin recortar: apoyada abajo y con aire arriba.
             // Las tres principales van de cuerpo entero, en una forma alta.
@@ -120,7 +125,7 @@ function MemberCard({
             featured ? "text-[22px] leading-[28px]" : "text-[17px] leading-[22px]",
           )}
         >
-          {member.name}
+          {name}
         </h2>
         <p
           className={cn(
@@ -128,7 +133,7 @@ function MemberCard({
             featured ? "text-small" : "text-[13px] leading-[18px]",
           )}
         >
-          {member.role}
+          {tr(member.role)}
         </p>
       </div>
     </Reveal>

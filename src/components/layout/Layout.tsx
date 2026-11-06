@@ -5,6 +5,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { PageMeta } from "@/components/layout/PageMeta";
+import { LangProvider } from "@/i18n/context";
+import { LANG_TAG, type Lang } from "@/i18n/langs";
+import { messages } from "@/i18n/messages";
 
 /**
  * Al cambiar de ruta, llevamos al top. Si la URL trae un hash vamos al ancla:
@@ -29,8 +32,12 @@ function ScrollOnNav() {
   return null;
 }
 
-export function Layout() {
+export function Layout({ lang }: { lang: Lang }) {
+  useEffect(() => {
+    document.documentElement.lang = LANG_TAG[lang];
+  }, [lang]);
   return (
+    <LangProvider lang={lang}>
     <div className="flex min-h-screen flex-col bg-surface text-ink">
       <ScrollOnNav />
       <PageMeta />
@@ -41,6 +48,7 @@ export function Layout() {
       <Footer />
       <WhatsAppFloat />
       <Toaster
+        containerAriaLabel={messages[lang].common.notifications}
         position="bottom-center"
         toastOptions={{
           classNames: {
@@ -50,5 +58,6 @@ export function Layout() {
         }}
       />
     </div>
+    </LangProvider>
   );
 }
