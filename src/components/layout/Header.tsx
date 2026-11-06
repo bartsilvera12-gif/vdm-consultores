@@ -62,7 +62,7 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <LanguageSwitcher className="hidden sm:flex" />
+          <LanguageSwitcher flagsOnly className="hidden sm:flex" />
           <Button asChild size="sm" className="hidden xl:inline-flex">
             <Link to={path("contacto")}>{t.common.bookConsultation}</Link>
           </Button>
