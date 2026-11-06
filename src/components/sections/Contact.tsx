@@ -166,6 +166,8 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
                 </p>
               </div>
             )}
+            {/* Dos columnas en todos los tamaños: menos alto. */}
+            <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:gap-x-6 sm:gap-y-6">
             <ContactRow
               icon={<WhatsAppIcon className="size-5" />}
               label={contactInfo.whatsapp.label}
@@ -207,6 +209,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
                 href={contactInfo.linkedin.href}
               />
             )}
+            </div>
           </div>
 
           {/* Form --------------------------------------------------------- */}
@@ -214,7 +217,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
             ref={formRef}
             onSubmit={handleSubmit}
             noValidate
-            className="grid gap-4 rounded-lg border border-line bg-surface p-5 shadow-card sm:p-7 md:grid-cols-2 md:gap-x-5 md:p-10"
+            className="grid grid-cols-2 items-end gap-x-3 gap-y-4 rounded-lg border border-line bg-surface p-4 shadow-card sm:gap-x-5 sm:p-7 md:p-10"
           >
             <FormField
               id="f-nombre"
@@ -260,7 +263,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               required
               invalid={!!errors.area}
               onChange={() => clearError("area")}
-              className="md:col-span-2"
+              className="col-span-2"
               as="select"
               placeholder={t.servicePlaceholder}
               options={[
@@ -276,7 +279,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               required
               invalid={!!errors.mensaje}
               onChange={() => clearError("mensaje")}
-              className="md:col-span-2"
+              className="col-span-2"
               as="textarea"
             />
             <input
@@ -287,7 +290,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               aria-hidden="true"
               className="absolute -left-[9999px]"
             />
-            <div className="flex flex-wrap items-center justify-between gap-4 md:col-span-2">
+            <div className="col-span-2 flex flex-wrap items-center justify-between gap-4">
               <small className="max-w-[40ch] text-small text-ink-muted">
                 {t.privacy}
               </small>
@@ -338,6 +341,12 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
   );
 }
 
+/** Correos y enlaces largos: permite cortar después de @ y de /. */
+function softBreaks(text: string) {
+  if (!/[@/]/.test(text)) return text;
+  return text.split(/(?<=[@/])/).flatMap((part, i) => (i ? [<wbr key={i} />, part] : [part]));
+}
+
 function ContactRow({
   icon,
   label,
@@ -354,24 +363,24 @@ function ContactRow({
   const toBeConfirmed = useT().common.toBeConfirmed;
   const content = (
     <>
-      <span className="grid size-11 place-items-center rounded-full bg-blue/10 text-blue">
+      <span className="grid size-9 place-items-center rounded-full bg-blue/10 text-blue sm:size-11 lg:size-10">
         {icon}
       </span>
       <div>
-        <p className="text-small text-ink-muted">{label}</p>
+        <p className="text-[13px] leading-[18px] text-ink-muted sm:text-small">{label}</p>
         <p
           className={cn(
-            "break-words text-base font-semibold",
+            "text-[14px] leading-[20px] font-semibold [overflow-wrap:anywhere] sm:text-base sm:leading-[24px] lg:text-[15px] lg:leading-[22px]",
             pending && "font-normal italic text-ink-muted",
           )}
         >
-          {value}
+          {softBreaks(value)}
           {pending && ` ${toBeConfirmed}`}
         </p>
       </div>
     </>
   );
-  const className = "grid grid-cols-[44px_1fr] items-start gap-3.5";
+  const className = "grid min-w-0 content-start items-start gap-2 sm:grid-cols-[44px_1fr] sm:gap-3.5 lg:grid-cols-1 lg:gap-2";
   // Si hay href válido y no está pendiente, lo volvemos clickeable.
   if (href && href !== "#" && !pending) {
     return (
@@ -429,7 +438,7 @@ function FormField(props: FormFieldProps) {
 
   return (
     <div className={cn("grid min-w-0 gap-1.5", className)}>
-      <label id={`${id}-label`} htmlFor={id} className="text-label font-semibold">
+      <label id={`${id}-label`} htmlFor={id} className="text-[13px] leading-[18px] font-semibold sm:text-label">
         {label}
         {hint && (
           <span className="ml-1 font-normal text-ink-muted">{hint}</span>

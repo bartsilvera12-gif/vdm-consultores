@@ -71,11 +71,11 @@ export function Experiencia() {
 
           <div
             onMouseLeave={() => setActive(0)}
-            className="grid gap-10 md:grid-cols-[1fr_minmax(260px,360px)_1fr] md:gap-x-10 md:gap-y-12 lg:gap-x-14">
+            className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-[1fr_minmax(260px,360px)_1fr] md:gap-x-10 md:gap-y-12 lg:gap-x-14">
             <Photo
               photos={photos}
               active={active}
-              className={cn("md:col-start-2 md:row-start-1 md:self-center", rowSpan(half))}
+              className={cn("col-span-2 md:col-span-1 md:col-start-2 md:row-start-1 md:self-center", rowSpan(half))}
             />
             {left.map((sector, i) => (
               <SectorItem
@@ -222,13 +222,13 @@ function SectorItem({
         onBlur={() => onSelect(false)}
         className="group grid gap-3 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-sky focus-visible:ring-offset-4 focus-visible:ring-offset-surface-alt"
       >
-        <div className={cn("flex items-center gap-3", !isLeft && "md:flex-row-reverse")}>
-          <span className="grid size-12 flex-none place-items-center rounded-md bg-blue/10 text-blue transition-colors duration-300 group-hover:bg-blue group-hover:text-on-navy">
-            <Icon className="size-6" strokeWidth={1.5} aria-hidden="true" />
+        <div className={cn("flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-3", !isLeft && "md:flex-row-reverse")}>
+          <span className="grid size-10 flex-none place-items-center rounded-md bg-blue/10 md:size-12 text-blue transition-colors duration-300 group-hover:bg-blue group-hover:text-on-navy">
+            <Icon className="size-5 md:size-6" strokeWidth={1.5} aria-hidden="true" />
           </span>
           <h3
             className={cn(
-              "text-[19px] leading-[25px] font-semibold text-ink transition-colors duration-300 group-hover:text-blue",
+              "text-[16px] leading-[21px] font-semibold text-ink md:text-[19px] md:leading-[25px] transition-colors duration-300 group-hover:text-blue",
               !isLeft && "md:text-right",
             )}
           >
@@ -262,7 +262,7 @@ function SectorItem({
         </div>
         <p
           className={cn(
-            "pl-[60px] text-small leading-[23px] text-ink-muted",
+            "text-[14px] leading-[21px] text-ink-muted md:pl-[60px] md:text-small md:leading-[23px]",
             !isLeft && "md:pl-0 md:pr-[60px] md:text-right",
           )}
         >
