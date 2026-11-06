@@ -21,7 +21,7 @@ export function Header() {
         scrolled && "border-line shadow-card",
       )}
     >
-      <Container className="flex h-18 items-center justify-between gap-6">
+      <Container className="flex h-18 items-center justify-between gap-3 sm:gap-6">
         <Link
           to={path("home")}
           aria-label={t.common.logoHome}
@@ -62,8 +62,8 @@ export function Header() {
           ))}
         </nav>
         {/* Banderas y botón con ancho fijo: no se mueven al cambiar de idioma. */}
-        <div className="flex flex-none items-center gap-2">
-          <LanguageSwitcher flagsOnly className="hidden sm:flex" />
+        <div className="flex flex-none items-center gap-1 sm:gap-2">
+          <LanguageSwitcher flagsOnly />
           <Button asChild size="sm" className="hidden w-[188px] justify-center xl:inline-flex">
             <Link to={path("contacto")}>{t.common.bookConsultation}</Link>
           </Button>

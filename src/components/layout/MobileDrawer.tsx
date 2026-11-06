@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { navPages } from "@/content/nav";
 import { usePath, useT } from "@/i18n/context";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -54,7 +53,6 @@ export function MobileDrawer() {
           >
             <X className="size-5" aria-hidden="true" />
           </button>
-          <LanguageSwitcher className="mb-2 -ml-1.5" onNavigate={close} />
           {navPages.map((page) => (
             <NavLink
               key={page}
