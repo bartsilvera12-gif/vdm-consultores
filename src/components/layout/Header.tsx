@@ -31,7 +31,7 @@ export function Header() {
         </Link>
         <nav
           aria-label={t.common.mainNav}
-          className="hidden items-center gap-1 lg:flex xl:gap-2"
+          className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 lg:flex"
         >
           {navPages.map((page) => (
             <NavLink
@@ -40,7 +40,7 @@ export function Header() {
               end={page === "home"}
               className={({ isActive }) =>
                 cn(
-                  "group relative whitespace-nowrap px-2.5 py-2 font-display text-sm font-semibold tracking-[0.01em] transition-colors duration-200 xl:px-3",
+                  "group relative whitespace-nowrap px-2.5 py-2 font-display text-sm font-semibold tracking-[0.01em] transition-colors duration-200",
                   isActive ? "text-blue" : "text-ink hover:text-blue",
                 )
               }
@@ -52,7 +52,7 @@ export function Header() {
                   <span
                     aria-hidden="true"
                     className={cn(
-                      "absolute inset-x-2.5 -bottom-0.5 h-[2px] origin-center rounded-full bg-blue transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] xl:inset-x-3",
+                      "absolute inset-x-2.5 -bottom-0.5 h-[2px] origin-center rounded-full bg-blue transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
                       isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
                     )}
                   />
@@ -61,9 +61,10 @@ export function Header() {
             </NavLink>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
+        {/* Banderas y botón con ancho fijo: no se mueven al cambiar de idioma. */}
+        <div className="flex flex-none items-center gap-2">
           <LanguageSwitcher flagsOnly className="hidden sm:flex" />
-          <Button asChild size="sm" className="hidden xl:inline-flex">
+          <Button asChild size="sm" className="hidden w-[188px] justify-center xl:inline-flex">
             <Link to={path("contacto")}>{t.common.bookConsultation}</Link>
           </Button>
           <MobileDrawer />
