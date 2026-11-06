@@ -60,10 +60,10 @@ export function Nosotros() {
                 </div>
               </div>
 
-              <p className="border-t border-line pt-6 text-body text-ink-muted">
+              <p className="border-t border-line pt-6 text-body text-ink-muted md:text-lead">
                 {content["about.commitment"]}
               </p>
-              <p className="font-display text-base font-semibold text-blue">
+              <p className="font-display text-base font-semibold text-blue md:text-lg">
                 VDM Consultores ·{" "}
                 <span className="font-normal italic text-ink-muted">
                   {t.about.slogan}

@@ -54,7 +54,7 @@ export function AreasStrip() {
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
-                <span className="font-display text-[10.5px] leading-[13px] font-semibold text-on-navy sm:text-small md:text-base">
+                <span className="max-w-full font-display text-[10.5px] leading-[13px] font-semibold text-on-navy hyphens-auto [overflow-wrap:anywhere] sm:text-small lg:hyphens-none lg:[overflow-wrap:normal] md:text-base">
                   {t.about.strip[key]}
                 </span>
               </Link>
