@@ -19,8 +19,13 @@ import { areas } from "@/content/areas";
 import { useContactInfo } from "@/hooks/useContactInfo";
 import { enviarConsulta, type Consulta } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
-import { useT, useTr } from "@/i18n/context";
+import { useLang, useT, useTr } from "@/i18n/context";
 import type { Messages } from "@/i18n/messages";
+
+/** La oficina en Google Maps (el lugar que tiene VDM cargado, Caballero 893). */
+const MAP_COORDS = "-25.288707,-57.634553";
+const MAP_LINK =
+  "https://www.google.com/maps/place/VDM+Consultores+Jur%C3%ADdicos+y+Empresariales/@-25.288707,-57.634553,17z/data=!4m6!3m5!1s0x945da70055fce56f:0x638bff47f839218a!8m2!3d-25.288707!4d-57.634553";
 
 type Field = "nombre" | "email" | "telefono" | "area" | "mensaje";
 
@@ -61,6 +66,7 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
   const m = useT();
   const t = m.contact;
   const tr = useTr();
+  const lang = useLang();
   const areaLabel = (v: string) => (v === "Otra consulta" ? t.otherInquiry : tr(v));
 
   // Pre-selección del área al llegar desde el apartado Servicios
@@ -303,6 +309,29 @@ export function Contact({ embedded = false }: { embedded?: boolean } = {}) {
               </Button>
             </div>
           </form>
+        </div>
+
+        {/* Mapa de la oficina */}
+        <div className="mt-10 grid gap-3 md:mt-14">
+          <div className="overflow-hidden rounded-lg border border-line bg-surface shadow-card">
+            <iframe
+              title={t.mapTitle}
+              src={`https://maps.google.com/maps?q=${MAP_COORDS}&hl=${lang === "pt" ? "pt-BR" : lang}&z=17&output=embed`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              className="block h-[300px] w-full border-0 md:h-[400px]"
+            />
+          </div>
+          <a
+            href={MAP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 justify-self-start text-small font-semibold text-blue underline-offset-4 hover:underline"
+          >
+            <MapPin className="size-4" aria-hidden="true" />
+            {t.openMap}
+          </a>
         </div>
       </Container>
     </section>

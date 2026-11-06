@@ -128,6 +128,8 @@ const es = {
     okBody: "Un profesional del área te responderá a la brevedad.",
     labelEmail: "Correo",
     labelOffice: "Oficina",
+    mapTitle: "Ubicación de la oficina de VDM Consultores en Asunción",
+    openMap: "Abrir en Google Maps",
     wa: {
       intro: "Hola, quiero hacer una consulta desde la web de VDM Consultores.",
       name: "Nombre",
@@ -285,6 +287,8 @@ const en: Messages = {
     okBody: "A specialist will get back to you shortly.",
     labelEmail: "Email",
     labelOffice: "Office",
+    mapTitle: "Location of the VDM Consultores office in Asunción",
+    openMap: "Open in Google Maps",
     wa: {
       intro: "Hello, I'd like to make an inquiry from the VDM Consultores website.",
       name: "Name",
@@ -440,6 +444,8 @@ const pt: Messages = {
     okBody: "Um profissional da área responderá em breve.",
     labelEmail: "E-mail",
     labelOffice: "Escritório",
+    mapTitle: "Localização do escritório da VDM Consultores em Assunção",
+    openMap: "Abrir no Google Maps",
     wa: {
       intro: "Olá, gostaria de fazer uma consulta pelo site da VDM Consultores.",
       name: "Nome",
